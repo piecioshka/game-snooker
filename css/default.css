@@ -1,0 +1,25 @@
+#table {
+	border: 5px solid #999;
+	margin: 0 auto;
+	position: relative;
+	float: left;
+	-moz-border-radius: 5px;
+}
+
+.ball {
+	position: absolute;
+	left: 0;
+	top: 0;
+	border: 1px solid #000;
+	display: block;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	cursor: pointer;
+}
+#blue,
+#brown,
+#black {
+	color: #fff;
+}
