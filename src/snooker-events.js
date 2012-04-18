@@ -1,14 +1,14 @@
 snooker = this.snooker || {};
 snooker.events = snooker.events || {};
  
-snooker.events.ball = (function(){
+snooker.events.ball = (function () {
 	
-	var _colissions = function(area){
+	var colission_handler = function (area) {
 		var elements = area.childNodes,
-            XYarr = [],
+            x_y_array = [],
             bigUp = 0.7;
 
-		for(var i = 0, len = elements.length; i < len; ++i){
+		for (var i = 0, len = elements.length; i < len; ++i) {
 			var item = elements[i],
 			
                 ol = item.offsetLeft,
@@ -17,18 +17,18 @@ snooker.events.ball = (function(){
                 cenL = ol + item.offsetWidth/2,
                 cenT = ot + item.offsetHeight/2;
 			
-			XYarr.push({
+			x_y_array.push({
 				'obj': item, 
 				'left': cenL, 
 				'top': cenT
 			});
 		}
 		
-		for(var i = 0; i < XYarr.length; ++i){
-			var el = XYarr[i];
+		for (var i = 0; i < x_y_array.length; ++i) {
+			var el = x_y_array[i];
 			
-			for(var j = i +1; j < XYarr.length; ++j){
-				var newel = XYarr[j],
+			for(var j = i +1; j < x_y_array.length; ++j){
+				var newel = x_y_array[j],
 				
 				    lx = el.left - newel.left,
 				    tx = el.top - newel.top,
@@ -40,7 +40,7 @@ snooker.events.ball = (function(){
 				
 				// colission
 				if( sqrt <= el.obj.offsetWidth/2 + newel.obj.offsetWidth/2){
-					//snooker.log('collision..');
+					//console.log('collision..');
 					
 					var elErr = newel,
 					   elOK = el;
@@ -78,22 +78,17 @@ snooker.events.ball = (function(){
 					if(ifOKLeft < 0 ){
 						scallEl.style.left = scallEl.offsetLeft + ifOKLeft;
 					}
-					
 				}
 			}
-			
 		}
 		
-		delete XYarr;
-		
-	}
+		x_y_array = null;
+	};
 	
 	return {
-		init: function(table, ball){
-			
+		init: function (table, ball) {
             if (pklib.dom.isNode(ball)) {
-				
-				_colissions(table);
+				colission_handler(table);
 				
 				var hisL = null,
 				    hisT = null,
@@ -118,8 +113,8 @@ snooker.events.ball = (function(){
 				    
 				    pull = null;
 				
-				// ball.addEventListener('mousedown', function(){
-				pklib.event.add(ball, 'mousedown', function(){
+				// ball.addEventListener('mousedown', function () {
+				pklib.event.add(ball, 'mousedown', function () {
 					this.draggable = true;
 					
 					w = _ball.offsetWidth;
@@ -130,11 +125,10 @@ snooker.events.ball = (function(){
 					
 					histTimer = new Date().getTime();
 					clearInterval(pull);
-					
 				}, true);
 				
-				// ball.addEventListener('mouseup', function(){
-				pklib.event.add(ball, 'mouseup', function(){
+				// ball.addEventListener('mouseup', function () {
+				pklib.event.add(ball, 'mouseup', function () {
 					this.draggable = false;
 					
 					w = _ball.offsetWidth;
@@ -150,20 +144,18 @@ snooker.events.ball = (function(){
                         
 					(pows < 0) && (pows *= (-1));
 					
-					
 					var s = Math.ceil(Math.sqrt(pows)), // street					
                         t = (new Date().getTime() - histTimer)/13, // time
                         v = Math.ceil(s/t), // speed ( v )
                         v1 = newL/t, // up
 				        v2 = newT/t; // right
 					
-					//snooker.log(s, t+'ms', v+'p/s', v1+'p/s', v2+'p/s');
+					//console.log(s, t+'ms', v+'p/s', v1+'p/s', v2+'p/s');
 					
 					var mover = 1;
-					pull = setTimeout(function puller(){
+					pull = setTimeout(function puller () {
 						
-						if(!_ball.draggable){
-							
+						if (!_ball.draggable) {
 							w = _ball.offsetWidth;
 							h = _ball.offsetHeight;
 							
@@ -178,7 +170,7 @@ snooker.events.ball = (function(){
 							if( leftPos >= 0 && leftPos <= intTw ){
 								// flying on the table
 							} else {
-								snooker.info(ball.className, '- collision with left wall:', leftPos, intTw);
+								console.log(ball.className, '- collision with left wall:', leftPos, intTw);
 								v1*=(-1);
 							}
 							
@@ -188,7 +180,7 @@ snooker.events.ball = (function(){
 							if( topPos >= 0 && topPos <= intTh ){
 								// flying on the table
 							} else{
-								snooker.info(ball.className, '- collision with top wall:', topPos, intTh);
+								console.log(ball.className, '- collision with top wall:', topPos, intTh);
 								v2*=(-1);
 							}
 							
@@ -198,21 +190,19 @@ snooker.events.ball = (function(){
 							if(mover < 300) {
 								setTimeout(puller, mover);
 							} else {
-								snooker.warn(ball.className, ' stopped!');
+								console.log(ball.className, ' stopped!');
 								mover = 1;
 							}
 						
 							mover *= 1.1;	
 							
-							_colissions(table);
-							
+							colission_handler(table);
 						}
 					}, mover);
-					
 				}, true);
 				
-				// table.addEventListener('mousemove', function(evt){
-				pklib.event.add(table, 'mousemove', function(evt){
+				// table.addEventListener('mousemove', function (evt) {
+				pklib.event.add(table, 'mousemove', function (evt) {
 					ball.style.border = '1px solid black';
 					
 					if(ball.draggable){
@@ -223,22 +213,22 @@ snooker.events.ball = (function(){
 						
 						var x = evt.clientX;
 						var y = evt.clientY;
-
 						var pl = x - cenBw - tow;
 						var pt = y - cenBh - toh;
 				
-						(pl >= 0 && pl < (tw - w)) && (_ball.style.left = pl);
-						(pt >= 0 && pt < (th - h)) && (_ball.style.top = pt);
+						if (pl >= 0 && pl < (tw - w)) {
+                            _ball.style.left = pl;
+                        }
+						if (pt >= 0 && pt < (th - h)) {
+                            _ball.style.top = pt;
+                        }
 						
-						_colissions(table);
+						colission_handler(table);
 					}
-					
 				}, true);
-				
 			} else {
-				snooker.error('Ball is not HTMLSpanElement');
+				console.log('Ball is not HTMLSpanElement');
 			}
 		}
 	};
-	
-})();
+}());

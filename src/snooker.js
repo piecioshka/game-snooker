@@ -1,7 +1,6 @@
 snooker = this.snooker || {};
 
-snooker.Table = function(name){
-	
+snooker.Table = function (name) {
 	var self = this;
 	this.ui = null;
 	
@@ -19,24 +18,17 @@ snooker.Table = function(name){
 		}
 	};
 	
-	snooker.info('snooker.Table (',name,')');
+	console.log('snooker.Table (',name,')');
 	
 	return this;
-}
+};
 
-snooker.Ball = function(color){
-	
-	var _ball = null;
+snooker.Ball = function (color) {
+    console.log('snooker.Ball (',color,')');
+	return new snooker.ui.Ball(color);
+};
 
-	(function init(){
-		_ball = new snooker.ui.Ball(color);
-	})();
-	
-	return _ball;
-}
-
-snooker.init = function(){
-	
+snooker.init = function () {
 	new snooker.Table('stolik').addBalls([
 		new snooker.Ball('red'),
 		new snooker.Ball('pink'),
@@ -47,6 +39,6 @@ snooker.init = function(){
 		new snooker.Ball('orange'),
 		new snooker.Ball('green')
 	]);
-}
+};
 
 window.onload = snooker.init;
