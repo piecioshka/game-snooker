@@ -1,1 +1,4 @@
-.idea
+# IDE configs
+.idea/
+nbproject/
+.settings/
