@@ -4,7 +4,6 @@
     var snooker = (global.snooker = global.snooker || {});
 
     snooker.Ball = function (color) {
-        console.log("snooker.Ball()");
         this.color = color.toLowerCase();
     };
 

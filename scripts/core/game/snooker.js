@@ -4,21 +4,26 @@
     var snooker = (global.snooker = global.snooker || {});
 
     snooker.init = function () {
-        console.log("snooker.init()");
-
-        var table = new snooker.Table();
-        table.create(function (context) {
-            _.each(snooker.getMap(), function (balls, type) {
-                _.each(balls, function (position) {
-                    new snooker.Ball(type).create(context, position);
-                });
+        new snooker.Table().create(function (context) {
+            onEachBall(function (type, position) {
+                new snooker.Ball(type).create(context, position);
             });
         });
     };
 
+    function onEachBall(callback) {
+        _.each(snooker.getMap(), function (balls, type) {
+            _.each(balls, function (position) {
+                if (typeof callback === "function") {
+                    callback(type, position);
+                }
+            });
+        });
+    }
+
     snooker.getMap = function () {
         return {
-            "WHITE": [{ x: snooker.Table.WIDTH * 0.1, y: snooker.Table.HEIGHT * 0.6 }],
+            "WHITE": [{ x: snooker.Table.WIDTH * 0.15, y: snooker.Table.HEIGHT * 0.6 }],
             "YELLOW": [{ x: snooker.Table.WIDTH * 0.2, y: snooker.Table.HEIGHT * 0.3 }],
             "BROWN": [{ x: snooker.Table.WIDTH * 0.2, y: snooker.Table.HEIGHT / 2 }],
             "GREEN": [{ x: snooker.Table.WIDTH * 0.2, y: snooker.Table.HEIGHT * 0.7}],
