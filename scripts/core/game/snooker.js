@@ -5,6 +5,16 @@
 
     snooker.init = function () {
         new snooker.Table().create(function (context) {
+            new snooker.Cue().create(context, {
+                x: 170,
+                y: snooker.Table.HEIGHT * 0.15
+            });
+
+            new snooker.Cue().create(context, {
+                x: 170,
+                y: snooker.Table.HEIGHT * 0.85
+            });
+
             onEachBall(function (type, position) {
                 new snooker.Ball(type).create(context, position);
             });
