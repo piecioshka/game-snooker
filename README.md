@@ -7,3 +7,7 @@
 [1]: http://www.w3.org/TR/2011/WD-html5-20110525/the-canvas-element.html
 [2]: http://underscorejs.org/
 [3]: http://pivotal.github.io/jasmine/
+
+## Features
+
+* scroll or use mouse wheel, to scale game area
