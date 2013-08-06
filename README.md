@@ -10,4 +10,4 @@
 
 ## Features
 
-* scroll or use mouse wheel, to scale game area
+* use mouse wheel, to scale game area
