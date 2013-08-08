@@ -5,8 +5,23 @@
     var snooker = (global.snooker = global.snooker || {});
     var utils = (global.utils = global.utils || {});
 
+    /**
+     * @see: http://webstuff.nfshost.com/anim-timing/Overview.html
+     */
+    global.requestAnimFrame = (function() {
+        return global.requestAnimationFrame    ||
+            global.webkitRequestAnimationFrame ||
+            global.mozRequestAnimationFrame    ||
+            global.oRequestAnimationFrame      ||
+            global.msRequestAnimationFrame     ||
+            function(/* function */ callback, /* DOMElement */ element) {
+                global.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
     function Game() {
         this.resourceLoader = null;
+        this.status = Game.LOADING;
     }
 
     /**
@@ -19,8 +34,8 @@
     Game.SMALLEST_SCALE = 1;
     Game.BIGGEST_SCALE = 3;
 
-    Game.power = 0;
-    Game.STRENGTH = 5;
+    Game.READY = 0;
+    Game.LOADING = 1;
 
     /**
      * Setup Game dimensions.
@@ -28,6 +43,11 @@
      */
     Game.WIDTH =  356.9 * Game.SCALE;
     Game.HEIGHT = 177.8 * Game.SCALE;
+
+    Game.power = 0;
+    Game.MIN_POWER = 0;
+    Game.MAX_POWER = 1000;
+    Game.STRENGTH = 1;
 
     Game.prototype.initialize = function () {
         this.loadResources(function () {
@@ -37,6 +57,8 @@
             if (!(/spec\.html$/).test(location.pathname)) {
                 snooker.draw();
             }
+
+            game.status = Game.READY;
         });
     };
 
@@ -67,17 +89,38 @@
     };
 
     Game.prototype.handleKeydown = function () {
-        if (snooker.READY === snooker.PAINTED) {
-            Game.power += Game.STRENGTH;
+        if (game.status === Game.READY) {
+            if (Game.power === Game.MIN_POWER) {
+                /**
+                 * First value.
+                 * @type {number}
+                 */
+                Game.power = Game.STRENGTH;
+            } else {
+                /**
+                 * Exponentially increase.
+                 * @type {number}
+                 */
+                Game.power += (Game.power / Game.STRENGTH) * Game.STRENGTH;
+            }
+
+            /**
+             * Limit to maximum power in game.
+             */
+            if (Game.power > Game.MAX_POWER) {
+                Game.power = Game.MAX_POWER;
+            }
         } else {
             Game.power = 0;
         }
     };
 
     Game.prototype.handleKeyup = function (evt) {
-        if (snooker.READY === snooker.PAINTED) {
+        if (game.status === Game.READY) {
             var first_ball = snooker.balls[0];
-            first_ball.move(evt.keyCode, Game.power);
+            if (first_ball.status === snooker.Ball.READY) {
+                first_ball.move(evt.keyCode, Game.power);
+            }
             Game.power = 0;
         }
     };

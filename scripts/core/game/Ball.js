@@ -38,7 +38,12 @@
             x: null,
             y: null
         };
+
+        this.status = snooker.Ball.READY;
     };
+
+    snooker.Ball.READY = 0;
+    snooker.Ball.MOVING = 1;
 
     /**
      * Setup Ball dimensions.
@@ -67,7 +72,6 @@
     };
 
     snooker.Ball.prototype.move = function (direction, power) {
-        // this.ctx.clearRect(this.position.x, this.position.y, snooker.Ball.RADIUS * 2, snooker.Ball.RADIUS * 2);
         snooker.draw();
 
         switch (direction) {
@@ -87,25 +91,42 @@
     };
 
     snooker.Ball.prototype.animate = function (direction, power) {
-        var ball = snooker.getBallByType(this.color);
+        var self = this;
+        var ball = snooker.getBallByColor(this.color);
         var limit = ball[direction] + power;
-        var interval = setInterval(function () {
+
+        global.requestAnimFrame(function () {
+            ball.status = snooker.Ball.MOVING;
+
+            /*
+            var l = {
+                limit: limit,
+                power: power
+            };
+            l[direction] = ball[direction];
+            console.log(l);
+            */
+
             if (power > 0) {
                 ball[direction]++;
                 if (ball[direction] >= limit) {
                     ball[direction] = limit;
-                    clearInterval(interval);
+                    ball.status = snooker.Ball.READY;
+                } else {
+                    self.animate(direction, --power);
                 }
             } else {
                 ball[direction]--;
                 if (ball[direction] <= limit) {
                     ball[direction] = limit;
-                    clearInterval(interval);
+                    ball.status = snooker.Ball.READY;
+                } else {
+                    self.animate(direction, ++power);
                 }
             }
 
             snooker.draw();
-        }, 10);
+        });
     };
 
 }(this));

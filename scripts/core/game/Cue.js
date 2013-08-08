@@ -17,8 +17,8 @@
     /**
      * @param {CanvasRenderingContext2D} ctx
      * @param {Object} position
-     * @param {Object} position.x
-     * @param {Object} position.y
+     * @param {number} position.x
+     * @param {number} position.y
      * @param {number} [angle] TODO: make rotation
      * @returns {Cue}
      */

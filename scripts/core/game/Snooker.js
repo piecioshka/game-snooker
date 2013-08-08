@@ -17,32 +17,25 @@
      */
     snooker.balls = [];
 
-    snooker.BEFORE_PAINTED = 0;
-    snooker.PAINTED = 1;
-
-    snooker.READY = snooker.BEFORE_PAINTED;
-
     snooker.draw = function () {
         var self = this;
-
-        snooker.READY = snooker.BEFORE_PAINTED;
 
         this.table = new snooker.Table();
         this.table.build();
 
         /*
-        new snooker.Cue().create(context, {
+        new snooker.Cue().create(this.table.ctx, {
             x: 170,
             y: snooker.Table.HEIGHT * 0.15
         });
 
-        new snooker.Cue().create(context, {
+        new snooker.Cue().create(this.table.ctx, {
             x: 170,
             y: snooker.Table.HEIGHT * 0.85
         });
         */
 
-        onEachBall(function (ball) {
+        _.each(snooker.MAP, function (ball) {
             var uiBall = new snooker.Ball(ball.name);
             uiBall.build(self.table.ctx, {
                 x: ball.x,
@@ -50,17 +43,7 @@
             });
             self.table.addBall(uiBall);
         });
-
-        snooker.READY = snooker.PAINTED;
     };
-
-    function onEachBall(callback) {
-        _.each(snooker.MAP, function (ball) {
-            if (_.isFunction(callback)) {
-                callback(ball);
-            }
-        });
-    }
 
     snooker.MAP = [
         { name: "white", x: snooker.Table.WIDTH * 0.225, y: snooker.Table.HEIGHT * 0.53 },
@@ -96,7 +79,7 @@
         { name: "black", x: snooker.Table.WIDTH * 0.84, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}
     ];
 
-    snooker.getBallByType = function (name) {
+    snooker.getBallByColor = function (name) {
         return _.findWhere(snooker.MAP, { name: name });
     }
 
