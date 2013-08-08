@@ -72,20 +72,40 @@
 
         switch (direction) {
             case Keys.LEFT:
-                this.position.x -= power;
+                this.animate("x", (-1) * power);
                 break;
             case Keys.UP:
-                this.position.y -= power;
+                this.animate("y", (-1) * power);
                 break;
             case Keys.RIGHT:
-                this.position.x += power;
+                this.animate("x", power);
                 break;
             case Keys.DOWN:
-                this.position.y += power;
+                this.animate("y", power);
                 break;
         }
+    };
 
-        this.draw();
+    snooker.Ball.prototype.animate = function (direction, power) {
+        var ball = snooker.getBallByType(this.color);
+        var limit = ball[direction] + power;
+        var interval = setInterval(function () {
+            if (power > 0) {
+                ball[direction]++;
+                if (ball[direction] >= limit) {
+                    ball[direction] = limit;
+                    clearInterval(interval);
+                }
+            } else {
+                ball[direction]--;
+                if (ball[direction] <= limit) {
+                    ball[direction] = limit;
+                    clearInterval(interval);
+                }
+            }
+
+            snooker.draw();
+        }, 10);
     };
 
 }(this));

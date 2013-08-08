@@ -46,10 +46,8 @@
         this.resourceLoader = new ResourceLoader();
         this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
 
-        var balls = _.keys(snooker.MAP);
-
-        _.each(balls, function (ball) {
-            self.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
+        _.each(snooker.MAP, function (ball) {
+            self.resourceLoader.addResource("ball-" + ball.name, "textures/balls/" + ball.name + ".png", ResourceType.IMAGE);
         });
 
         var checkLoadedResource = setInterval(function () {
@@ -71,6 +69,8 @@
     Game.prototype.handleKeydown = function () {
         if (snooker.READY === snooker.PAINTED) {
             Game.power += Game.STRENGTH;
+        } else {
+            Game.power = 0;
         }
     };
 
