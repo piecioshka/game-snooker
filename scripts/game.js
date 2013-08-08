@@ -1,61 +1,97 @@
 (function (global) {
     "use strict";
 
+    // imports
     var snooker = (global.snooker = global.snooker || {});
     var utils = (global.utils = global.utils || {});
 
-    function setScale(evt) {
-        /**
-         * No small, smallest version.
-         */
-        if (evt.wheelDelta < 0 && snooker.SCALE === setScale.SMALLEST_SCALE) {
-            return false;
-        }
-
-        /**
-         * No zoom, the biggest version.
-         */
-        if (evt.wheelDelta > 0 && snooker.SCALE === setScale.BIGGEST_SCALE) {
-            return false;
-        }
-
-        /**
-         * Change SCALE value.
-         * @type {number}
-         */
-        snooker.SCALE += 0.05 * (evt.wheelDelta / 10);
-
-        /**
-         * Secure for change SCALE not too small.
-         */
-        if (snooker.SCALE < setScale.SMALLEST_SCALE) {
-            snooker.SCALE = setScale.SMALLEST_SCALE;
-        }
-
-        /**
-         * Secure for change SCALE not too big.
-         */
-        if (snooker.SCALE > setScale.BIGGEST_SCALE) {
-            snooker.SCALE = setScale.BIGGEST_SCALE;
-        }
-
-        return true;
+    function Game() {
+        this.resourceLoader = null;
     }
 
-    setScale.SMALLEST_SCALE = 1;
-    setScale.BIGGEST_SCALE = 3;
+    /**
+     * Game scale value.
+     * Bigger number => bigger game board.
+     * @type {number}
+     */
+    Game.SCALE = 2;
 
-    utils.listener.add(window, "load", function () {
-        snooker.init();
-    });
+    Game.SMALLEST_SCALE = 1;
+    Game.BIGGEST_SCALE = 3;
 
-    utils.listener.add(document, "mousewheel", function (evt) {
-        if (setScale(evt)) {
-            snooker.init();
+    Game.power = 0;
+    Game.STRENGTH = 5;
+
+    /**
+     * Setup Game dimensions.
+     * @type {number}
+     */
+    Game.WIDTH =  356.9 * Game.SCALE;
+    Game.HEIGHT = 177.8 * Game.SCALE;
+
+    Game.prototype.initialize = function () {
+        this.loadResources(function () {
+            /**
+             * Don't draw game in spec.
+             */
+            if (!(/spec\.html$/).test(location.pathname)) {
+                snooker.draw();
+            }
+        });
+    };
+
+    Game.prototype.loadResources = function (callback) {
+        var self = this;
+
+        this.resourceLoader = new ResourceLoader();
+        this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
+
+        var balls = _.keys(snooker.MAP);
+
+        _.each(balls, function (ball) {
+            self.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
+        });
+
+        var checkLoadedResource = setInterval(function () {
+            var loadingStatus = self.resourceLoader.getPercentStatus();
+            console.log("Resource loading", loadingStatus + "%" );
+
+            if (self.resourceLoader.isAllResourcesLoaded()) {
+                clearInterval(checkLoadedResource);
+
+                if (_.isFunction(callback)) {
+                    callback();
+                }
+            }
+        }, 28);
+
+        this.resourceLoader.preloadingResources();
+    };
+
+    Game.prototype.handleKeydown = function () {
+        if (snooker.READY === snooker.PAINTED) {
+            Game.power += Game.STRENGTH;
         }
+    };
 
-        evt.preventDefault();
-        evt.stopPropagation();
-    });
+    Game.prototype.handleKeyup = function (evt) {
+        if (snooker.READY === snooker.PAINTED) {
+            var first_ball = snooker.balls[0];
+            first_ball.move(evt.keyCode, Game.power);
+            Game.power = 0;
+        }
+    };
+
+    // exports
+    global.Game = Game;
+    var game = global.game = new Game();
+
+    // support events
+    utils.listener.add(window, "load", game.initialize.bind(game));
+    utils.listener.add(window, "keydown", game.handleKeydown.bind(game));
+    utils.listener.add(window, "keyup", game.handleKeyup.bind(game));
+
+    // disabled events
+    utils.listener.add(document, "mousewheel", utils.event.disable);
 
 }(this));

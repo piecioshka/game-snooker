@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    // imports
     var snooker = (global.snooker = global.snooker || {});
 
     /**
@@ -23,7 +24,6 @@
      */
     snooker.Cue.prototype.create = function (ctx, position, angle) {
         this.ctx = ctx;
-
         this.ctx.save();
 
         var x = position.x || 100;
@@ -46,7 +46,6 @@
         this.ctx.strokeRect(x + 410, y, 4, snooker.Cue.HEIGHT);
 
         this.ctx.restore();
-
         return this;
     };
 

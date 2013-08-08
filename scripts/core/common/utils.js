@@ -1,8 +1,10 @@
 (function (global) {
     "use strict";
 
+    // imports
     var utils = (global.utils = global.utils || {});
     var listener = (utils.listener = utils.listener || {});
+    var event = (utils.event = utils.event || {});
 
     /**
      * @param {Object} obj
@@ -17,6 +19,11 @@
         } else {
             obj["on" + name] = callback;
         }
+    };
+
+    event.disable = function (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
     };
 
 }(this));

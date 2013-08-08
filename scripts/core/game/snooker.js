@@ -1,115 +1,100 @@
 (function (global) {
     "use strict";
 
+    // imports
+    var _ = global._;
     var snooker = (global.snooker = global.snooker || {});
 
     /**
-     * Game scale.
-     * @type {number}
+     * Table of game, in snooker is all playing area.
+     * @type {snooker.Table}
      */
-    snooker.SCALE = 1;
+    snooker.table = null;
 
     /**
-     * Game area.
-     * @type {null|Object}
+     * List of balls.
+     * @type {Array.<snooker.Ball>}
      */
-    snooker.area = null;
+    snooker.balls = [];
 
-    /**
-     * Game dimensions.
-     * @type {null|number}
-     */
-    snooker.GAME_WIDTH = null;
-    snooker.GAME_HEIGHT = null;
+    snooker.BEFORE_PAINTED = 0;
+    snooker.PAINTED = 1;
 
-    snooker.init = function () {
-        /**
-         * Setup Table dimensions.
-         * @type {number}
-         */
-        snooker.Table.WIDTH = 410.5 * snooker.SCALE;
-        snooker.Table.HEIGHT = 229.5 * snooker.SCALE;
+    snooker.READY = snooker.BEFORE_PAINTED;
 
-        /**
-         * Setup Game dimensions.
-         * @type {number}
-         */
-        snooker.GAME_WIDTH =  356.9 * snooker.SCALE;
-        snooker.GAME_HEIGHT = 177.8 * snooker.SCALE;
+    snooker.draw = function () {
+        var self = this;
 
-        /**
-         * Setup Ball dimensions.
-         * @type {number}
-         */
-        snooker.Ball.RADIUS = 5.25 * snooker.SCALE;
+        snooker.READY = snooker.BEFORE_PAINTED;
 
-        this.area = new snooker.Table();
-        this.area.create(function (context) {
-            /*
-            new snooker.Cue().create(context, {
-                x: 170,
-                y: snooker.Table.HEIGHT * 0.15
-            });
+        this.table = new snooker.Table();
+        this.table.build();
 
-            new snooker.Cue().create(context, {
-                x: 170,
-                y: snooker.Table.HEIGHT * 0.85
-            });
-            */
-
-            onEachBall(function (type, position) {
-                var ball = new snooker.Ball(type);
-                ball.create(context, position);
-            });
+        /*
+        new snooker.Cue().create(context, {
+            x: 170,
+            y: snooker.Table.HEIGHT * 0.15
         });
+
+        new snooker.Cue().create(context, {
+            x: 170,
+            y: snooker.Table.HEIGHT * 0.85
+        });
+        */
+
+        onEachBall(function (type, position) {
+            var ball = new snooker.Ball(type);
+            ball.build(self.table.ctx, position);
+            self.table.addBall(ball);
+        });
+
+        snooker.READY = snooker.PAINTED;
     };
 
     function onEachBall(callback) {
-        _.each(snooker.getMap(), function (balls, type) {
+        _.each(snooker.MAP, function (balls, type) {
             _.each(balls, function (position) {
-                if (typeof callback === "function") {
+                if (_.isFunction(callback)) {
                     callback(type, position);
                 }
             });
         });
     }
 
-    snooker.getMap = function () {
-        return {
-            "WHITE": [{ x: snooker.Table.WIDTH * 0.225, y: snooker.Table.HEIGHT * 0.53 }],
-            "GREEN": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.35 }],
-            "BROWN": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}],
-            "YELLOW": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.6 }],
-            "BLUE": [{ x: snooker.Table.WIDTH / 2 - snooker.Ball.RADIUS, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS }],
-            "PINK": [{ x: snooker.Table.WIDTH * 0.63, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}],
-            "RED": [
-                // 1
-                { x: snooker.Table.WIDTH * 0.67, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
+    snooker.MAP = {
+        "white": [{ x: snooker.Table.WIDTH * 0.225, y: snooker.Table.HEIGHT * 0.53 }],
+        "green": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.35 }],
+        "brown": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}],
+        "yellow": [{ x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.6 }],
+        "blue": [{ x: snooker.Table.WIDTH / 2 - snooker.Ball.RADIUS, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS }],
+        "pink": [{ x: snooker.Table.WIDTH * 0.63, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}],
+        "red": [
+            // 1
+            { x: snooker.Table.WIDTH * 0.67, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
 
-                // 2
-                { x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
+            // 2
+            { x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
 
-                // 3
-                { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
+            // 3
+            { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
 
-                // 4
-                { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
+            // 4
+            { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
 
-                // 5
-                { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-                { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS }
-            ],
-            "BLACk": [{ x: snooker.Table.WIDTH * 0.84, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}]
-        };
+            // 5
+            { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
+            { x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS }
+        ],
+        "black": [{ x: snooker.Table.WIDTH * 0.84, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}]
     };
 
 }(this));

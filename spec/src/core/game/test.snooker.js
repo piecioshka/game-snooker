@@ -3,9 +3,9 @@ describe("Snooker Game", function() {
         var table;
 
         beforeEach(function () {
-            spyOn(snooker, "init");
+            spyOn(snooker, "initialize").andCallThrough();
 
-            snooker.init();
+            snooker.initialize();
         });
 
         xit("should create table", function () {

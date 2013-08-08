@@ -1,25 +1,38 @@
 (function (global) {
     "use strict";
 
+    // imports
     var _ = global._;
     var snooker = (global.snooker = global.snooker || {});
-    var utils = (global.utils = global.utils || {});
 
     /**
      * @constructor
      */
     snooker.Table = function () {
+        /**
+         * @type {HTMLElement}
+         */
         this.canvas = null;
+
+        /**
+         * @type {CanvasRenderingContext2D}
+         */
         this.ctx = null;
+
+        /**
+         * @type {Image}
+         */
+        this.img = null;
     };
 
-    snooker.Table.WIDTH = null;
-    snooker.Table.HEIGHT = null;
-
     /**
-     * @param {Function} callback
+     * Setup Table dimensions.
+     * @type {number}
      */
-    snooker.Table.prototype.create = function (callback) {
+    snooker.Table.WIDTH = 410.5 * Game.SCALE;
+    snooker.Table.HEIGHT = 229.5 * Game.SCALE;
+
+    snooker.Table.prototype.build = function () {
         this.canvas = document.createElement("canvas");
         this.canvas.setAttribute("width", snooker.Table.WIDTH + "px");
         this.canvas.setAttribute("height", snooker.Table.HEIGHT + "px");
@@ -33,9 +46,8 @@
         });
 
         this.ctx = this.canvas.getContext("2d");
-        this._addTexture(callback);
 
-        return this;
+        this.draw();
     };
 
     /**
@@ -49,22 +61,18 @@
         body.appendChild(this.canvas);
     };
 
+    snooker.Table.prototype.draw = function () {
+        var resource = game.resourceLoader.getResource("table");
+        var texture = resource.img;
+        this.ctx.drawImage(texture, 0, 0, snooker.Table.WIDTH, snooker.Table.HEIGHT);
+    };
+
     /**
-     * @param {Function} callback
-     * @private
+     * Add balls on table and balls list.
+     * @param {snooker.Ball} ball
      */
-    snooker.Table.prototype._addTexture = function (callback) {
-        var self = this;
-        var img = new Image();
-        img.src = "textures/table.png";
-
-        utils.listener.add(img, "load", function () {
-            self.ctx.drawImage(img, 0, 0, snooker.Table.WIDTH, snooker.Table.HEIGHT);
-
-            if (typeof callback === "function") {
-                callback(self.ctx);
-            }
-        });
+    snooker.Table.prototype.addBall = function (ball) {
+        snooker.balls.push(ball);
     };
 
 }(this));
