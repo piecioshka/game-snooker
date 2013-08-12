@@ -4,6 +4,7 @@
     // imports
     var snooker = (global.snooker = global.snooker || {});
     var utils = (global.utils = global.utils || {});
+    var Keys = (global.Keys = global.Keys || {});
 
     /**
      * @see: http://webstuff.nfshost.com/anim-timing/Overview.html
@@ -22,6 +23,7 @@
     function Game() {
         this.resourceLoader = null;
         this.status = Game.LOADING;
+        this.currentBall = null;
     }
 
     /**
@@ -44,12 +46,13 @@
     Game.WIDTH =  356.9 * Game.SCALE;
     Game.HEIGHT = 177.8 * Game.SCALE;
 
-    Game.power = 0;
+    Game.velocity = 0;
     Game.MIN_POWER = 0;
-    Game.MAX_POWER = 1000;
-    Game.STRENGTH = 1;
+    Game.MAX_POWER = 40; // 100
+    Game.STRENGTH = 1; // 3
 
     Game.prototype.initialize = function () {
+        var self = this;
         this.loadResources(function () {
             /**
              * Don't draw game in spec.
@@ -59,6 +62,8 @@
             }
 
             game.status = Game.READY;
+
+            self.currentBall = snooker.balls[0];
         });
     };
 
@@ -72,9 +77,11 @@
             self.resourceLoader.addResource("ball-" + ball.name, "textures/balls/" + ball.name + ".png", ResourceType.IMAGE);
         });
 
+        this.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
+
         var checkLoadedResource = setInterval(function () {
             var loadingStatus = self.resourceLoader.getPercentStatus();
-            console.log("Resource loading", loadingStatus + "%" );
+            // console.log("Resource loading", loadingStatus + "%" );
 
             if (self.resourceLoader.isAllResourcesLoaded()) {
                 clearInterval(checkLoadedResource);
@@ -83,45 +90,50 @@
                     callback();
                 }
             }
-        }, 28);
+        }, 10);
 
         this.resourceLoader.preloadingResources();
     };
 
-    Game.prototype.handleKeydown = function () {
-        if (game.status === Game.READY) {
-            if (Game.power === Game.MIN_POWER) {
-                /**
-                 * First value.
-                 * @type {number}
-                 */
-                Game.power = Game.STRENGTH;
-            } else {
-                /**
-                 * Exponentially increase.
-                 * @type {number}
-                 */
-                Game.power += (Game.power / Game.STRENGTH) * Game.STRENGTH;
-            }
+    Game.prototype.handleKeydown = function (evt) {
+        if (_.contains(Keys, evt.keyCode)) {
+            if (game.status === Game.READY) {
+                if (Game.velocity === Game.MIN_POWER) {
+                    /**
+                     * First value.
+                     * @type {number}
+                     */
+                    Game.velocity = Game.STRENGTH;
+                } else {
+                    /**
+                     * Exponentially increase.
+                     * @type {number}
+                     */
+                    // Game.velocity += (Game.velocity / Game.STRENGTH) * Game.STRENGTH;
+                    Game.velocity += Game.STRENGTH;
+                }
 
-            /**
-             * Limit to maximum power in game.
-             */
-            if (Game.power > Game.MAX_POWER) {
-                Game.power = Game.MAX_POWER;
+                /**
+                 * Limit to maximum power in game.
+                 */
+                if (Game.velocity > Game.MAX_POWER) {
+                    Game.velocity = Game.MAX_POWER;
+                }
+
+                var powerView = +(Game.velocity * 100 / Game.MAX_POWER);
+                this.currentBall.updatePower(powerView);
+            } else {
+                Game.velocity = 0;
             }
-        } else {
-            Game.power = 0;
         }
     };
 
     Game.prototype.handleKeyup = function (evt) {
         if (game.status === Game.READY) {
-            var first_ball = snooker.balls[0];
-            if (first_ball.status === snooker.Ball.READY) {
-                first_ball.move(evt.keyCode, Game.power);
+            if (this.currentBall.status === snooker.Ball.READY) {
+                this.currentBall.move(evt.keyCode, Game.velocity);
             }
-            Game.power = 0;
+            Game.velocity = 0;
         }
     };
 

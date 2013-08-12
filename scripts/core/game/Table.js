@@ -10,16 +10,19 @@
      */
     snooker.Table = function () {
         /**
+         * Reference to global object.
          * @type {HTMLElement}
          */
         this.canvas = null;
 
         /**
+         * Reference to global object.
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = null;
 
         /**
+         * Object with texture.
          * @type {Image}
          */
         this.img = null;
@@ -31,6 +34,11 @@
      */
     snooker.Table.WIDTH = 410.5 * Game.SCALE;
     snooker.Table.HEIGHT = 229.5 * Game.SCALE;
+
+    snooker.Table.LEFT_BOARD = (snooker.Table.WIDTH - Game.WIDTH)/2;
+    snooker.Table.RIGHT_BOARD = snooker.Table.LEFT_BOARD + Game.WIDTH;
+    snooker.Table.TOP_BOARD = (snooker.Table.HEIGHT - Game.HEIGHT)/2;
+    snooker.Table.BOTTOM_BOARD = snooker.Table.TOP_BOARD + Game.HEIGHT;
 
     snooker.Table.prototype.build = function () {
         this.canvas = document.createElement("canvas");
