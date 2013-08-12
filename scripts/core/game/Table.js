@@ -55,9 +55,18 @@
      */
     snooker.Table.prototype._render = function () {
         var body = document.body;
-        _.each(body.childNodes, function (node) {
-            body.removeChild(node);
-        });
+        var canvas = document.getElementsByTagName("canvas");
+
+        /**
+         * If exists <canvas> tag delete this.
+         */
+        if (canvas.length) {
+            canvas[0].parentNode.removeChild(canvas[0]);
+        }
+
+        /**
+         * Append <canvas> to <body> tag.
+         */
         body.appendChild(this.canvas);
     };
 
