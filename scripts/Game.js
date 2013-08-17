@@ -3,8 +3,6 @@
 
     // imports
     var snooker = (global.snooker = global.snooker || {});
-    var utils = (global.utils = global.utils || {});
-    var Keys = (global.Keys = global.Keys || {});
 
     /**
      * @see: http://webstuff.nfshost.com/anim-timing/Overview.html
@@ -20,11 +18,11 @@
             };
     })();
 
-    function Game() {
+    var Game = global.Game = function () {
         this.resourceLoader = null;
         this.status = Game.LOADING;
         this.currentBall = null;
-    }
+    };
 
     /**
      * Game scale value.
@@ -51,18 +49,14 @@
     Game.MAX_POWER = 40; // 100
     Game.STRENGTH = 1; // 3
 
-    Game.prototype.initialize = function () {
+    Game.prototype.initialize = function (callback) {
         var self = this;
         this.loadResources(function () {
-            /**
-             * Don't draw game in spec.
-             */
-            if (!(/spec\.html$/).test(location.pathname)) {
-                snooker.draw();
+            if (_.isFunction(callback)) {
+                callback();
             }
 
-            game.status = Game.READY;
-
+            self.status = Game.READY;
             self.currentBall = snooker.balls[0];
         });
     };
@@ -94,59 +88,5 @@
 
         this.resourceLoader.preloadingResources();
     };
-
-    Game.prototype.handleKeydown = function (evt) {
-        if (_.contains(Keys, evt.keyCode)) {
-            if (game.status === Game.READY) {
-                if (Game.velocity === Game.MIN_POWER) {
-                    /**
-                     * First value.
-                     * @type {number}
-                     */
-                    Game.velocity = Game.STRENGTH;
-                } else {
-                    /**
-                     * Exponentially increase.
-                     * @type {number}
-                     */
-                    // Game.velocity += (Game.velocity / Game.STRENGTH) * Game.STRENGTH;
-                    Game.velocity += Game.STRENGTH;
-                }
-
-                /**
-                 * Limit to maximum power in game.
-                 */
-                if (Game.velocity > Game.MAX_POWER) {
-                    Game.velocity = Game.MAX_POWER;
-                }
-
-                var powerView = +(Game.velocity * 100 / Game.MAX_POWER);
-                this.currentBall.updatePower(powerView);
-            } else {
-                Game.velocity = 0;
-            }
-        }
-    };
-
-    Game.prototype.handleKeyup = function (evt) {
-        if (game.status === Game.READY) {
-            if (this.currentBall.status === snooker.Ball.READY) {
-                this.currentBall.move(evt.keyCode, Game.velocity);
-            }
-            Game.velocity = 0;
-        }
-    };
-
-    // exports
-    global.Game = Game;
-    var game = global.game = new Game();
-
-    // support events
-    utils.listener.add(window, "load", game.initialize.bind(game));
-    utils.listener.add(window, "keydown", game.handleKeydown.bind(game));
-    utils.listener.add(window, "keyup", game.handleKeyup.bind(game));
-
-    // disabled events
-    utils.listener.add(document, "mousewheel", utils.event.disable);
 
 }(this));

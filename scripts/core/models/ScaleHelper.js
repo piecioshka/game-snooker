@@ -4,7 +4,6 @@
     // imports
     var _ = global._;
     var Game = (global.Game = global.Game || {});
-    var utils = (global.utils = global.utils || {});
 
     function ScaleHelper() {
 
@@ -54,8 +53,6 @@
         if (this.canScale(evt)) {
             this.setScale(evt);
         }
-
-        utils.event.disable();
     };
 
     // exports

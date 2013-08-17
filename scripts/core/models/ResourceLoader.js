@@ -3,7 +3,6 @@
 
     // imports
     var _ = global._;
-    var utils = (global.utils = global.utils || {});
 
     function ResourceLoader() {
         this.resourcesList = {};
@@ -26,7 +25,7 @@
         var img = new Image();
         img.src = url;
 
-        utils.listener.add(img, "load", function () {
+        Events.bind(img, "load", function () {
             self.loadedResources++;
         });
 

@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="styles/default.css" type="text/css" />
 </head>
 <body>
-	<script type="text/javascript" src="scripts/lib/underscore-min.js"></script>
+	<script type="text/javascript" src="scripts/lib/underscore/underscore.js"></script>
+	<script type="text/javascript" src="scripts/lib/events/events.js"></script>
 
-	<script type="text/javascript" src="scripts/core/common/keys.js"></script>
-	<script type="text/javascript" src="scripts/core/common/utils.js"></script>
+	<script type="text/javascript" src="scripts/core/common/Keys.js"></script>
 
     <script type="text/javascript" src="scripts/Game.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Table.js"></script>
@@ -18,6 +18,29 @@
 	<script type="text/javascript" src="scripts/core/game/Cue.js"></script>
     <script type="text/javascript" src="scripts/core/game/Snooker.js"></script>
 	<script type="text/javascript" src="scripts/core/models/ResourceLoader.js"></script>
+	<script type="text/javascript" src="scripts/core/models/KeyHandler.js"></script>
     <script type="text/javascript" src="scripts/core/models/ScaleHelper.js"></script>
+    <script>
+        (function (global) {
+            'use strict';
+
+            // imports
+            var snooker = global.snooker;
+            var KeyHandler = global.KeyHandler;
+
+            Events.ready(function () {
+                var game = global.game = new Game();
+
+                game.initialize.call(game, _.bind(snooker.draw, snooker));
+
+                // support events
+                Events.bind(window, "keydown", _.bind(KeyHandler.handleKeyDown, game));
+                Events.bind(window, "keyup", _.bind(KeyHandler.handleKeyUp, game));
+
+                // disabled events
+                // Events.unbind(window, "mousewheel");
+            });
+        }(this));
+    </script>
 </body>
 </html>
