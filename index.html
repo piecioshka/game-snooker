@@ -25,6 +25,7 @@
     <script type="text/javascript" src="scripts/Game.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Table.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Ball.js"></script>
+	<script type="text/javascript" src="scripts/core/game/PowerBar.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Cue.js"></script>
     <script type="text/javascript" src="scripts/core/game/Snooker.js"></script>
 	<script type="text/javascript" src="scripts/core/models/ResourceLoader.js"></script>
@@ -41,11 +42,27 @@
             Events.ready(function () {
                 var game = global.game = new Game();
 
-                game.initialize.call(game, _.bind(snooker.draw, snooker));
+                game.initialize.call(game, function () {
+                    snooker.drawTable();
+                    snooker.drawBalls();
+                    // snooker.drawCues();
 
-                // support events
-                Events.bind(window, "keydown", _.bind(KeyHandler.handleKeyDown, game));
-                Events.bind(window, "keyup", _.bind(KeyHandler.handleKeyUp, game));
+                    (function (can) {
+                        var interval;
+                        // support events
+                        Events.bind(can, "mousedown", function (e) {
+                            interval = setInterval(function () {
+                                KeyHandler.mouseDown.call(game, e);
+                            }, 50);
+                        });
+                        Events.bind(can, "mouseup", function (e) {
+                            clearInterval(interval);
+                            KeyHandler.mouseUp.call(game, e);
+                        });
+                    }(snooker.table.canvas));
+
+                });
+
 
                 // disabled events
                 // Events.unbind(window, "mousewheel");

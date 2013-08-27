@@ -45,6 +45,8 @@
     Game.HEIGHT = 177.8 * Game.SCALE;
 
     Game.velocity = 0;
+    Game.direction = -1;
+
     Game.MIN_POWER = 0;
     Game.MAX_POWER = 40; // 100
     Game.STRENGTH = 1; // 3

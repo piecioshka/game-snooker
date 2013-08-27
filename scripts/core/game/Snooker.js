@@ -17,13 +17,13 @@
      */
     snooker.balls = [];
 
-    snooker.draw = function () {
-        var self = this;
-
+    snooker.drawTable = function () {
         this.table = new snooker.Table();
         this.table.build();
+        this.table.draw();
+    };
 
-        /*
+    snooker.drawCues = function () {
         new snooker.Cue().create(this.table.ctx, {
             x: 170,
             y: snooker.Table.HEIGHT * 0.15
@@ -33,7 +33,10 @@
             x: 170,
             y: snooker.Table.HEIGHT * 0.85
         });
-        */
+    };
+
+    snooker.drawBalls = function () {
+        var self = this;
 
         _.each(snooker.MAP, function (ball) {
             var uiBall = new snooker.Ball(ball.name);
