@@ -27,13 +27,16 @@
             this.currentBall.updatePower(powerView);
         },
 
-        mouseUp: function () {
+        mouseUp: function (e) {
             // If current ball in during animation do nothing.
             if (this.currentBall.status !== snooker.Ball.READY) {
                 return;
             }
 
-            this.currentBall.move(Game.direction, Game.velocity);
+            this.currentBall.move({
+                x: (this.currentBall.position.x - e.layerX) / 100,
+                y: (this.currentBall.position.y - e.layerY) /100
+            }, Game.velocity);
             Game.velocity = 0;
         }
     };

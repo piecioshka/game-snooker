@@ -44,12 +44,11 @@
     Game.WIDTH =  356.9 * Game.SCALE;
     Game.HEIGHT = 177.8 * Game.SCALE;
 
-    Game.velocity = 0;
-    Game.direction = -1;
-
     Game.MIN_POWER = 0;
     Game.MAX_POWER = 40; // 100
-    Game.STRENGTH = 1; // 3
+    Game.STRENGTH = 3;
+
+    Game.velocity = 0;
 
     Game.prototype.initialize = function (callback) {
         var self = this;
@@ -77,7 +76,7 @@
 
         var checkLoadedResource = setInterval(function () {
             var loadingStatus = self.resourceLoader.getPercentStatus();
-            // console.log("Resource loading", loadingStatus + "%" );
+            // Events.log("Resource loading", loadingStatus + "%" );
 
             if (self.resourceLoader.isAllResourcesLoaded()) {
                 clearInterval(checkLoadedResource);

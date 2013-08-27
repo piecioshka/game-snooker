@@ -93,9 +93,9 @@
         draw: function () {
             this.ctx.drawImage(this.texture, this.position.x, this.position.y, snooker.Ball.RADIUS * 2, snooker.Ball.RADIUS * 2);
         },
-        move: function (direction, power) {
+        move: function (cursorPosition, power) {
             snooker.drawBalls();
-            this.animate("x", direction, power);
+            this.animate(cursorPosition, power);
         },
         _isCollision: function (ball) {
             var pos = ball.position;
@@ -104,52 +104,63 @@
     
             if (x < snooker.Table.LEFT_BOARD) {
                 ball.position.x = snooker.Table.LEFT_BOARD;
-                // console.log('collision with *left* board');
-                return true;
-            } else if (x + (snooker.Ball.RADIUS * 2) > snooker.Table.RIGHT_BOARD) {
-                ball.position.x = snooker.Table.RIGHT_BOARD - (snooker.Ball.RADIUS * 2);
-                // console.log('collision with *right* board');
-                return true;
+                // Events.log('collision with *left* board', ball.position);
+                return 1;
             } else if (y < snooker.Table.TOP_BOARD) {
                 ball.position.y = snooker.Table.TOP_BOARD;
-                // console.log('collision with *top* board');
-                return true;
+                // Events.log('collision with *top* board', ball.position);
+                return 2;
+            } else if (x + (snooker.Ball.RADIUS * 2) > snooker.Table.RIGHT_BOARD) {
+                ball.position.x = snooker.Table.RIGHT_BOARD - (snooker.Ball.RADIUS * 2);
+                // Events.log('collision with *right* board', ball.position);
+                return 3;
             } else if (y + (snooker.Ball.RADIUS * 2) > snooker.Table.BOTTOM_BOARD) {
                 ball.position.y = snooker.Table.BOTTOM_BOARD - (snooker.Ball.RADIUS * 2);
-                // console.log('collision with *bottom* board');
-                return true;
+                // Events.log('collision with *bottom* board', ball.position);
+                return 4;
             }
     
-            return false;
+            return 0;
         },
         _update: function (ball) {
             var pos = this.position;
             ball.x = pos.x;
             ball.y = pos.y;
         },
-        animate: function (axis, direction, velocity) {
+        animate: function (cursorDelta, velocity) {
             var self = this;
             var ball = snooker.getBallByColor(this.color);
     
             this.status = snooker.Ball.MOVING;
     
             function loop() {
-                self.velocity[axis] = direction * velocity;
-                self.position[axis] += self.velocity[axis];
-    
-                if (Math.abs(self.velocity[axis]) <= 0.2) {
+                self.velocity.x = cursorDelta.x * velocity;
+                self.position.x += self.velocity.x;
+
+                self.velocity.y = cursorDelta.y * velocity;
+                self.position.y += self.velocity.y;
+
+                if (
+                    Math.abs(self.velocity.x) <= 0.1 &&
+                    Math.abs(self.velocity.y) <= 0.1
+                ) {
                     self.status = snooker.Ball.READY;
                     return;
                 }
-    
+
+                var direction = self._isCollision(self);
+
                 // If collision chane direction.
-                if (self._isCollision(self)) {
-                    direction *= -1;
+                switch (direction) {
+                    case 1: cursorDelta.x *= -1; break; // left
+                    case 2: cursorDelta.y *= -1; break; // top
+                    case 3: cursorDelta.x *= -1; break; // right
+                    case 4: cursorDelta.y *= -1; break; // down
                 }
-    
-                // Update positions.
+
+                // Update positions
                 self._update.call(self, ball);
-    
+
                 // Clear table
                 snooker.table.draw();
     
