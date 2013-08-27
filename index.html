@@ -50,9 +50,9 @@
                     (function (can) {
                         var interval;
                         // support events
-                        Events.bind(can, "mousedown", function (e) {
+                        Events.bind(can, "mousedown", function () {
                             interval = setInterval(function () {
-                                KeyHandler.mouseDown.call(game, e);
+                                KeyHandler.mouseDown.call(game);
                             }, 50);
                         });
                         Events.bind(can, "mouseup", function (e) {
@@ -60,12 +60,7 @@
                             KeyHandler.mouseUp.call(game, e);
                         });
                     }(snooker.table.canvas));
-
                 });
-
-
-                // disabled events
-                // Events.unbind(window, "mousewheel");
             });
         }(this));
     </script>

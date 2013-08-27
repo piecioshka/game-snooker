@@ -10,7 +10,7 @@
     /**
      * @param {string} color
      * @class
-     * @this {snooker.Ball}
+     * @this snooker.Ball
      * @constructor
      */
     snooker.Ball = function (color) {
@@ -31,7 +31,7 @@
         this.color = color.toLowerCase();
 
         /**
-         * Object with texture.
+         * Texture.
          * @type {Image}
          */
         this.texture = null;
@@ -91,10 +91,14 @@
             this.draw();
         },
         draw: function () {
-            this.ctx.drawImage(this.texture, this.position.x, this.position.y, snooker.Ball.RADIUS * 2, snooker.Ball.RADIUS * 2);
+            var ballDiameter = snooker.Ball.RADIUS * 2;
+            var pos = this.position;
+            this.ctx.drawImage(this.texture, pos.x, pos.y, ballDiameter, ballDiameter);
         },
         move: function (cursorPosition, power) {
+            // Redraw all balls
             snooker.drawBalls();
+            // Animate current selected ball
             this.animate(cursorPosition, power);
         },
         _isCollision: function (ball) {
@@ -134,11 +138,8 @@
             this.status = snooker.Ball.MOVING;
     
             function loop() {
-                self.velocity.x = cursorDelta.x * velocity;
-                self.position.x += self.velocity.x;
-
-                self.velocity.y = cursorDelta.y * velocity;
-                self.position.y += self.velocity.y;
+                self.position.x += (self.velocity.x = cursorDelta.x * velocity);
+                self.position.y += (self.velocity.y = cursorDelta.y * velocity);
 
                 if (
                     Math.abs(self.velocity.x) <= 0.1 &&
@@ -150,7 +151,7 @@
 
                 var direction = self._isCollision(self);
 
-                // If collision chane direction.
+                // If collision chane direction
                 switch (direction) {
                     case 1: cursorDelta.x *= -1; break; // left
                     case 2: cursorDelta.y *= -1; break; // top
@@ -164,7 +165,7 @@
                 // Clear table
                 snooker.table.draw();
     
-                // Redraw table & each item on table;
+                // Redraw table & each item on table
                 snooker.drawBalls();
     
                 /**

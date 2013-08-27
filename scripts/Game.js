@@ -46,48 +46,49 @@
 
     Game.MIN_POWER = 0;
     Game.MAX_POWER = 40; // 100
-    Game.STRENGTH = 3;
+    Game.STRENGTH = 1;
 
     Game.velocity = 0;
 
-    Game.prototype.initialize = function (callback) {
-        var self = this;
-        this.loadResources(function () {
-            if (_.isFunction(callback)) {
-                callback();
-            }
-
-            self.status = Game.READY;
-            self.currentBall = snooker.balls[0];
-        });
-    };
-
-    Game.prototype.loadResources = function (callback) {
-        var self = this;
-
-        this.resourceLoader = new ResourceLoader();
-        this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
-
-        _.each(snooker.MAP, function (ball) {
-            self.resourceLoader.addResource("ball-" + ball.name, "textures/balls/" + ball.name + ".png", ResourceType.IMAGE);
-        });
-
-        this.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
-
-        var checkLoadedResource = setInterval(function () {
-            var loadingStatus = self.resourceLoader.getPercentStatus();
-            // Events.log("Resource loading", loadingStatus + "%" );
-
-            if (self.resourceLoader.isAllResourcesLoaded()) {
-                clearInterval(checkLoadedResource);
-
+    Game.prototype = {
+        initialize: function (callback) {
+            var self = this;
+            this.loadResources(function () {
                 if (_.isFunction(callback)) {
                     callback();
                 }
-            }
-        }, 10);
 
-        this.resourceLoader.preloadingResources();
+                self.status = Game.READY;
+                self.currentBall = snooker.balls[0];
+            });
+        },
+        loadResources: function (callback) {
+            var self = this;
+
+            this.resourceLoader = new ResourceLoader();
+            this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
+
+            _.each(snooker.MAP, function (ball) {
+                self.resourceLoader.addResource("ball-" + ball.name, "textures/balls/" + ball.name + ".png", ResourceType.IMAGE);
+            });
+
+            this.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
+
+            var checkLoadedResource = setInterval(function () {
+                var loadingStatus = self.resourceLoader.getPercentStatus();
+                // Events.log("Resource loading", loadingStatus + "%" );
+
+                if (self.resourceLoader.isAllResourcesLoaded()) {
+                    clearInterval(checkLoadedResource);
+
+                    if (_.isFunction(callback)) {
+                        callback();
+                    }
+                }
+            }, 10);
+
+            this.resourceLoader.preLoadingResources();
+        }
     };
 
 }(this));

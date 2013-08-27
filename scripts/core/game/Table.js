@@ -10,7 +10,7 @@
     /**
      * @class
      * @constructor
-     * @this {snooker.Table}
+     * @this snooker.Table
      */
     snooker.Table = function () {
         /**
@@ -27,9 +27,11 @@
 
         /**
          * Texture.
-         * @type {null}
+         * @type {Image}
          */
         this.texture = null;
+
+        this.initialize();
     };
 
     /**
@@ -45,6 +47,10 @@
     snooker.Table.BOTTOM_BOARD = snooker.Table.TOP_BOARD + Game.HEIGHT;
 
     snooker.Table.prototype = {
+        initialize: function () {
+            var resource = game.resourceLoader.getResource("table");
+            this.texture = resource.img;
+        },
         build: function () {
             this.canvas = document.createElement("canvas");
             this.canvas.setAttribute("width", snooker.Table.WIDTH + "px");
@@ -75,9 +81,6 @@
              * Append <canvas> to <body> tag.
              */
             body.appendChild(this.canvas);
-
-            var resource = game.resourceLoader.getResource("table");
-            this.texture = resource.img;
         },
         draw: function () {
             this.ctx.drawImage(this.texture, 0, 0, snooker.Table.WIDTH, snooker.Table.HEIGHT);

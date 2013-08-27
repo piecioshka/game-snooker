@@ -5,7 +5,7 @@
     var snooker = (global.snooker = global.snooker || {});
     var Game = (global.Game = global.Game || {});
 
-    global.KeyHandler = {
+    var KeyHandler = {
         mouseDown: function () {
             // If current ball in during animation do nothing.
             if (this.currentBall.status !== snooker.Ball.READY) {
@@ -37,8 +37,12 @@
                 x: (this.currentBall.position.x - e.layerX) / 100,
                 y: (this.currentBall.position.y - e.layerY) /100
             }, Game.velocity);
+
             Game.velocity = 0;
         }
     };
+
+    // exports
+    global.KeyHandler = KeyHandler;
 
 }(this));

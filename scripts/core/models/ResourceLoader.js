@@ -32,7 +32,7 @@
         return img;
     };
 
-    ResourceLoader.prototype.preloadingResources = function () {
+    ResourceLoader.prototype.preLoadingResources = function () {
         var self = this;
         _.each(this.resourcesList, function (resource, name) {
             switch (resource.type) {

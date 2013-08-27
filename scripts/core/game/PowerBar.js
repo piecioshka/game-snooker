@@ -9,7 +9,7 @@
     /**
      * @class
      * @constructor
-     * @this {snooker.PowerBar}
+     * @this snooker.PowerBar
      */
     snooker.PowerBar = function () {
         this.position = {
@@ -17,6 +17,10 @@
             y: null
         };
 
+        /**
+         * Texture.
+         * @type {Image}
+         */
         this.texture = null;
 
         this.initialize();

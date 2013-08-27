@@ -48,39 +48,45 @@
         });
     };
 
-    snooker.MAP = [
-        { name: "white", x: snooker.Table.WIDTH * 0.225, y: snooker.Table.HEIGHT * 0.53 },
-        { name: "green", x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.35 },
-        { name: "brown", x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS},
-        { name: "yellow", x: snooker.Table.WIDTH * 0.265, y: snooker.Table.HEIGHT * 0.6 },
-        { name: "blue", x: snooker.Table.WIDTH / 2 - snooker.Ball.RADIUS, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
-        { name: "pink", x: snooker.Table.WIDTH * 0.63, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS},
-        // 1
-        { name: "red", x: snooker.Table.WIDTH * 0.67, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
+    snooker.MAP = (function () {
+        var tableWidth = snooker.Table.WIDTH;
+        var tableHeight = snooker.Table.HEIGHT;
+        var ballRadius = snooker.Ball.RADIUS;
 
-        // 2
-        { name: "red", x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.70, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
+        return [
+            { name: "white", x: tableWidth * 0.225, y: tableHeight * 0.53 },
+            { name: "green", x: tableWidth * 0.265, y: tableHeight * 0.35 },
+            { name: "brown", x: tableWidth * 0.265, y: tableHeight / 2 - ballRadius},
+            { name: "yellow", x: tableWidth * 0.265, y: tableHeight * 0.6 },
+            { name: "blue", x: tableWidth / 2 - ballRadius, y: tableHeight / 2 - ballRadius },
+            { name: "pink", x: tableWidth * 0.63, y: tableHeight / 2 - ballRadius},
+            // 1
+            { name: "red", x: tableWidth * 0.67, y: tableHeight / 2 - ballRadius },
 
-        // 3
-        { name: "red", x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.73, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
+            // 2
+            { name: "red", x: tableWidth * 0.70, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius },
+            { name: "red", x: tableWidth * 0.70, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius },
 
-        // 4
-        { name: "red", x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 1.5 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.76, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 4.5 - snooker.Ball.RADIUS },
+            // 3
+            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius * 3 - ballRadius },
+            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius },
+            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 + ballRadius * 3 - ballRadius },
 
-        // 5
-        { name: "red", x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 3 - snooker.Ball.RADIUS },
-        { name: "red", x: snooker.Table.WIDTH * 0.79, y: snooker.Table.HEIGHT / 2 + snooker.Ball.RADIUS * 6 - snooker.Ball.RADIUS },
-        { name: "black", x: snooker.Table.WIDTH * 0.84, y: snooker.Table.HEIGHT / 2 - snooker.Ball.RADIUS}
-    ];
+            // 4
+            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 4.5 - ballRadius },
+            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius },
+            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius },
+            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 4.5 - ballRadius },
+
+            // 5
+            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 6 - ballRadius },
+            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 3 - ballRadius },
+            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius },
+            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 3 - ballRadius },
+            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 6 - ballRadius },
+            { name: "black", x: tableWidth * 0.84, y: tableHeight / 2 - ballRadius}
+        ];
+    }());
 
     snooker.getBallByColor = function (name) {
         return _.findWhere(snooker.MAP, { name: name });
