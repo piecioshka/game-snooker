@@ -1,3 +1,8 @@
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
 body {
     background:
         linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,

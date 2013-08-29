@@ -39,6 +39,18 @@
             var snooker = global.snooker;
             var KeyHandler = global.KeyHandler;
 
+            var stopEvent = function (e) {
+                if (!e) {
+                    return;
+                }
+                if (typeof e.preventDefault === 'function') {
+                    e.preventDefault();
+                }
+                if (typeof e.stopPropagation === 'function') {
+                    e.stopPropagation();
+                }
+            };
+
             Events.ready(function () {
                 var game = global.game = new Game();
 
@@ -49,15 +61,31 @@
 
                     (function (can) {
                         var interval;
-                        // support events
-                        Events.bind(can, "mousedown", function () {
-                            interval = setInterval(function () {
-                                KeyHandler.mouseDown.call(game);
-                            }, 50);
-                        });
-                        Events.bind(can, "mouseup", function (e) {
+
+                        function startAction(e) {
+                            clearInterval(interval);
+                            interval = setInterval(startAction, 50);
+                            KeyHandler.mouseDown.call(game);
+                            stopEvent(e);
+                        }
+                        function stopAction(e) {
                             clearInterval(interval);
                             KeyHandler.mouseUp.call(game, e);
+                            stopEvent(e);
+                        }
+
+                        _.each([
+                            "mousedown", "touchstart", "dragstart"
+                        ], function (event) {
+                            Events.bind(can, event, startAction);
+                        });
+
+                        _.each([
+                            "mouseup", "touchend", "touchcancel",
+                            "touchleave", "touchmove", "tap",
+                            "dbltap", "dragmove", "dragend"
+                        ], function (event) {
+                            Events.bind(can, event, stopAction);
                         });
                     }(snooker.table.canvas));
                 });

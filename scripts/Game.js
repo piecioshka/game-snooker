@@ -29,7 +29,7 @@
      * Bigger number => bigger game board.
      * @type {number}
      */
-    Game.SCALE = 2;
+    Game.SCALE = 2; // global.innerWidth / 410.5;
 
     Game.SMALLEST_SCALE = 1;
     Game.BIGGEST_SCALE = 3;
@@ -45,7 +45,7 @@
     Game.HEIGHT = 177.8 * Game.SCALE;
 
     Game.MIN_POWER = 0;
-    Game.MAX_POWER = 40; // 100
+    Game.MAX_POWER = 30;
     Game.STRENGTH = 1;
 
     Game.velocity = 0;
