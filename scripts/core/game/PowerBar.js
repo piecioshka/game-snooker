@@ -53,6 +53,11 @@
             ctx.fillStyle = "green";
             ctx.fillRect(dx - 1, dy - 1, ballRadius * 3, dh + 2);
 
+            var maxWidth = this.texture.width;
+
+            sw = (sw > maxWidth) ? maxWidth : sw;
+            dw = (dw > maxWidth) ? maxWidth : dw;
+
             ctx.drawImage(this.texture, sx, sy, sw, sh, dx, dy, dw, dh);
         }
     };

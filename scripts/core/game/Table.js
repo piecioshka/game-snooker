@@ -59,8 +59,8 @@
             _.extend(this.canvas.style, {
                 "width": snooker.Table.WIDTH + "px",
                 "height": snooker.Table.HEIGHT + "px",
-                "margin-left": (-1 * snooker.Table.WIDTH / 2) + "px",
-                "margin-top": (-1 * snooker.Table.HEIGHT / 2) + "px"
+                "marginLeft": (-1 * snooker.Table.WIDTH / 2) + "px",
+                "marginTop": (-1 * snooker.Table.HEIGHT / 2) + "px"
             });
 
             this.ctx = this.canvas.getContext("2d");
