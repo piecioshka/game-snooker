@@ -9,11 +9,15 @@
 
     /**
      * @param {string} color
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {Object} pos
+     * @param {Object} pos.x
+     * @param {Object} pos.y
      * @class
      * @this snooker.Ball
      * @constructor
      */
-    snooker.Ball = function (color) {
+    snooker.Ball = function (color, ctx, pos) {
         if (!_.isString(color)) {
             throw new Error("snooker.Ball: color should creating with *string*, not " + typeof color);
         }
@@ -22,7 +26,7 @@
          * Reference to global context.
          * @type {CanvasRenderingContext2D}
          */
-        this.ctx = null;
+        this.ctx = ctx;
 
         /**
          * Ball color.
@@ -40,10 +44,7 @@
          * Object position - use X & Y axis.
          * @type {object}
          */
-        this.position = {
-            x: null,
-            y: null
-        };
+        this.position = pos;
 
         /**
          * Speed.
@@ -78,16 +79,6 @@
         initialize: function () {
             var resource = game.resourceLoader.getResource("ball-" + this.color);
             this.texture = resource.img;
-        },
-        /**
-         * @param {CanvasRenderingContext2D} ctx
-         * @param {Object} pos
-         * @param {Object} pos.x
-         * @param {Object} pos.y
-         */
-        build: function (ctx, pos) {
-            this.ctx = ctx;
-            this.position = pos;
             this.draw();
         },
         draw: function () {
@@ -97,7 +88,7 @@
         },
         move: function (cursorPosition, power) {
             // Redraw all balls
-            snooker.drawBalls();
+            snooker.refreshBalls();
             // Animate current selected ball
             this.animate(cursorPosition, power);
         },
@@ -126,15 +117,9 @@
     
             return 0;
         },
-        _update: function (ball) {
-            var pos = this.position;
-            ball.x = pos.x;
-            ball.y = pos.y;
-        },
         animate: function (cursorDelta, velocity) {
             var self = this;
-            var ball = snooker.getBallByColor(this.color);
-    
+
             this.status = snooker.Ball.MOVING;
     
             function loop() {
@@ -159,19 +144,13 @@
                     case 4: cursorDelta.y *= -1; break; // down
                 }
 
-                // Update positions
-                self._update.call(self, ball);
-
                 // Clear table
                 snooker.table.draw();
     
-                // Redraw table & each item on table
-                snooker.drawBalls();
-    
-                /**
-                 * Slower...
-                 * @type {number}
-                 */
+                // Redraw each ball on table
+                snooker.refreshBalls();
+
+                // Slower...
                 velocity *= 0.95;
     
                 requestAnimFrame(loop);

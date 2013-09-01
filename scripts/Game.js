@@ -68,8 +68,10 @@
             this.resourceLoader = new ResourceLoader();
             this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
 
-            _.each(snooker.MAP, function (ball) {
-                self.resourceLoader.addResource("ball-" + ball.name, "textures/balls/" + ball.name + ".png", ResourceType.IMAGE);
+            var colors = ['white', 'green', 'brown', 'yellow', 'blue', 'pink', 'red', 'black'];
+
+            _.each(colors, function (ball) {
+                self.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
             });
 
             this.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);

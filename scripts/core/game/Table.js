@@ -4,6 +4,7 @@
     "use strict";
 
     // imports
+    var document = global.document;
     var _ = global._;
     var snooker = (global.snooker = global.snooker || {});
 
@@ -70,16 +71,12 @@
             var body = document.body;
             var canvas = document.getElementsByTagName("canvas");
 
-            /**
-             * If exists <canvas> tag delete this.
-             */
+            // If exists <canvas> tag delete this.
             if (canvas.length) {
                 canvas[0].parentNode.removeChild(canvas[0]);
             }
 
-            /**
-             * Append <canvas> to <body> tag.
-             */
+            // Append <canvas> to <body> tag.
             body.appendChild(this.canvas);
         },
         draw: function () {

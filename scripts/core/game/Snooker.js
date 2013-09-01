@@ -35,61 +35,98 @@
         });
     };
 
-    snooker.drawBalls = function () {
-        var self = this;
-
-        _.each(snooker.MAP, function (ball) {
-            var uiBall = new snooker.Ball(ball.name);
-            uiBall.build(self.table.ctx, {
-                x: ball.x,
-                y: ball.y
-            });
-            self.table.addBall(uiBall);
+    snooker.refreshBalls = function () {
+        _.each(snooker.balls, function (ball) {
+            ball.draw();
         });
     };
 
-    snooker.MAP = (function () {
+    snooker.drawBalls = function () {
+        var self = this;
+        var ctx = self.table.ctx;
+
         var tableWidth = snooker.Table.WIDTH;
         var tableHeight = snooker.Table.HEIGHT;
         var ballRadius = snooker.Ball.RADIUS;
 
-        return [
-            { name: "white", x: tableWidth * 0.225, y: tableHeight * 0.53 },
-            { name: "green", x: tableWidth * 0.265, y: tableHeight * 0.35 },
-            { name: "brown", x: tableWidth * 0.265, y: tableHeight / 2 - ballRadius},
-            { name: "yellow", x: tableWidth * 0.265, y: tableHeight * 0.6 },
-            { name: "blue", x: tableWidth / 2 - ballRadius, y: tableHeight / 2 - ballRadius },
-            { name: "pink", x: tableWidth * 0.63, y: tableHeight / 2 - ballRadius},
-            // 1
-            { name: "red", x: tableWidth * 0.67, y: tableHeight / 2 - ballRadius },
+        self.table.addBall(new snooker.Ball('white', ctx, {
+            x: tableWidth * 0.225, y: tableHeight * 0.53
+        }));
 
-            // 2
-            { name: "red", x: tableWidth * 0.70, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius },
-            { name: "red", x: tableWidth * 0.70, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius },
+        self.table.addBall(new snooker.Ball('green', ctx, {
+            x: tableWidth * 0.265, y: tableHeight * 0.35
+        }));
+        self.table.addBall(new snooker.Ball('brown', ctx, {
+            x: tableWidth * 0.265, y: tableHeight / 2 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('yellow', ctx, {
+            x: tableWidth * 0.265, y: tableHeight * 0.6
+        }));
+        self.table.addBall(new snooker.Ball('blue', ctx, {
+            x: tableWidth / 2 - ballRadius, y: tableHeight / 2 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('pink', ctx, {
+            x: tableWidth * 0.63, y: tableHeight / 2 - ballRadius
+        }));
 
-            // 3
-            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius * 3 - ballRadius },
-            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius },
-            { name: "red", x: tableWidth * 0.73, y: tableHeight / 2 + ballRadius * 3 - ballRadius },
+        // 1
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.67, y: tableHeight / 2 - ballRadius
+        }));
 
-            // 4
-            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 4.5 - ballRadius },
-            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius },
-            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius },
-            { name: "red", x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 4.5 - ballRadius },
+        // 2
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.70, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.70, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius
+        }));
 
-            // 5
-            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 6 - ballRadius },
-            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 3 - ballRadius },
-            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius },
-            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 3 - ballRadius },
-            { name: "red", x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 6 - ballRadius },
-            { name: "black", x: tableWidth * 0.84, y: tableHeight / 2 - ballRadius}
-        ];
-    }());
+        // 3
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius * 3 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.73, y: tableHeight / 2 + ballRadius * 3 - ballRadius
+        }));
 
-    snooker.getBallByColor = function (name) {
-        return _.findWhere(snooker.MAP, { name: name });
-    }
+        // 4
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 4.5 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 4.5 - ballRadius
+        }));
+
+        // 5
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 6 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 3 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 3 - ballRadius
+        }));
+        self.table.addBall(new snooker.Ball('red', ctx, {
+            x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 6 - ballRadius
+        }));
+
+        self.table.addBall(new snooker.Ball('black', ctx, {
+            x: tableWidth * 0.84, y: tableHeight / 2 - ballRadius
+        }));
+    };
 
 }(this));
