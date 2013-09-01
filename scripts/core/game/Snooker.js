@@ -24,20 +24,15 @@
     };
 
     snooker.drawCues = function () {
-        new snooker.Cue().create(this.table.ctx, {
-            x: 170,
-            y: snooker.Table.HEIGHT * 0.15
+        var ctx = this.table.ctx;
+        var tableHeight = snooker.Table.HEIGHT;
+
+        new snooker.Cue().create(ctx, {
+            x: 170, y: tableHeight * 0.15
         });
 
-        new snooker.Cue().create(this.table.ctx, {
-            x: 170,
-            y: snooker.Table.HEIGHT * 0.85
-        });
-    };
-
-    snooker.refreshBalls = function () {
-        _.each(snooker.balls, function (ball) {
-            ball.draw();
+        new snooker.Cue().create(ctx, {
+            x: 170, y: tableHeight * 0.85
         });
     };
 
@@ -127,6 +122,16 @@
         self.table.addBall(new snooker.Ball('black', ctx, {
             x: tableWidth * 0.84, y: tableHeight / 2 - ballRadius
         }));
+    };
+
+    snooker.refreshTable = function () {
+        snooker.table.draw();
+    };
+
+    snooker.refreshBalls = function () {
+        _.each(snooker.balls, function (ball) {
+            ball.draw();
+        });
     };
 
 }(this));

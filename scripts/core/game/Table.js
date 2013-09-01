@@ -19,13 +19,11 @@
          * @type {HTMLElement}
          */
         this.canvas = null;
-
         /**
          * Reference to global object.
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = null;
-
         /**
          * Texture.
          * @type {Image}

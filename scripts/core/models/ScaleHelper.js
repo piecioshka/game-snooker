@@ -2,13 +2,11 @@
     "use strict";
 
     // imports
-    var _ = global._;
     var Game = (global.Game = global.Game || {});
 
     /**
      * @class
      * @constructor
-     * @type {ScaleHelper}
      */
     function ScaleHelper() {
         // empty
@@ -16,21 +14,13 @@
 
     ScaleHelper.prototype = {
         canScale: function (evt) {
-            /**
-             * No small, smallest version.
-             */
-            if (evt.wheelDelta < 0 && Game.SCALE === Game.SMALLEST_SCALE) {
-                return false;
-            }
+            // No small, smallest version.
+            var notSmall = evt.wheelDelta < 0 && Game.SCALE === Game.SMALLEST_SCALE;
 
-            /**
-             * No zoom, the biggest version.
-             */
-            if (evt.wheelDelta > 0 && Game.SCALE === Game.BIGGEST_SCALE) {
-                return false;
-            }
+            // No zoom, the biggest version.
+            var nonZoom = evt.wheelDelta > 0 && Game.SCALE === Game.BIGGEST_SCALE;
 
-            return true;
+            return !notSmall || !nonZoom;
         },
         setScale: function (evt) {
             /**

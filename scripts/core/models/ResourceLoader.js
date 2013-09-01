@@ -4,6 +4,10 @@
     // imports
     var _ = global._;
 
+    /**
+     * @class
+     * @constructor
+     */
     function ResourceLoader() {
         this.resourcesList = {};
         this.loadedResources = 0;

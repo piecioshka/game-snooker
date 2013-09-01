@@ -27,36 +27,33 @@
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = ctx;
-
         /**
          * Ball color.
          * @type {string}
          */
         this.color = color.toLowerCase();
-
         /**
          * Texture.
          * @type {Image}
          */
         this.texture = null;
-
         /**
          * Object position - use X & Y axis.
          * @type {object}
          */
         this.position = pos;
-
         /**
          * Speed.
          * @type {{x: null, y: null}}
          */
         this.velocity = {
-            x: 0,
-            y: 0
+            x: 0, y: 0
         };
-
+        /**
+         * Current ball status.
+         * @type {number}
+         */
         this.status = snooker.Ball.READY;
-
         /**
          * The power bar.
          * @type {snooker.PowerBar}
@@ -92,7 +89,7 @@
             // Animate current selected ball
             this.animate(cursorPosition, power);
         },
-        _isCollision: function (ball) {
+        _isBoardCollision: function (ball) {
             var pos = ball.position;
             var x = pos.x;
             var y = pos.y;
@@ -114,7 +111,6 @@
                 // Events.log('collision with *bottom* board', ball.position);
                 return 4;
             }
-    
             return 0;
         },
         animate: function (cursorDelta, velocity) {
@@ -134,7 +130,7 @@
                     return;
                 }
 
-                var direction = self._isCollision(self);
+                var direction = self._isBoardCollision(self);
 
                 // If collision chane direction
                 switch (direction) {
@@ -145,7 +141,7 @@
                 }
 
                 // Clear table
-                snooker.table.draw();
+                snooker.refreshTable();
     
                 // Redraw each ball on table
                 snooker.refreshBalls();
@@ -161,6 +157,6 @@
         updatePower: function (percentPower) {
             this.powerBar.update(this, percentPower);
         }
-    }
+    };
 
 }(this));

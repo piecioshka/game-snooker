@@ -16,7 +16,6 @@
             x: null,
             y: null
         };
-
         /**
          * Texture.
          * @type {Image}
