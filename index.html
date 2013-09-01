@@ -20,8 +20,6 @@
 	<script type="text/javascript" src="scripts/lib/underscore/underscore.js"></script>
 	<script type="text/javascript" src="scripts/lib/events/events.js"></script>
 
-	<script type="text/javascript" src="scripts/core/common/Keys.js"></script>
-
     <script type="text/javascript" src="scripts/Game.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Table.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Ball.js"></script>
@@ -43,15 +41,15 @@
                 if (!e) {
                     return;
                 }
-                if (typeof e.preventDefault === 'function') {
+                if (_.isFunction(e.preventDefault)) {
                     e.preventDefault();
                 }
-                if (typeof e.stopPropagation === 'function') {
+                if (_.isFunction(e.stopPropagation)) {
                     e.stopPropagation();
                 }
             };
 
-            Events.ready(function () {
+            function bootstrap() {
                 var game = global.game = new Game();
 
                 game.initialize.call(game, function () {
@@ -89,7 +87,9 @@
                         });
                     }(snooker.table.canvas));
                 });
-            });
+            }
+
+            Events.ready(bootstrap);
         }(this));
     </script>
 </body>
