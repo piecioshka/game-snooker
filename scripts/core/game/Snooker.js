@@ -130,7 +130,10 @@
 
     snooker.refreshBalls = function () {
         _.each(snooker.balls, function (ball) {
-            ball.draw();
+            // If the ball has not been removed, draw it
+            if (ball.status !== snooker.Ball.REMOVED) {
+                ball.draw();
+            }
         });
     };
 

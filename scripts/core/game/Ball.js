@@ -65,6 +65,7 @@
 
     snooker.Ball.READY = 0;
     snooker.Ball.MOVING = 1;
+    snooker.Ball.REMOVED = 2;
 
     /**
      * Setup Ball dimensions.
@@ -93,6 +94,14 @@
             var self = this;
 
             this.status = snooker.Ball.MOVING;
+
+            function refreshViewPort() {
+                // Clear table
+                snooker.refreshTable();
+
+                // Redraw each ball on table
+                snooker.refreshBalls();
+            }
     
             function loop() {
                 self.position.x += (self.velocity.x = cursorDelta.x * velocity);
@@ -108,6 +117,12 @@
 
                 var direction = snooker.Collision.isBoardCollision(self);
 
+                if (snooker.Collision.isPotCollision(direction, self)) {
+                    self.status = snooker.Ball.REMOVED;
+                    refreshViewPort();
+                    return;
+                }
+
                 // If collision chane direction
                 switch (direction) {
                     case 1: cursorDelta.x *= -1; break; // left
@@ -116,11 +131,7 @@
                     case 4: cursorDelta.y *= -1; break; // down
                 }
 
-                // Clear table
-                snooker.refreshTable();
-    
-                // Redraw each ball on table
-                snooker.refreshBalls();
+                refreshViewPort();
 
                 // Slower...
                 velocity *= 0.95;
@@ -130,7 +141,7 @@
     
             requestAnimFrame(loop);
         },
-        updatePower: function (percentPower) {
+        updatePowerBar: function (percentPower) {
             this.powerBar.update(this, percentPower);
         }
     };

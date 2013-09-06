@@ -24,7 +24,7 @@
             }
 
             var powerView = +(Game.velocity * 100 / Game.MAX_POWER);
-            this.currentBall.updatePower(powerView);
+            this.currentBall.updatePowerBar(powerView);
         },
         mouseUp: function (e) {
             // If current ball in during animation do nothing.
