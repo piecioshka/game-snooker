@@ -2,6 +2,8 @@
     "use strict";
 
     // imports
+    var _ = global._;
+    var $ = global.$;
     var snooker = (global.snooker = global.snooker || {});
 
     /**
@@ -50,10 +52,15 @@
 
     Game.velocity = 0;
 
+    var LOADING_PLACE_HOLDER_ID = 'loading-panel';
+    var LOADING_PROGRESS_PLACE_HOLDER_ID = 'loader';
+
     Game.prototype = {
         initialize: function (callback) {
             var self = this;
+            this.createLoading();
             this.loadResources(function () {
+                self.destroyLoading();
                 if (_.isFunction(callback)) {
                     callback();
                 }
@@ -62,6 +69,32 @@
                 self.currentBall = snooker.balls[0];
             });
         },
+        createLoading: function () {
+            var $loading = $('<div>').attr({
+                id: LOADING_PLACE_HOLDER_ID
+            });
+            var $loader = $('<div>').attr({
+                id: LOADING_PROGRESS_PLACE_HOLDER_ID
+            });
+            $loading.html($loader);
+            $('body').append($loading);
+        },
+        destroyLoading: function () {
+            $("#" + LOADING_PLACE_HOLDER_ID).remove();
+        },
+        updateLoadingProgress: (function () {
+            var loader = null;
+            var size = 0;
+            return function (percent) {
+                if (loader === null) {
+                    loader = $('#' + LOADING_PROGRESS_PLACE_HOLDER_ID);
+                    size = loader.parent().width();
+                }
+                loader.animate({
+                    width: percent / 100 * size
+                });
+            }
+        }()),
         loadResources: function (callback) {
             var self = this;
 
@@ -78,14 +111,12 @@
 
             var checkLoadedResource = setInterval(function () {
                 var loadingStatus = self.resourceLoader.getPercentStatus();
+                self.updateLoadingProgress(loadingStatus);
                 // Events.log("Resource loading", loadingStatus + "%" );
 
                 if (self.resourceLoader.isAllResourcesLoaded()) {
                     clearInterval(checkLoadedResource);
-
-                    if (_.isFunction(callback)) {
-                        callback();
-                    }
+                    setTimeout(callback, 700);
                 }
             }, 10);
 

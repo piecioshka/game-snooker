@@ -12,3 +12,25 @@ canvas {
     left: 50%;
     top: 50%;
 }
+
+#loading-panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 300px;
+    height: 1px;
+
+    margin: -1px 0 0 -150px;
+
+    background: #990CE8;
+}
+
+#loader {
+    background: #0D4AFF;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    height: 3px;
+    box-shadow: 0 0 3px #0D4AFF;
+}
