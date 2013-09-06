@@ -1,0 +1,14 @@
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
+html {
+    background-color: #131313;
+}
+
+canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
