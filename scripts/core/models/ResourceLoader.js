@@ -1,5 +1,5 @@
 (function (global) {
-    "use strict";
+    'use strict';
 
     // imports
     var _ = global._;
@@ -20,8 +20,8 @@
     ResourceLoader.prototype = {
         addResource: function (name, url, type) {
             this.resourcesList[name] = {
-                "url": url,
-                "type": type
+                'url': url,
+                'type': type
             };
         },
         _loadImage: function (url) {
@@ -29,7 +29,7 @@
             var img = new Image();
             img.src = url;
 
-            Events.bind(img, "load", function () {
+            Events.bind(img, 'load', function () {
                 self.loadedResources++;
             });
 

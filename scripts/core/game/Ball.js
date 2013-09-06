@@ -1,7 +1,7 @@
 /*global game */
 
 (function (global) {
-    "use strict";
+    'use strict';
 
     // imports
     var _ = global._;
@@ -19,7 +19,7 @@
      */
     snooker.Ball = function (color, ctx, pos) {
         if (!_.isString(color)) {
-            throw new Error("snooker.Ball: color should creating with *string*, not " + typeof color);
+            throw new Error('snooker.Ball: color should creating with *string*, not ' + typeof color);
         }
 
         /**
@@ -74,7 +74,7 @@
 
     snooker.Ball.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource("ball-" + this.color);
+            var resource = game.resourceLoader.getResource('ball-' + this.color);
             this.texture = resource.img;
             this.draw();
         },
@@ -88,30 +88,6 @@
             snooker.refreshBalls();
             // Animate current selected ball
             this.animate(cursorPosition, power);
-        },
-        _isBoardCollision: function (ball) {
-            var pos = ball.position;
-            var x = pos.x;
-            var y = pos.y;
-    
-            if (x < snooker.Table.LEFT_BOARD) {
-                ball.position.x = snooker.Table.LEFT_BOARD;
-                // Events.log('collision with *left* board', ball.position);
-                return 1;
-            } else if (y < snooker.Table.TOP_BOARD) {
-                ball.position.y = snooker.Table.TOP_BOARD;
-                // Events.log('collision with *top* board', ball.position);
-                return 2;
-            } else if (x + (snooker.Ball.RADIUS * 2) > snooker.Table.RIGHT_BOARD) {
-                ball.position.x = snooker.Table.RIGHT_BOARD - (snooker.Ball.RADIUS * 2);
-                // Events.log('collision with *right* board', ball.position);
-                return 3;
-            } else if (y + (snooker.Ball.RADIUS * 2) > snooker.Table.BOTTOM_BOARD) {
-                ball.position.y = snooker.Table.BOTTOM_BOARD - (snooker.Ball.RADIUS * 2);
-                // Events.log('collision with *bottom* board', ball.position);
-                return 4;
-            }
-            return 0;
         },
         animate: function (cursorDelta, velocity) {
             var self = this;
@@ -130,7 +106,7 @@
                     return;
                 }
 
-                var direction = self._isBoardCollision(self);
+                var direction = snooker.Collision.isBoardCollision(self);
 
                 // If collision chane direction
                 switch (direction) {

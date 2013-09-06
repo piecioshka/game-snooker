@@ -1,5 +1,5 @@
 (function (global) {
-    "use strict";
+    'use strict';
 
     // imports
     var Game = (global.Game = global.Game || {});

@@ -1,7 +1,7 @@
 /*global game */
 
 (function (global) {
-    "use strict";
+    'use strict';
 
     // imports
     var document = global.document;
@@ -47,27 +47,27 @@
 
     snooker.Table.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource("table");
+            var resource = game.resourceLoader.getResource('table');
             this.texture = resource.img;
         },
         build: function () {
-            this.canvas = document.createElement("canvas");
-            this.canvas.setAttribute("width", snooker.Table.WIDTH + "px");
-            this.canvas.setAttribute("height", snooker.Table.HEIGHT + "px");
+            this.canvas = document.createElement('canvas');
+            this.canvas.setAttribute('width', snooker.Table.WIDTH + 'px');
+            this.canvas.setAttribute('height', snooker.Table.HEIGHT + 'px');
             this._render();
 
             _.extend(this.canvas.style, {
-                "width": snooker.Table.WIDTH + "px",
-                "height": snooker.Table.HEIGHT + "px",
-                "marginLeft": (-1 * snooker.Table.WIDTH / 2) + "px",
-                "marginTop": (-1 * snooker.Table.HEIGHT / 2) + "px"
+                'width': snooker.Table.WIDTH + 'px',
+                'height': snooker.Table.HEIGHT + 'px',
+                'marginLeft': (-1 * snooker.Table.WIDTH / 2) + 'px',
+                'marginTop': (-1 * snooker.Table.HEIGHT / 2) + 'px'
             });
 
-            this.ctx = this.canvas.getContext("2d");
+            this.ctx = this.canvas.getContext('2d');
         },
         _render: function () {
             var body = document.body;
-            var canvas = document.getElementsByTagName("canvas");
+            var canvas = document.getElementsByTagName('canvas');
 
             // If exists <canvas> tag delete this.
             if (canvas.length) {

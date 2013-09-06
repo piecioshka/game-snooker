@@ -1,5 +1,5 @@
 (function (global) {
-    "use strict";
+    'use strict';
 
     // imports
     var snooker = (global.snooker = global.snooker || {});

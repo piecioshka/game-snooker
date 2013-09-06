@@ -27,7 +27,7 @@
 
     snooker.PowerBar.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource("power");
+            var resource = game.resourceLoader.getResource('power');
             this.texture = resource.img;
         },
         update: function (ball, power) {
@@ -50,7 +50,7 @@
              * Add thin border around power bar.
              * @type {string}
              */
-            ctx.fillStyle = "green";
+            ctx.fillStyle = 'green';
             ctx.fillRect(dx - 1, dy - 1, ballRadius * 3, dh + 2);
 
             var maxWidth = this.texture.width;
