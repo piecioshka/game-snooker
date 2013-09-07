@@ -3,7 +3,6 @@
 
     // imports
     var _ = global._;
-    var $ = global.$;
     var snooker = (global.snooker = global.snooker || {});
 
     /**
@@ -54,6 +53,8 @@
 
     var LOADING_PLACE_HOLDER_ID = 'loading-panel';
     var LOADING_PROGRESS_PLACE_HOLDER_ID = 'loader';
+    var $loading = null;
+    var $loader = null;
 
     Game.prototype = {
         initialize: function (callback) {
@@ -70,31 +71,19 @@
             });
         },
         createLoading: function () {
-            var $loading = $('<div>').attr({
-                id: LOADING_PLACE_HOLDER_ID
-            });
-            var $loader = $('<div>').attr({
-                id: LOADING_PROGRESS_PLACE_HOLDER_ID
-            });
-            $loading.html($loader);
-            $('body').append($loading);
+            $loading = document.createElement('div');
+            $loading.id = LOADING_PLACE_HOLDER_ID;
+            $loader = document.createElement('div');
+            $loader.id = LOADING_PROGRESS_PLACE_HOLDER_ID;
+            $loading.appendChild($loader);
+            document.body.appendChild($loading);
         },
         destroyLoading: function () {
-            $("#" + LOADING_PLACE_HOLDER_ID).remove();
+            $loading.parentNode.removeChild($loading);
         },
-        updateLoadingProgress: (function () {
-            var loader = null;
-            var size = 0;
-            return function (percent) {
-                if (loader === null) {
-                    loader = $('#' + LOADING_PROGRESS_PLACE_HOLDER_ID);
-                    size = loader.parent().width();
-                }
-                loader.animate({
-                    width: percent / 100 * size
-                });
-            }
-        }()),
+        updateLoadingProgress: function (percent) {
+            $loader.style.width = (percent / 100 * 300) + "px";
+        },
         loadResources: function (callback) {
             var self = this;
 
