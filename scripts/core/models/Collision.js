@@ -9,8 +9,6 @@
         return [undefined, 'left', 'top', 'right', 'bottom'][index];
     }
 
-
-
     var tableWidth = snooker.Table.WIDTH;
     var leftBoard = snooker.Table.LEFT_BOARD;
     var topBoard = snooker.Table.TOP_BOARD;
@@ -87,7 +85,6 @@
             if (state) {
                 Events.log('collision with *' + getBoardName(state) + '* board', ball.position);
             }
-
             return state;
         },
         isPotCollision: function (board, ball) {
@@ -108,7 +105,6 @@
                     status = true;
                 }
             });
-
             return status;
         }
     };
