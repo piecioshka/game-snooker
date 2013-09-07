@@ -35,8 +35,9 @@
             var pos = this.currentBall.position;
             var radius = snooker.Ball.RADIUS;
 
-            var cursorX = e.offsetX || e.eventObject().layerX;
-            var cursorY = e.offsetY || e.eventObject().layerY;
+            var eO = e.eventObject();
+            var cursorX = e.offsetX || eO.offsetX || eO.layerX;
+            var cursorY = e.offsetY || eO.offsetX || eO.layerY;
 
             this.currentBall.move({
                 x: (pos.x + radius - cursorX) / 100,
