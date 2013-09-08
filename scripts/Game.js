@@ -19,10 +19,10 @@
             };
     })();
 
-    var Game = global.Game = function () {
-        this.resourceLoader = null;
-        this.status = Game.LOADING;
-        this.currentBall = null;
+    var Game = global.Game = {
+        resourceLoader: null,
+        status: null,
+        currentBall: null
     };
 
     /**
@@ -49,25 +49,27 @@
     Game.MAX_POWER = 40;
     Game.STRENGTH = 1;
 
-    Game.velocity = 0;
+    Game.power = 0;
 
     var LOADING_PLACE_HOLDER_ID = 'loading-panel';
     var LOADING_PROGRESS_PLACE_HOLDER_ID = 'loader';
     var $loading = null;
     var $loader = null;
 
-    Game.prototype = {
+    _.extend(Game, {
         initialize: function (callback) {
-            var self = this;
-            this.createLoading();
-            this.loadResources(function () {
-                self.destroyLoading();
+            Game.status = Game.LOADING;
+
+            Game.createLoading();
+            Game.loadResources(function () {
+                Game.destroyLoading();
+
                 if (_.isFunction(callback)) {
                     callback();
                 }
 
-                self.status = Game.READY;
-                self.currentBall = snooker.balls[0];
+                Game.status = Game.READY;
+                Game.currentBall = snooker.balls[0];
             });
         },
         createLoading: function () {
@@ -85,32 +87,34 @@
             $loader.style.width = (percent / 100 * 300) + "px";
         },
         loadResources: function (callback) {
-            var self = this;
-
-            this.resourceLoader = new ResourceLoader();
-            this.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
+            Game.resourceLoader = new ResourceLoader();
+            Game.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
 
             var colors = ['white', 'green', 'brown', 'yellow', 'blue', 'pink', 'red', 'black'];
 
             _.each(colors, function (ball) {
-                self.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
+                Game.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
             });
 
-            this.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
+            Game.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
 
             var checkLoadedResource = setInterval(function () {
-                var loadingStatus = self.resourceLoader.getPercentStatus();
-                self.updateLoadingProgress(loadingStatus);
+                var loadingStatus = Game.resourceLoader.getPercentStatus();
+                Game.updateLoadingProgress(loadingStatus);
                 // Events.log("Resource loading", loadingStatus + "%" );
 
-                if (self.resourceLoader.isAllResourcesLoaded()) {
+                if (Game.resourceLoader.isAllResourcesLoaded()) {
                     clearInterval(checkLoadedResource);
-                    setTimeout(callback, 700);
+                    setTimeout(callback, 300);
                 }
             }, 10);
 
-            this.resourceLoader.preLoadingResources();
+            Game.resourceLoader.preLoadingResources();
+        },
+        refreshViewPort: function () {
+            snooker.refreshTable();
+            snooker.refreshBalls();
         }
-    };
+    });
 
 }(this));

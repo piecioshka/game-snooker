@@ -58,9 +58,26 @@
         ]
     };
 
-    snooker.Collision = {
-        isBallCollision: function (ball) {
+    function isTwoBallTouches(first, second) {
+        var xAxisValue = Math.pow(Math.abs(first.position.x - second.position.x), 2);
+        var yAxisValue = Math.pow(Math.abs(first.position.y - second.position.y), 2);
+        return Math.sqrt(xAxisValue + yAxisValue) <= (snooker.Ball.RADIUS * 2);
+    }
 
+    snooker.Collision = {
+        isBallCollision: function (currentBall) {
+            var collisionBall = null;
+            _.each(snooker.balls, function (ball) {
+                if (ball.color === currentBall.color) return;
+                if (isTwoBallTouches(ball, currentBall)) {
+                    collisionBall = ball;
+                }
+            });
+
+            if (collisionBall) {
+                Events.log('collision with *' + collisionBall.color + ' (id: ' + collisionBall.id + ') * ball');
+            }
+            return collisionBall;
         },
         isBoardCollision: function (ball) {
             var pos = ball.position;
@@ -90,7 +107,7 @@
         isPotCollision: function (board, ball) {
             var pos = ball.position;
             var status = false;
-
+            var collisionPot = null;
             _.each(pots, function (pot, name) {
                 var b, o;
                 if (!board) return;
@@ -101,10 +118,14 @@
                 o = [undefined, 'y', 'x', 'y', 'x'][board];
 
                 if (b.min <= pos[o] && b.max >= pos[o]) {
-                    console.log('collision with *' + name + '* pot');
+                    collisionPot = name;
                     status = true;
                 }
             });
+
+            if (status) {
+                Events.log('collision with *' + collisionPot + '* pot');
+            }
             return status;
         }
     };

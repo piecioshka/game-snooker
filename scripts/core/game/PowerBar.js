@@ -1,5 +1,3 @@
-/*global game */
-
 (function (global) {
     'use strict';
 
@@ -27,7 +25,7 @@
 
     snooker.PowerBar.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource('power');
+            var resource = Game.resourceLoader.getResource('power');
             this.texture = resource.img;
         },
         update: function (ball, power) {

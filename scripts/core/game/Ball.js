@@ -1,5 +1,3 @@
-/*global game */
-
 (function (global) {
     'use strict';
 
@@ -21,6 +19,8 @@
         if (!_.isString(color)) {
             throw new Error('snooker.Ball: color should creating with *string*, not ' + typeof color);
         }
+
+        this.id = _.uniqueId('ball_');
 
         /**
          * Reference to global context.
@@ -75,7 +75,7 @@
 
     snooker.Ball.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource('ball-' + this.color);
+            var resource = Game.resourceLoader.getResource('ball-' + this.color);
             this.texture = resource.img;
             this.draw();
         },
@@ -84,28 +84,18 @@
             var pos = this.position;
             this.ctx.drawImage(this.texture, pos.x, pos.y, ballDiameter, ballDiameter);
         },
-        move: function (cursorPosition, power) {
-            // Redraw all balls
+        move: function (cursorPosition) {
             snooker.refreshBalls();
-            // Animate current selected ball
-            this.animate(cursorPosition, power);
+            this.animate(cursorPosition);
         },
-        animate: function (cursorDelta, velocity) {
+        animate: function (cursorDelta) {
             var self = this;
 
             this.status = snooker.Ball.MOVING;
-
-            function refreshViewPort() {
-                // Clear table
-                snooker.refreshTable();
-
-                // Redraw each ball on table
-                snooker.refreshBalls();
-            }
     
             function loop() {
-                self.position.x += (self.velocity.x = cursorDelta.x * velocity);
-                self.position.y += (self.velocity.y = cursorDelta.y * velocity);
+                self.position.x += (self.velocity.x = cursorDelta.x * Game.power);
+                self.position.y += (self.velocity.y = cursorDelta.y * Game.power);
 
                 if (
                     Math.abs(self.velocity.x) <= 0.1 &&
@@ -115,15 +105,9 @@
                     return;
                 }
 
+                // 1) check board collision
                 var direction = snooker.Collision.isBoardCollision(self);
-
-                if (snooker.Collision.isPotCollision(direction, self)) {
-                    self.status = snooker.Ball.REMOVED;
-                    refreshViewPort();
-                    return;
-                }
-
-                // If collision chane direction
+                // Board collision change direction
                 switch (direction) {
                     case 1: cursorDelta.x *= -1; break; // left
                     case 2: cursorDelta.y *= -1; break; // top
@@ -131,10 +115,27 @@
                     case 4: cursorDelta.y *= -1; break; // down
                 }
 
-                refreshViewPort();
+                // 2) check pot collision
+                if (snooker.Collision.isPotCollision(direction, self)) {
+                    self.status = snooker.Ball.REMOVED;
+                    Game.refreshViewPort();
+                    return;
+                }
+
+                // 3) check collision with other ball
+                var collisionBall = snooker.Collision.isBallCollision(self);
+                // Disable undone resolve collision
+                if (0 && collisionBall) {
+                    collisionBall.animate({
+                        x: cursorDelta.x * 0.95,
+                        y: cursorDelta.y * 0.95
+                    });
+                }
+
+                Game.refreshViewPort();
 
                 // Slower...
-                velocity *= 0.95;
+                Game.power *= 0.95;
     
                 requestAnimFrame(loop);
             }

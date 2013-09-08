@@ -1,5 +1,3 @@
-/*global game */
-
 (function (global) {
     'use strict';
 
@@ -47,7 +45,7 @@
 
     snooker.Table.prototype = {
         initialize: function () {
-            var resource = game.resourceLoader.getResource('table');
+            var resource = Game.resourceLoader.getResource('table');
             this.texture = resource.img;
         },
         build: function () {

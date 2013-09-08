@@ -25,72 +25,11 @@
 	<script type="text/javascript" src="scripts/core/game/PowerBar.js"></script>
 	<script type="text/javascript" src="scripts/core/game/Cue.js"></script>
     <script type="text/javascript" src="scripts/core/game/Snooker.js"></script>
+	<script type="text/javascript" src="scripts/core/models/Lines.js"></script>
 	<script type="text/javascript" src="scripts/core/models/Collision.js"></script>
 	<script type="text/javascript" src="scripts/core/models/ResourceLoader.js"></script>
 	<script type="text/javascript" src="scripts/core/models/KeyHandler.js"></script>
     <script type="text/javascript" src="scripts/core/models/ScaleHelper.js"></script>
-    <script>
-        (function (global) {
-            'use strict';
-
-            // imports
-            var snooker = global.snooker;
-            var KeyHandler = global.KeyHandler;
-
-            var stopEvent = function (e) {
-                if (!e) {
-                    return;
-                }
-                if (_.isFunction(e.preventDefault)) {
-                    e.preventDefault();
-                }
-                if (_.isFunction(e.stopPropagation)) {
-                    e.stopPropagation();
-                }
-            };
-
-            function bootstrap() {
-                var game = global.game = new Game();
-
-                game.initialize.call(game, function () {
-                    snooker.drawTable();
-                    snooker.drawBalls();
-                    // snooker.drawCues();
-
-                    (function (can) {
-                        var interval;
-
-                        function startAction(e) {
-                            clearInterval(interval);
-                            interval = setInterval(startAction, 50);
-                            KeyHandler.mouseDown.call(game);
-                            stopEvent(e);
-                        }
-                        function stopAction(e) {
-                            clearInterval(interval);
-                            KeyHandler.mouseUp.call(game, e);
-                            stopEvent(e);
-                        }
-
-                        _.each([
-                            "mousedown", "touchstart", "dragstart"
-                        ], function (event) {
-                            Events.bind(can, event, startAction);
-                        });
-
-                        _.each([
-                            "mouseup", "touchend", "touchcancel",
-                            "touchleave", "touchmove", "tap",
-                            "dbltap", "dragmove", "dragend"
-                        ], function (event) {
-                            Events.bind(can, event, stopAction);
-                        });
-                    }(snooker.table.canvas));
-                });
-            }
-
-            Events.ready(bootstrap);
-        }(this));
-    </script>
+    <script type="text/javascript" src="scripts/bootstrap.js"></script>
 </body>
 </html>
