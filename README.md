@@ -11,5 +11,5 @@
 
 ## Features
 
-* ~~use mouse wheel, to scale game area~~ - currently disabledgs
-* use mouse to change ball velocity (white ball only for now)
+* ~~use mouse wheel, to scale game area~~ - currently disabled
+* use mouse to change ball velocity (only white ball for now)
