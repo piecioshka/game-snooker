@@ -4,6 +4,7 @@
     // imports
     var _ = global._;
     var snooker = (global.snooker = global.snooker || {});
+    var Loader = (global.Loader = global.Loader || {});
 
     /**
      * @see: http://webstuff.nfshost.com/anim-timing/Overview.html
@@ -22,47 +23,14 @@
     var Game = global.Game = {
         resourceLoader: null,
         status: null,
-        currentBall: null
-    };
+        currentBall: null,
 
-    /**
-     * Game scale value.
-     * Bigger number => bigger game board.
-     * @type {number}
-     */
-    Game.SCALE = 2; // global.innerWidth / 410.5;
-
-    Game.SMALLEST_SCALE = 1;
-    Game.BIGGEST_SCALE = 3;
-
-    Game.READY = 0;
-    Game.LOADING = 1;
-
-    /**
-     * Setup Game dimensions.
-     * @type {number}
-     */
-    Game.WIDTH =  356.9 * Game.SCALE;
-    Game.HEIGHT = 177.8 * Game.SCALE;
-
-    Game.MIN_POWER = 0;
-    Game.MAX_POWER = 40;
-    Game.STRENGTH = 1;
-
-    Game.power = 0;
-
-    var LOADING_PLACE_HOLDER_ID = 'loading-panel';
-    var LOADING_PROGRESS_PLACE_HOLDER_ID = 'loader';
-    var $loading = null;
-    var $loader = null;
-
-    _.extend(Game, {
         initialize: function (callback) {
             Game.status = Game.LOADING;
 
-            Game.createLoading();
+            Loader.createLoading();
             Game.loadResources(function () {
-                Game.destroyLoading();
+                Loader.destroyLoading();
 
                 if (_.isFunction(callback)) {
                     callback();
@@ -71,20 +39,6 @@
                 Game.status = Game.READY;
                 Game.currentBall = snooker.balls[0];
             });
-        },
-        createLoading: function () {
-            $loading = document.createElement('div');
-            $loading.id = LOADING_PLACE_HOLDER_ID;
-            $loader = document.createElement('div');
-            $loader.id = LOADING_PROGRESS_PLACE_HOLDER_ID;
-            $loading.appendChild($loader);
-            document.body.appendChild($loading);
-        },
-        destroyLoading: function () {
-            $loading.parentNode.removeChild($loading);
-        },
-        updateLoadingProgress: function (percent) {
-            $loader.style.width = (percent / 100 * 300) + "px";
         },
         loadResources: function (callback) {
             Game.resourceLoader = new ResourceLoader();
@@ -100,7 +54,7 @@
 
             var checkLoadedResource = setInterval(function () {
                 var loadingStatus = Game.resourceLoader.getPercentStatus();
-                Game.updateLoadingProgress(loadingStatus);
+                Loader.updateLoadingProgress(loadingStatus);
                 // Events.log("Resource loading", loadingStatus + "%" );
 
                 if (Game.resourceLoader.isAllResourcesLoaded()) {
@@ -110,11 +64,38 @@
             }, 10);
 
             Game.resourceLoader.preLoadingResources();
-        },
-        refreshViewPort: function () {
-            snooker.refreshTable();
-            snooker.refreshBalls();
         }
-    });
+    };
+
+    /**
+     * Game scale value.
+     * Bigger number => bigger game board.
+     * @type {number}
+     */
+    Game.SCALE = 2;
+
+    Game.SMALLEST_SCALE = 1;
+    Game.BIGGEST_SCALE = 3;
+
+    Game.READY = 0;
+    Game.LOADING = 1;
+
+    /**
+     * Setup Game dimensions.
+     * @type {number}
+     */
+    Game.WIDTH =  356.9 * Game.SCALE;
+    Game.HEIGHT = 177.8 * Game.SCALE;
+
+    Game.STRENGTH = 1;
+
+    Game.MIN_POWER = 0;
+    Game.MAX_POWER = 40;
+
+    /**
+     * Power of shot.
+     * @type {number}
+     */
+    Game.power = 0;
 
 }(this));

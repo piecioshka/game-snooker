@@ -137,4 +137,9 @@
         });
     };
 
+    snooker.refreshViewPort = function () {
+        snooker.refreshTable();
+        snooker.refreshBalls();
+    };
+
 }(this));

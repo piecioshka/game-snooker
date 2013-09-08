@@ -8,9 +8,7 @@
     global.KeyHandler = {
         mouseDown: function () {
             // If current ball in during animation do nothing.
-            if (Game.currentBall.status !== snooker.Ball.READY) {
-                return;
-            }
+            if (Game.currentBall.status !== snooker.Ball.READY) return;
 
             if (Game.power === Game.MIN_POWER) {
                 Game.power = Game.STRENGTH;
@@ -28,9 +26,7 @@
         },
         mouseUp: function (e) {
             // If current ball in during animation do nothing.
-            if (Game.currentBall.status !== snooker.Ball.READY) {
-                return;
-            }
+            if (Game.currentBall.status !== snooker.Ball.READY) return;
 
             var pos = Game.currentBall.position;
             var radius = snooker.Ball.RADIUS;

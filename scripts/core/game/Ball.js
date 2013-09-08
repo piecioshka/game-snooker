@@ -118,7 +118,7 @@
                 // 2) check pot collision
                 if (snooker.Collision.isPotCollision(direction, self)) {
                     self.status = snooker.Ball.REMOVED;
-                    Game.refreshViewPort();
+                    snooker.refreshViewPort();
                     return;
                 }
 
@@ -132,7 +132,7 @@
                     });
                 }
 
-                Game.refreshViewPort();
+                snooker.refreshViewPort();
 
                 // Slower...
                 Game.power *= 0.95;

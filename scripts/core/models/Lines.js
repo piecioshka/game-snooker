@@ -17,7 +17,8 @@
                 y: e.offsetY || eO.offsetY || eO.layerY
             };
 
-            Game.refreshViewPort();
+            snooker.refreshViewPort();
+
             Lines.drawVerticalLine(cursor);
             Lines.drawHorizontalLine(cursor);
             Lines.drawHelperBox(cursor);
