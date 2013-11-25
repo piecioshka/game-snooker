@@ -23,7 +23,6 @@ define([
     snooker.drawTable = function () {
         this.table = new Table();
         this.table.build();
-        this.table.draw();
     };
 
     snooker.drawCues = function () {
@@ -127,10 +126,6 @@ define([
         }));
     };
 
-    snooker.refreshTable = function () {
-        snooker.table.draw();
-    };
-
     snooker.refreshBalls = function () {
         _.each(snooker.balls, function (ball) {
             // If the ball has not been removed, draw it
@@ -138,6 +133,10 @@ define([
                 ball.draw();
             }
         });
+    };
+
+    snooker.refreshTable = function () {
+        snooker.table.draw();
     };
 
     snooker.refreshViewPort = function () {

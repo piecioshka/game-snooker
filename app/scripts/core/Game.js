@@ -29,7 +29,6 @@ define([
         },
         loadResources: function (callback) {
             Game.resourceLoader = new ResourceLoader();
-            Game.resourceLoader.addResource("table", "textures/table.png", ResourceLoader.IMAGE);
 
             var colors = ['white', 'green', 'brown', 'yellow', 'blue', 'pink', 'red', 'black'];
 

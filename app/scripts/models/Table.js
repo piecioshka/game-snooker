@@ -20,11 +20,6 @@ define([
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = null;
-        /**
-         * Texture.
-         * @type {Image}
-         */
-        this.texture = null;
 
         this.initialize();
     }
@@ -43,8 +38,7 @@ define([
 
     Table.prototype = {
         initialize: function () {
-            var resource = Game.resourceLoader.getResource('table');
-            this.texture = resource.img;
+            // do smth...
         },
         build: function () {
             this.canvas = document.createElement('canvas');
@@ -74,7 +68,7 @@ define([
             body.appendChild(this.canvas);
         },
         draw: function () {
-            this.ctx.drawImage(this.texture, 0, 0, Table.WIDTH, Table.HEIGHT);
+           this.ctx.clearRect(0, 0, Table.WIDTH, Table.HEIGHT);
         }
     };
     return Table;

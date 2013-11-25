@@ -11,6 +11,7 @@ canvas {
     position: absolute;
     left: 50%;
     top: 50%;
+    background: url(../../textures/table.png) no-repeat center center;
 }
 
 #loading-panel {
