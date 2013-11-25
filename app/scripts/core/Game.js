@@ -24,7 +24,7 @@ define([
                 }
 
                 Game.status = Game.READY;
-                Game.currentBall = snooker.balls[0];
+                // Game.currentBall = snooker.balls[0];
             });
         },
         loadResources: function (callback) {

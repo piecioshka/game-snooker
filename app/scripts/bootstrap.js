@@ -1,8 +1,9 @@
 define([
     'core/snooker',
     'core/KeyHandler',
-    'core/Game'
-], function (snooker, KeyHandler, Game) {
+    'core/Game',
+    'core/Lines'
+], function (snooker, KeyHandler, Game, Lines) {
     'use strict';
 
     var stopEvent = function (e) {
@@ -21,7 +22,7 @@ define([
             snooker.drawBalls();
             // snooker.drawCues();
 
-            snooker.Lines.initialize({
+            Lines.initialize({
                 ctx: snooker.table.ctx
             });
 
@@ -45,7 +46,7 @@ define([
                 Events.bind(snooker.table.canvas, event, startAction);
             });
 
-            Events.bind(snooker.table.canvas, 'mousemove', snooker.Lines.draw);
+            Events.bind(snooker.table.canvas, 'mousemove', Lines.draw);
 
             _.each([
                 "mouseup", "touchend", "touchcancel",

@@ -47,82 +47,82 @@ define([
         var tableHeight = Table.HEIGHT;
         var ballRadius = Ball.RADIUS;
 
-        self.table.addBall(new Ball('white', ctx, {
+        snooker.balls.push(new Ball('white', ctx, {
             x: tableWidth * 0.225, y: tableHeight * 0.53
         }));
 
-        self.table.addBall(new Ball('green', ctx, {
+        snooker.balls.push(new Ball('green', ctx, {
             x: tableWidth * 0.265, y: tableHeight * 0.35
         }));
-        self.table.addBall(new Ball('brown', ctx, {
+        snooker.balls.push(new Ball('brown', ctx, {
             x: tableWidth * 0.265, y: tableHeight / 2 - ballRadius
         }));
-        self.table.addBall(new Ball('yellow', ctx, {
+        snooker.balls.push(new Ball('yellow', ctx, {
             x: tableWidth * 0.265, y: tableHeight * 0.6
         }));
-        self.table.addBall(new Ball('blue', ctx, {
+        snooker.balls.push(new Ball('blue', ctx, {
             x: tableWidth / 2 - ballRadius, y: tableHeight / 2 - ballRadius
         }));
-        self.table.addBall(new Ball('pink', ctx, {
+        snooker.balls.push(new Ball('pink', ctx, {
             x: tableWidth * 0.63, y: tableHeight / 2 - ballRadius
         }));
 
         // 1
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.67, y: tableHeight / 2 - ballRadius
         }));
 
         // 2
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.70, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.70, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius
         }));
 
         // 3
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius * 3 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.73, y: tableHeight / 2 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.73, y: tableHeight / 2 + ballRadius * 3 - ballRadius
         }));
 
         // 4
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 4.5 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.76, y: tableHeight / 2 - ballRadius * 1.5 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 1.5 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.76, y: tableHeight / 2 + ballRadius * 4.5 - ballRadius
         }));
 
         // 5
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 6 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius * 3 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.79, y: tableHeight / 2 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 3 - ballRadius
         }));
-        self.table.addBall(new Ball('red', ctx, {
+        snooker.balls.push(new Ball('red', ctx, {
             x: tableWidth * 0.79, y: tableHeight / 2 + ballRadius * 6 - ballRadius
         }));
 
-        self.table.addBall(new Ball('black', ctx, {
+        snooker.balls.push(new Ball('black', ctx, {
             x: tableWidth * 0.84, y: tableHeight / 2 - ballRadius
         }));
     };

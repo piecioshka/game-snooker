@@ -1,8 +1,7 @@
 define([
     'underscore',
-    'core/snooker',
     'core/Game'
-], function (_, snooker, Game) {
+], function (_, Game) {
     'use strict';
 
     /**
@@ -76,9 +75,6 @@ define([
         },
         draw: function () {
             this.ctx.drawImage(this.texture, 0, 0, Table.WIDTH, Table.HEIGHT);
-        },
-        addBall: function (ball) {
-            snooker.balls.push(ball);
         }
     };
     return Table;
