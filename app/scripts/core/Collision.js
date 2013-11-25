@@ -1,20 +1,21 @@
-(function (global) {
+define([
+    'underscore',
+    'core/snooker',
+    'models/Table',
+    'models/Ball'
+], function (_, snooker, Table, Ball) {
     'use strict';
-
-    // imports
-    var _ = global._;
-    var snooker = (global.snooker = global.snooker || {});
 
     function getBoardName(index) {
         return [undefined, 'left', 'top', 'right', 'bottom'][index];
     }
 
-    var tableWidth = snooker.Table.WIDTH;
-    var leftBoard = snooker.Table.LEFT_BOARD;
-    var topBoard = snooker.Table.TOP_BOARD;
-    var rightBoard = snooker.Table.RIGHT_BOARD;
-    var bottomBoard = snooker.Table.BOTTOM_BOARD;
-    var radius = snooker.Ball.RADIUS;
+    var tableWidth = Table.WIDTH;
+    var leftBoard = Table.LEFT_BOARD;
+    var topBoard = Table.TOP_BOARD;
+    var rightBoard = Table.RIGHT_BOARD;
+    var bottomBoard = Table.BOTTOM_BOARD;
+    var radius = Ball.RADIUS;
     var diameter = radius * 2;
 
     var pots = {
@@ -61,10 +62,10 @@
     function isTwoBallTouches(first, second) {
         var xAxisValue = Math.pow(Math.abs(first.position.x - second.position.x), 2);
         var yAxisValue = Math.pow(Math.abs(first.position.y - second.position.y), 2);
-        return Math.sqrt(xAxisValue + yAxisValue) <= (snooker.Ball.RADIUS * 2);
+        return Math.sqrt(xAxisValue + yAxisValue) <= (Ball.RADIUS * 2);
     }
 
-    snooker.Collision = {
+    var Collision = {
         isBallCollision: function (currentBall) {
             var collisionBall = null;
             _.each(snooker.balls, function (ball) {
@@ -85,17 +86,17 @@
             var y = pos.y;
             var state = 0;
 
-            if (x < snooker.Table.LEFT_BOARD) {
-                ball.position.x = snooker.Table.LEFT_BOARD;
+            if (x < Table.LEFT_BOARD) {
+                ball.position.x = Table.LEFT_BOARD;
                 state = 1;
-            } else if (y < snooker.Table.TOP_BOARD) {
-                ball.position.y = snooker.Table.TOP_BOARD;
+            } else if (y < Table.TOP_BOARD) {
+                ball.position.y = Table.TOP_BOARD;
                 state = 2;
-            } else if (x + (snooker.Ball.RADIUS * 2) > snooker.Table.RIGHT_BOARD) {
-                ball.position.x = snooker.Table.RIGHT_BOARD - (snooker.Ball.RADIUS * 2);
+            } else if (x + (Ball.RADIUS * 2) > Table.RIGHT_BOARD) {
+                ball.position.x = Table.RIGHT_BOARD - (Ball.RADIUS * 2);
                 state = 3;
-            } else if (y + (snooker.Ball.RADIUS * 2) > snooker.Table.BOTTOM_BOARD) {
-                ball.position.y = snooker.Table.BOTTOM_BOARD - (snooker.Ball.RADIUS * 2);
+            } else if (y + (Ball.RADIUS * 2) > Table.BOTTOM_BOARD) {
+                ball.position.y = Table.BOTTOM_BOARD - (Ball.RADIUS * 2);
                 state = 4;
             }
 
@@ -129,5 +130,6 @@
             return status;
         }
     };
+    return Collision;
+});
 
-}(this));

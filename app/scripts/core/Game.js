@@ -1,26 +1,13 @@
-(function (global) {
+define([
+    'underscore',
+    'events',
+    'core/snooker',
+    'core/Loader',
+    'core/ResourceLoader'
+], function (_, Events, snooker, Loader, ResourceLoader) {
     "use strict";
 
-    // imports
-    var _ = global._;
-    var snooker = (global.snooker = global.snooker || {});
-    var Loader = (global.Loader = global.Loader || {});
-
-    /**
-     * @see: http://webstuff.nfshost.com/anim-timing/Overview.html
-     */
-    global.requestAnimFrame = (function() {
-        return global.requestAnimationFrame    ||
-            global.webkitRequestAnimationFrame ||
-            global.mozRequestAnimationFrame    ||
-            global.oRequestAnimationFrame      ||
-            global.msRequestAnimationFrame     ||
-            function(/* function */ callback, /* DOMElement */ element) {
-                global.setTimeout(callback, 1000 / 60);
-            };
-    })();
-
-    var Game = global.Game = {
+    var Game = {
         resourceLoader: null,
         status: null,
         currentBall: null,
@@ -42,15 +29,15 @@
         },
         loadResources: function (callback) {
             Game.resourceLoader = new ResourceLoader();
-            Game.resourceLoader.addResource("table", "textures/table.png", ResourceType.IMAGE);
+            Game.resourceLoader.addResource("table", "textures/table.png", ResourceLoader.IMAGE);
 
             var colors = ['white', 'green', 'brown', 'yellow', 'blue', 'pink', 'red', 'black'];
 
             _.each(colors, function (ball) {
-                Game.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceType.IMAGE);
+                Game.resourceLoader.addResource("ball-" + ball, "textures/balls/" + ball + ".png", ResourceLoader.IMAGE);
             });
 
-            Game.resourceLoader.addResource("power", "textures/power.png", ResourceType.IMAGE);
+            Game.resourceLoader.addResource("power", "textures/power.png", ResourceLoader.IMAGE);
 
             var checkLoadedResource = setInterval(function () {
                 var loadingStatus = Game.resourceLoader.getPercentStatus();
@@ -98,4 +85,6 @@
      */
     Game.power = 0;
 
-}(this));
+    return Game;
+});
+

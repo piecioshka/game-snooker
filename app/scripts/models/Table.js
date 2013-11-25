@@ -1,17 +1,16 @@
-(function (global) {
+define([
+    'underscore',
+    'core/snooker',
+    'core/Game'
+], function (_, snooker, Game) {
     'use strict';
-
-    // imports
-    var document = global.document;
-    var _ = global._;
-    var snooker = (global.snooker = global.snooker || {});
 
     /**
      * @class
      * @constructor
-     * @this snooker.Table
+     * @this Table
      */
-    snooker.Table = function () {
+    function Table() {
         /**
          * Reference to global object.
          * @type {HTMLElement}
@@ -29,36 +28,36 @@
         this.texture = null;
 
         this.initialize();
-    };
+    }
 
     /**
      * Setup Table dimensions.
      * @type {number}
      */
-    snooker.Table.WIDTH = 410.5 * Game.SCALE;
-    snooker.Table.HEIGHT = 229.5 * Game.SCALE;
+    Table.WIDTH = 410.5 * Game.SCALE;
+    Table.HEIGHT = 229.5 * Game.SCALE;
 
-    snooker.Table.LEFT_BOARD = (snooker.Table.WIDTH - Game.WIDTH)/2;
-    snooker.Table.RIGHT_BOARD = snooker.Table.LEFT_BOARD + Game.WIDTH;
-    snooker.Table.TOP_BOARD = (snooker.Table.HEIGHT - Game.HEIGHT)/2;
-    snooker.Table.BOTTOM_BOARD = snooker.Table.TOP_BOARD + Game.HEIGHT;
+    Table.LEFT_BOARD = (Table.WIDTH - Game.WIDTH)/2;
+    Table.RIGHT_BOARD = Table.LEFT_BOARD + Game.WIDTH;
+    Table.TOP_BOARD = (Table.HEIGHT - Game.HEIGHT)/2;
+    Table.BOTTOM_BOARD = Table.TOP_BOARD + Game.HEIGHT;
 
-    snooker.Table.prototype = {
+    Table.prototype = {
         initialize: function () {
             var resource = Game.resourceLoader.getResource('table');
             this.texture = resource.img;
         },
         build: function () {
             this.canvas = document.createElement('canvas');
-            this.canvas.setAttribute('width', snooker.Table.WIDTH + 'px');
-            this.canvas.setAttribute('height', snooker.Table.HEIGHT + 'px');
+            this.canvas.setAttribute('width', Table.WIDTH + 'px');
+            this.canvas.setAttribute('height', Table.HEIGHT + 'px');
             this._render();
 
             _.extend(this.canvas.style, {
-                'width': snooker.Table.WIDTH + 'px',
-                'height': snooker.Table.HEIGHT + 'px',
-                'marginLeft': (-1 * snooker.Table.WIDTH / 2) + 'px',
-                'marginTop': (-1 * snooker.Table.HEIGHT / 2) + 'px'
+                'width': Table.WIDTH + 'px',
+                'height': Table.HEIGHT + 'px',
+                'marginLeft': (-1 * Table.WIDTH / 2) + 'px',
+                'marginTop': (-1 * Table.HEIGHT / 2) + 'px'
             });
 
             this.ctx = this.canvas.getContext('2d');
@@ -76,11 +75,12 @@
             body.appendChild(this.canvas);
         },
         draw: function () {
-            this.ctx.drawImage(this.texture, 0, 0, snooker.Table.WIDTH, snooker.Table.HEIGHT);
+            this.ctx.drawImage(this.texture, 0, 0, Table.WIDTH, Table.HEIGHT);
         },
         addBall: function (ball) {
             snooker.balls.push(ball);
         }
     };
+    return Table;
+});
 
-}(this));

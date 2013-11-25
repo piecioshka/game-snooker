@@ -1,8 +1,7 @@
-(function (global) {
+define([
+    'underscore'
+], function (_) {
     'use strict';
-
-    // imports
-    var _ = global._;
 
     /**
      * @class
@@ -13,9 +12,7 @@
         this.loadedResources = 0;
     }
 
-    var ResourceType = {
-        IMAGE: 1
-    };
+    ResourceLoader.IMAGE = 1;
 
     ResourceLoader.prototype = {
         addResource: function (name, url, type) {
@@ -39,7 +36,7 @@
             var self = this;
             _.each(this.resourcesList, function (resource, name) {
                 switch (resource.type) {
-                    case ResourceType.IMAGE:
+                    case ResourceLoader.IMAGE:
                         self.resourcesList[name].img = self._loadImage(resource.url);
                         break;
                 }
@@ -59,9 +56,5 @@
             return this.resourcesList[name] || null;
         }
     };
-
-    // exports
-    global.ResourceLoader = ResourceLoader;
-    global.ResourceType = ResourceType;
-
-}(this));
+    return ResourceLoader;
+});

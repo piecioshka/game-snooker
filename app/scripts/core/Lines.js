@@ -1,10 +1,10 @@
-(function (global) {
+define([
+    'core/snooker',
+    'models/Table'
+], function (snooker, Table) {
     'use strict';
 
-    // imports
-    var snooker = global.snooker;
-
-    var Lines = snooker.Lines = {
+    var Lines = {
         _ctx: null,
         MARGIN: -15,
         initialize: function (options) {
@@ -29,9 +29,9 @@
             ctx.lineWidth = '1';
             ctx.strokeStyle = '#3a3a3a';
             ctx.moveTo(cursor.x + Lines.MARGIN, 0);
-            ctx.lineTo(cursor.x + Lines.MARGIN, snooker.Table.HEIGHT);
+            ctx.lineTo(cursor.x + Lines.MARGIN, Table.HEIGHT);
             ctx.stroke();
-            ctx.closePath()
+            ctx.closePath();
         },
         drawHorizontalLine: function (cursor) {
             var ctx = Lines._ctx;
@@ -39,7 +39,7 @@
             ctx.lineWidth = '1';
             ctx.strokeStyle = '#3a3a3a';
             ctx.moveTo(0, cursor.y + Lines.MARGIN);
-            ctx.lineTo(snooker.Table.WIDTH, cursor.y + Lines.MARGIN);
+            ctx.lineTo(Table.WIDTH, cursor.y + Lines.MARGIN);
             ctx.stroke();
             ctx.closePath();
         },
@@ -53,5 +53,6 @@
             ctx.fillText('y: ' + (cursor.y + Lines.MARGIN), cursor.x + 55, cursor.y - boxHeight * 0.6);
         }
     };
+    return Lines;
+});
 
-}(this));

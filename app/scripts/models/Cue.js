@@ -1,26 +1,24 @@
-(function (global) {
+define([
+], function () {
     'use strict';
-
-    // imports
-    var snooker = (global.snooker = global.snooker || {});
 
     /**
      * @class
      * @constructor
-     * @this snooker.Cue
+     * @this Cue
      */
-    snooker.Cue = function () {
+    function Cue() {
         /**
          * Reference to global context.
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = null;
-    };
-    
-    snooker.Cue.WIDTH = 514;
-    snooker.Cue.HEIGHT = 4;
+    }
 
-    snooker.Cue.prototype = {
+    Cue.WIDTH = 514;
+    Cue.HEIGHT = 4;
+
+    Cue.prototype = {
         /**
          * @param {CanvasRenderingContext2D} ctx
          * @param {Object} position
@@ -37,24 +35,26 @@
             var y = position.y || 50;
 
             ctx.fillStyle = 'black';
-            ctx.fillRect(x, y, 150, snooker.Cue.HEIGHT);
-            ctx.strokeRect(x, y, 150, snooker.Cue.HEIGHT);
+            ctx.fillRect(x, y, 150, Cue.HEIGHT);
+            ctx.strokeRect(x, y, 150, Cue.HEIGHT);
 
             ctx.fillStyle = 'brown';
-            ctx.fillRect(x + 150, y, 250, snooker.Cue.HEIGHT);
-            ctx.strokeRect(x + 150, y, 250, snooker.Cue.HEIGHT);
+            ctx.fillRect(x + 150, y, 250, Cue.HEIGHT);
+            ctx.strokeRect(x + 150, y, 250, Cue.HEIGHT);
 
             ctx.fillStyle = 'black';
-            ctx.fillRect(x + 400, y, 10, snooker.Cue.HEIGHT);
-            ctx.strokeRect(x + 400, y, 10, snooker.Cue.HEIGHT);
+            ctx.fillRect(x + 400, y, 10, Cue.HEIGHT);
+            ctx.strokeRect(x + 400, y, 10, Cue.HEIGHT);
 
             ctx.fillStyle = 'white';
-            ctx.fillRect(x + 410, y, 4, snooker.Cue.HEIGHT);
-            ctx.strokeRect(x + 410, y, 4, snooker.Cue.HEIGHT);
+            ctx.fillRect(x + 410, y, 4, Cue.HEIGHT);
+            ctx.strokeRect(x + 410, y, 4, Cue.HEIGHT);
 
             ctx.restore();
             return this;
         }
     };
 
-}(this));
+    return Cue;
+});
+

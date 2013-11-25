@@ -1,9 +1,9 @@
-(function (global) {
+define([
+    'core/snooker',
+    'core/KeyHandler',
+    'core/Game'
+], function (snooker, KeyHandler, Game) {
     'use strict';
-
-    // imports
-    var snooker = global.snooker;
-    var KeyHandler = global.KeyHandler;
 
     var stopEvent = function (e) {
         if (!e) return;
@@ -57,5 +57,11 @@
         });
     }
 
-    Events.ready(bootstrap);
-}(this));
+    return {
+        setup: function () {
+            bootstrap();
+        }
+    };
+
+});
+

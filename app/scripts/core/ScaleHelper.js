@@ -1,8 +1,7 @@
-(function (global) {
+define([
+    'core/Game'
+], function (Game) {
     'use strict';
-
-    // imports
-    var Game = (global.Game = global.Game || {});
 
     /**
      * @class
@@ -49,8 +48,6 @@
             }
         }
     };
+    return ScaleHelper;
+});
 
-    // exports
-    global.ScaleHelper = ScaleHelper;
-
-}(this));

@@ -1,13 +1,11 @@
-(function (global) {
+define([
+], function () {
     'use strict';
-
-    // imports
-    var document = global.document;
 
     var $loading = null;
     var $loader = null;
 
-    global.Loader = {
+    var Loader = {
         LOADING_PLACE_HOLDER_ID: 'loading-panel',
         LOADING_PROGRESS_PLACE_HOLDER_ID: 'loader',
 
@@ -26,4 +24,6 @@
             $loader.style.width = (percent / 100 * 300) + "px";
         }
     };
-}(this));
+    return Loader;
+});
+

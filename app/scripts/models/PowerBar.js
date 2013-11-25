@@ -1,15 +1,15 @@
-(function (global) {
+define([
+    'models/Ball',
+    'core/Game'
+], function (Ball, Game) {
     'use strict';
-
-    // imports
-    var snooker = (global.snooker = global.snooker || {});
 
     /**
      * @class
      * @constructor
-     * @this snooker.PowerBar
+     * @this PowerBar
      */
-    snooker.PowerBar = function () {
+    function PowerBar() {
         this.position = {
             x: null,
             y: null
@@ -21,16 +21,16 @@
         this.texture = null;
 
         this.initialize();
-    };
+    }
 
-    snooker.PowerBar.prototype = {
+    PowerBar.prototype = {
         initialize: function () {
             var resource = Game.resourceLoader.getResource('power');
             this.texture = resource.img;
         },
         update: function (ball, power) {
             var ctx = ball.ctx;
-            var ballRadius = snooker.Ball.RADIUS;
+            var ballRadius = Ball.RADIUS;
 
             this.position.x = ball.position.x - ballRadius / 2;
             this.position.y = ball.position.y - 10;
@@ -59,5 +59,6 @@
             ctx.drawImage(this.texture, sx, sy, sw, sh, dx, dy, dw, dh);
         }
     };
+    return PowerBar;
+});
 
-}(this));
