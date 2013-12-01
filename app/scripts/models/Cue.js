@@ -15,9 +15,6 @@ define([
         this.ctx = null;
     }
 
-    Cue.WIDTH = 514;
-    Cue.HEIGHT = 4;
-
     Cue.prototype = {
         /**
          * @param {CanvasRenderingContext2D} ctx
@@ -35,20 +32,20 @@ define([
             var y = position.y || 50;
 
             ctx.fillStyle = 'black';
-            ctx.fillRect(x, y, 150, Cue.HEIGHT);
-            ctx.strokeRect(x, y, 150, Cue.HEIGHT);
+            ctx.fillRect(x, y, 150, CUE_HEIGHT);
+            ctx.strokeRect(x, y, 150, CUE_HEIGHT);
 
             ctx.fillStyle = 'brown';
-            ctx.fillRect(x + 150, y, 250, Cue.HEIGHT);
-            ctx.strokeRect(x + 150, y, 250, Cue.HEIGHT);
+            ctx.fillRect(x + 150, y, 250, CUE_HEIGHT);
+            ctx.strokeRect(x + 150, y, 250, CUE_HEIGHT);
 
             ctx.fillStyle = 'black';
-            ctx.fillRect(x + 400, y, 10, Cue.HEIGHT);
-            ctx.strokeRect(x + 400, y, 10, Cue.HEIGHT);
+            ctx.fillRect(x + 400, y, 10, CUE_HEIGHT);
+            ctx.strokeRect(x + 400, y, 10, CUE_HEIGHT);
 
             ctx.fillStyle = 'white';
-            ctx.fillRect(x + 410, y, 4, Cue.HEIGHT);
-            ctx.strokeRect(x + 410, y, 4, Cue.HEIGHT);
+            ctx.fillRect(x + 410, y, 4, CUE_HEIGHT);
+            ctx.strokeRect(x + 410, y, 4, CUE_HEIGHT);
 
             ctx.restore();
             return this;

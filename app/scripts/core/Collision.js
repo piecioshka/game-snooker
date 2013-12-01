@@ -1,21 +1,19 @@
 define([
     'underscore',
-    'core/snooker',
-    'models/Table',
-    'models/Ball'
-], function (_, snooker, Table, Ball) {
+    'core/snooker'
+], function (_, snooker) {
     'use strict';
 
     function getBoardName(index) {
         return [undefined, 'left', 'top', 'right', 'bottom'][index];
     }
 
-    var tableWidth = Table.WIDTH;
-    var leftBoard = Table.LEFT_BOARD;
-    var topBoard = Table.TOP_BOARD;
-    var rightBoard = Table.RIGHT_BOARD;
-    var bottomBoard = Table.BOTTOM_BOARD;
-    var radius = Ball.RADIUS;
+    var tableWidth = TABLE_WIDTH;
+    var leftBoard = TABLE_LEFT_BOARD;
+    var topBoard = TABLE_TOP_BOARD;
+    var rightBoard = TABLE_RIGHT_BOARD;
+    var bottomBoard = TABLE_BOTTOM_BOARD;
+    var radius = BALL_RADIUS;
     var diameter = radius * 2;
 
     var pots = {
@@ -62,7 +60,7 @@ define([
     function isTwoBallTouches(first, second) {
         var xAxisValue = Math.pow(Math.abs(first.position.x - second.position.x), 2);
         var yAxisValue = Math.pow(Math.abs(first.position.y - second.position.y), 2);
-        return Math.sqrt(xAxisValue + yAxisValue) <= (Ball.RADIUS * 2);
+        return Math.sqrt(xAxisValue + yAxisValue) <= (BALL_RADIUS * 2);
     }
 
     var Collision = {
@@ -86,17 +84,17 @@ define([
             var y = pos.y;
             var state = 0;
 
-            if (x < Table.LEFT_BOARD) {
-                ball.position.x = Table.LEFT_BOARD;
+            if (x < TABLE_LEFT_BOARD) {
+                ball.position.x = TABLE_LEFT_BOARD;
                 state = 1;
-            } else if (y < Table.TOP_BOARD) {
-                ball.position.y = Table.TOP_BOARD;
+            } else if (y < TABLE_TOP_BOARD) {
+                ball.position.y = TABLE_TOP_BOARD;
                 state = 2;
-            } else if (x + (Ball.RADIUS * 2) > Table.RIGHT_BOARD) {
-                ball.position.x = Table.RIGHT_BOARD - (Ball.RADIUS * 2);
+            } else if (x + (BALL_RADIUS * 2) > TABLE_RIGHT_BOARD) {
+                ball.position.x = TABLE_RIGHT_BOARD - (BALL_RADIUS * 2);
                 state = 3;
-            } else if (y + (Ball.RADIUS * 2) > Table.BOTTOM_BOARD) {
-                ball.position.y = Table.BOTTOM_BOARD - (Ball.RADIUS * 2);
+            } else if (y + (BALL_RADIUS * 2) > TABLE_BOTTOM_BOARD) {
+                ball.position.y = TABLE_BOTTOM_BOARD - (BALL_RADIUS * 2);
                 state = 4;
             }
 

@@ -29,7 +29,7 @@ define([
             ctx.lineWidth = '1';
             ctx.strokeStyle = '#3a3a3a';
             ctx.moveTo(cursor.x + Lines.MARGIN, 0);
-            ctx.lineTo(cursor.x + Lines.MARGIN, Table.HEIGHT);
+            ctx.lineTo(cursor.x + Lines.MARGIN, TABLE_HEIGHT);
             ctx.stroke();
             ctx.closePath();
         },
@@ -39,7 +39,7 @@ define([
             ctx.lineWidth = '1';
             ctx.strokeStyle = '#3a3a3a';
             ctx.moveTo(0, cursor.y + Lines.MARGIN);
-            ctx.lineTo(Table.WIDTH, cursor.y + Lines.MARGIN);
+            ctx.lineTo(TABLE_WIDTH, cursor.y + Lines.MARGIN);
             ctx.stroke();
             ctx.closePath();
         },

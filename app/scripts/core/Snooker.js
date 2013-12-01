@@ -42,9 +42,9 @@ define([
         var self = this;
         var ctx = self.table.ctx;
 
-        var tableWidth = Table.WIDTH;
-        var tableHeight = Table.HEIGHT;
-        var ballRadius = Ball.RADIUS;
+        var tableWidth = TABLE_WIDTH;
+        var tableHeight = TABLE_HEIGHT;
+        var ballRadius = BALL_RADIUS;
 
         snooker.balls.push(new Ball('white', ctx, {
             x: tableWidth * 0.225, y: tableHeight * 0.53
@@ -129,7 +129,7 @@ define([
     snooker.refreshBalls = function () {
         _.each(snooker.balls, function (ball) {
             // If the ball has not been removed, draw it
-            if (ball.status !== Ball.REMOVED) {
+            if (ball.status !== BALL_REMOVED) {
                 ball.draw();
             }
         });

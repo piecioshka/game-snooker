@@ -1,7 +1,6 @@
 define([
-    'models/Ball',
     'core/Game'
-], function (Ball, Game) {
+], function (Game) {
     'use strict';
 
     /**
@@ -30,26 +29,25 @@ define([
         },
         update: function (ball, power) {
             var ctx = ball.ctx;
-            var ballRadius = Ball.RADIUS;
 
-            this.position.x = ball.position.x - ballRadius / 2;
+            this.position.x = ball.position.x - BALL_RADIUS / 2;
             this.position.y = ball.position.y - 10;
 
             var sx = 0,
                 sy = 0,
-                sw = ballRadius * 3 * power / 100,
-                sh = ballRadius / 3,
+                sw = BALL_RADIUS * 3 * power / 100,
+                sh = BALL_RADIUS / 3,
                 dx = this.position.x,
                 dy = this.position.y,
-                dw = ballRadius * 3 * power / 100,
-                dh = ballRadius / 3;
+                dw = BALL_RADIUS * 3 * power / 100,
+                dh = BALL_RADIUS / 3;
 
             /**
              * Add thin border around power bar.
              * @type {string}
              */
             ctx.fillStyle = 'green';
-            ctx.fillRect(dx - 1, dy - 1, ballRadius * 3, dh + 2);
+            ctx.fillRect(dx - 1, dy - 1, BALL_RADIUS * 3, dh + 2);
 
             var maxWidth = this.texture.width;
 

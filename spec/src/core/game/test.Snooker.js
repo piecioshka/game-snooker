@@ -19,13 +19,13 @@ describe("Snooker Game", function() {
         });
 
         it("create smaller balls than table", function () {
-            expect(snooker.Ball.RADIUS).toBeLessThan(snooker.Table.WIDTH);
-            expect(snooker.Ball.RADIUS).toBeLessThan(snooker.Table.HEIGHT);
+            expect(BALL_RADIUS).toBeLessThan(TABLE_WIDTH);
+            expect(BALL_RADIUS).toBeLessThan(TABLE_HEIGHT);
         });
 
         it("create smaller cue than table", function () {
-            expect(snooker.Cue.WIDTH).toBeLessThan(snooker.Table.WIDTH);
-            expect(snooker.Cue.HEIGHT).toBeLessThan(snooker.Table.HEIGHT);
+            expect(CUE_WIDTH).toBeLessThan(TABLE_WIDTH);
+            expect(CUE_HEIGHT).toBeLessThan(TABLE_HEIGHT);
         });
     });
 });

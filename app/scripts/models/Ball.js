@@ -2,8 +2,9 @@ define([
     'underscore',
     'core/snooker',
     'core/Game',
+    'core/Collision',
     'models/PowerBar'
-], function (_, snooker, Game, PowerBar) {
+], function (_, snooker, Game, Collision, PowerBar) {
     'use strict';
 
     /**
@@ -54,7 +55,7 @@ define([
          * Current ball status.
          * @type {number}
          */
-        this.status = Ball.READY;
+        this.status = BALL_READY;
         /**
          * The power bar.
          * @type {PowerBar}
@@ -64,24 +65,15 @@ define([
         this.initialize();
     }
 
-    Ball.READY = 0;
-    Ball.MOVING = 1;
-    Ball.REMOVED = 2;
-
-    /**
-     * Setup Ball dimensions.
-     * @type {number}
-     */
-    Ball.RADIUS = 5.25 * Game.SCALE;
-
     Ball.prototype = {
         initialize: function () {
             var resource = Game.resourceLoader.getResource('ball-' + this.color);
             this.texture = resource.img;
             this.draw();
+            this.setCurrent();
         },
         draw: function () {
-            var ballDiameter = Ball.RADIUS * 2;
+            var ballDiameter = BALL_RADIUS * 2;
             var pos = this.position;
             this.ctx.drawImage(this.texture, pos.x, pos.y, ballDiameter, ballDiameter);
         },
@@ -92,7 +84,7 @@ define([
         animate: function (cursorDelta) {
             var self = this;
 
-            this.status = Ball.MOVING;
+            this.status = BALL_MOVING;
 
             function loop() {
                 self.position.x += (self.velocity.x = cursorDelta.x * Game.power);
@@ -102,7 +94,7 @@ define([
                     Math.abs(self.velocity.x) <= 0.1 &&
                     Math.abs(self.velocity.y) <= 0.1
                 ) {
-                    self.status = Ball.READY;
+                    self.status = BALL_READY;
                     return;
                 }
 
@@ -118,7 +110,7 @@ define([
 
                 // 2) check pot collision
                 if (Collision.isPotCollision(direction, self)) {
-                    self.status = Ball.REMOVED;
+                    self.status = BALL_REMOVED;
                     snooker.refreshViewPort();
                     return;
                 }
@@ -145,6 +137,11 @@ define([
         },
         updatePowerBar: function (percentPower) {
             this.powerBar.update(this, percentPower);
+        },
+        setCurrent: function () {
+            if (_.isNull(Game.currentBall)) {
+                Game.currentBall = this;
+            }
         }
     };
 
