@@ -14,3 +14,7 @@
 
 * ~~use mouse wheel, to scale game area~~ - currently disabled
 * use mouse to change ball velocity (only white ball for now)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/piecioshka/snooker/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
