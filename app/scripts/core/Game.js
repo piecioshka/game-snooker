@@ -15,8 +15,6 @@ define([
 
         status: null,
 
-        currentBall: null,
-
         /**
          * Power of shot.
          * @type {number}

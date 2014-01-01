@@ -1,31 +1,40 @@
 define([
-], function () {
+    'underscore'
+], function (_) {
     'use strict';
+
+    function getWhiteBall() {
+        return _.findWhere(Game.balls, { color: "white" });
+    }
 
     var KeyHandler = {
         mouseDown: function () {
-            // If current ball in during animation do nothing.
-            if (Game.currentBall.status !== BALL_READY) return;
+            var whiteBall = getWhiteBall();
 
-            if (Game.power === GAME_MIN_POWER) {
-                Game.power = GAME_STRENGTH;
+            // if white ball in during animation do nothing
+            if (whiteBall.status !== BALL_READY) return;
+
+            if (whiteBall.power === GAME_MIN_POWER) {
+                whiteBall.power = GAME_STRENGTH;
             } else {
-                Game.power += GAME_STRENGTH;
+                whiteBall.power += GAME_STRENGTH;
             }
 
             // Limit to maximum power in game.
-            if (Game.power > GAME_MAX_POWER) {
-                Game.power = GAME_MAX_POWER;
+            if (whiteBall.power > GAME_MAX_POWER) {
+                whiteBall.power = GAME_MAX_POWER;
             }
 
-            var powerView = +(Game.power * 100 / GAME_MAX_POWER);
-            Game.currentBall.updatePowerBar(powerView);
+            var powerView = +(whiteBall.power * 100 / GAME_MAX_POWER);
+            whiteBall.updatePowerBar(powerView);
         },
         mouseUp: function (e) {
-            // If current ball in during animation do nothing.
-            if (Game.currentBall.status !== BALL_READY) return;
+            var whiteBall = getWhiteBall();
 
-            var pos = Game.currentBall.position;
+            // if current ball in during animation do nothing.
+            if (whiteBall.status !== BALL_READY) return;
+
+            var pos = whiteBall.position;
             var radius = BALL_RADIUS;
 
             var eO = e.eventObject();
@@ -45,7 +54,7 @@ define([
                 y: (pos.y + radius - cursor.y) / 100
             };
 
-            Game.currentBall.move(velocity);
+            whiteBall.move(velocity);
         }
     };
     return KeyHandler;

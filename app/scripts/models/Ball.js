@@ -60,6 +60,11 @@ define([
          */
         this.powerBar = new PowerBar(this);
 
+        /**
+         * Hit power
+         */
+        this.power = 0;
+
         this.initialize();
     }
 
@@ -68,7 +73,6 @@ define([
             var resource = Game.resourceLoader.getResource('ball-' + this.color);
             this.texture = resource.img;
             this.draw();
-            this.setCurrent();
         },
         draw: function () {
             var ballDiameter = BALL_RADIUS * 2;
@@ -80,19 +84,23 @@ define([
             this.animate(cursorPosition);
         },
         animate: function (cursorDelta) {
+            console.log('-- animate ball *' +  this.color + '* to position: ', cursorDelta);
             var self = this;
 
             this.status = BALL_MOVING;
 
             function loop() {
-                self.position.x += (self.velocity.x = cursorDelta.x * Game.power);
-                self.position.y += (self.velocity.y = cursorDelta.y * Game.power);
+                requestAnimFrame(loop);
+
+                self.position.x += (self.velocity.x = cursorDelta.x * self.power);
+                self.position.y += (self.velocity.y = cursorDelta.y * self.power);
 
                 if (
                     Math.abs(self.velocity.x) <= 0.1 &&
                     Math.abs(self.velocity.y) <= 0.1
                 ) {
                     self.status = BALL_READY;
+                    self.velocity.x = self.velocity.y = 0;
                     return;
                 }
 
@@ -110,36 +118,40 @@ define([
                 if (Collision.isPotCollision(direction, self)) {
                     self.status = BALL_REMOVED;
                     Game.refreshViewPort();
+
+                    // if this ball is white restart game
+                    if (self.color === 'white') {
+                        alert('Oops! White ball inside pot');
+                        location.reload();
+                    }
                     return;
                 }
 
                 // 3) check collision with other ball
                 var collisionBall = Collision.isBallCollision(self);
-                // Disable undone resolve collision
-                if (0 && collisionBall) {
+                if (collisionBall) {
                     collisionBall.animate({
-                        x: cursorDelta.x * 0.95,
-                        y: cursorDelta.y * 0.95
+                        x: cursorDelta.x * self.power,
+                        y: cursorDelta.y * self.power
                     });
                 }
 
                 Game.refreshViewPort();
 
-                // Slower...
-                Game.power *= 0.95;
+                // ball slower
+                self.power *= 0.95;
 
-                requestAnimFrame(loop);
+                // safety value
+                if (Math.abs(self.power) <= 0.1) {
+                    self.power = 0;
+                    return;
+                }
             }
 
             requestAnimFrame(loop);
         },
         updatePowerBar: function (percentPower) {
             this.powerBar.update(this, percentPower);
-        },
-        setCurrent: function () {
-            if (_.isNull(Game.currentBall)) {
-                Game.currentBall = this;
-            }
         }
     };
     return Ball;
