@@ -40,9 +40,12 @@ window.GAME_LOADING = 1;
 
 window.GAME_WIDTH =  356.9 * GAME_SCALE;
 window.GAME_HEIGHT = 177.8 * GAME_SCALE;
+
+// Game hit limits
+
 window.GAME_STRENGTH = 1;
 window.GAME_MIN_POWER = 0;
-window.GAME_MAX_POWER = 40;
+window.GAME_MAX_POWER = 60;
 
 // Table
 
@@ -56,11 +59,13 @@ window.TABLE_BOTTOM_BOARD = TABLE_TOP_BOARD + GAME_HEIGHT;
 
 // Ball
 
+window.BALL_RADIUS = 5.25 * GAME_SCALE;
+
+// Ball states
+
 window.BALL_READY = 0;
 window.BALL_MOVING = 1;
 window.BALL_REMOVED = 2;
-
-window.BALL_RADIUS = 5.25 * GAME_SCALE;
 
 // Cue
 

@@ -35,6 +35,12 @@ define([
          */
         balls: [],
 
+        /**
+         * Cue of game.
+         * @type {Cue}
+         */
+        cue: null,
+
         initialize: function (callback) {
             Game.status = GAME_LOADING;
 
@@ -80,16 +86,10 @@ define([
             this.table.build();
         },
 
-        drawCues: function () {
-            var ctx = this.table.ctx;
-            var tableHeight = Table.HEIGHT;
-
-            new Cue().create(ctx, {
-                x: 170, y: tableHeight * 0.15
-            });
-
-            new Cue().create(ctx, {
-                x: 170, y: tableHeight * 0.85
+        drawCue: function () {
+            this.cue = new Cue();
+            this.cue.create(this.table.ctx, {
+                x: 270, y: TABLE_HEIGHT * 0.15
             });
         },
 
@@ -194,9 +194,14 @@ define([
             this.table.draw();
         },
 
+        refreshCue: function () {
+            this.cue.draw();
+        },
+
         refreshViewPort: function () {
             this.refreshTable();
             this.refreshBalls();
+            this.refreshCue();
         }
     };
 

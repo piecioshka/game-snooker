@@ -138,8 +138,8 @@ define([
                 // 3) check collision with other ball
                 var collisionBall = Collision.isBallCollision(self);
                 if (collisionBall) {
-                    // collision ball the same power as white ball
-                    collisionBall.power = self.power * 0.8;
+                    // collision ball the same power as hitted ball
+                    collisionBall.power = self.power;
 
                     // moving collision ball
                     collisionBall.animate({
@@ -147,8 +147,19 @@ define([
                         y: cursorDelta.y
                     });
 
-                    // white ball decrease power hit
-                    self.power *= 0.4;
+                    // hitted ball decrease power hit
+                    self.power *= 0.5;
+
+                    if (self.power < 20) {
+                        if (Math.abs(self.velocity.x) >= 0.1) {
+                            cursorDelta.x *= -1;
+                            self.power *= 0.3;
+                        }
+                        if (Math.abs(self.velocity.y) >= 0.1) {
+                            cursorDelta.y *= -1;
+                            self.power *= 0.3;
+                        }
+                    }
                 }
 
                 Game.refreshViewPort();

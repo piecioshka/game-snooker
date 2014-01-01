@@ -13,6 +13,10 @@ define([
          * @type {CanvasRenderingContext2D}
          */
         this.ctx = null;
+
+        this.position = {
+            x: 0, y: 0
+        };
     }
 
     Cue.prototype = {
@@ -28,8 +32,8 @@ define([
             this.ctx = ctx;
             ctx.save();
 
-            var x = position.x || 100;
-            var y = position.y || 50;
+            var x = this.position.x = position.x;
+            var y = this.position.y = position.y;
 
             ctx.fillStyle = 'black';
             ctx.fillRect(x, y, 150, CUE_HEIGHT);
@@ -48,7 +52,9 @@ define([
             ctx.strokeRect(x + 410, y, 4, CUE_HEIGHT);
 
             ctx.restore();
-            return this;
+        },
+        draw: function () {
+            this.create(this.ctx, this.position);
         }
     };
     return Cue;

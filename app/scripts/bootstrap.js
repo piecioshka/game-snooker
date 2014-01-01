@@ -19,7 +19,7 @@ define([
         Game.initialize(function () {
             Game.drawTable();
             Game.drawBalls();
-            // Game.drawCues();
+            Game.drawCue();
 
             Lines.initialize({
                 ctx: Game.table.ctx
