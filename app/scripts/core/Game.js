@@ -11,21 +11,23 @@ define([
     "use strict";
 
     var Game = {
+        /**
+         * Instance of ResourceLoader.
+         * @type {ResourceLoader}
+         */
         resourceLoader: null,
 
-        status: null,
-
         /**
-         * Power of shot.
+         * Current state of game.
          * @type {number}
          */
-        power: 0,
+        status: null,
 
         /**
          * Table of game, in snooker is all playing area.
          * @type {Table}
          */
-        table:  null,
+        table: null,
 
         /**
          * List of balls.

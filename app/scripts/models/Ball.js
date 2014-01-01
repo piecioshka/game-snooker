@@ -61,7 +61,8 @@ define([
         this.powerBar = new PowerBar(this);
 
         /**
-         * Hit power
+         * Hit power.
+         * @type {number}
          */
         this.power = 0;
 
@@ -84,14 +85,11 @@ define([
             this.animate(cursorPosition);
         },
         animate: function (cursorDelta) {
-            console.log('-- animate ball *' +  this.color + '* to position: ', cursorDelta);
             var self = this;
 
             this.status = BALL_MOVING;
 
             function loop() {
-                requestAnimFrame(loop);
-
                 self.position.x += (self.velocity.x = cursorDelta.x * self.power);
                 self.position.y += (self.velocity.y = cursorDelta.y * self.power);
 
@@ -121,7 +119,6 @@ define([
 
                     // if this ball is white restart game
                     if (self.color === 'white') {
-                        alert('Oops! White ball inside pot');
                         location.reload();
                     }
                     return;
@@ -130,10 +127,17 @@ define([
                 // 3) check collision with other ball
                 var collisionBall = Collision.isBallCollision(self);
                 if (collisionBall) {
+                    // collision ball the same power as white ball
+                    collisionBall.power = self.power * 0.8;
+
+                    // moving collision ball
                     collisionBall.animate({
-                        x: cursorDelta.x * self.power,
-                        y: cursorDelta.y * self.power
+                        x: cursorDelta.x,
+                        y: cursorDelta.y
                     });
+
+                    // white ball decrease power hit
+                    self.power *= 0.4;
                 }
 
                 Game.refreshViewPort();
@@ -142,10 +146,13 @@ define([
                 self.power *= 0.95;
 
                 // safety value
-                if (Math.abs(self.power) <= 0.1) {
+                if (Math.abs(self.power) <= 0.3) {
+                    self.status = BALL_READY;
                     self.power = 0;
                     return;
                 }
+
+                requestAnimFrame(loop);
             }
 
             requestAnimFrame(loop);

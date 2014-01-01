@@ -25,7 +25,7 @@ define([
                 whiteBall.power = GAME_MAX_POWER;
             }
 
-            var powerView = +(whiteBall.power * 100 / GAME_MAX_POWER);
+            var powerView = ~~(whiteBall.power * 100 / GAME_MAX_POWER);
             whiteBall.updatePowerBar(powerView);
         },
         mouseUp: function (e) {
