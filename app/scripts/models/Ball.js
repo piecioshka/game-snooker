@@ -93,6 +93,8 @@ define([
                 self.position.x += (self.velocity.x = cursorDelta.x * self.power);
                 self.position.y += (self.velocity.y = cursorDelta.y * self.power);
 
+/*****************************************************************************/
+
                 if (
                     Math.abs(self.velocity.x) <= 0.1 &&
                     Math.abs(self.velocity.y) <= 0.1
@@ -101,6 +103,18 @@ define([
                     self.velocity.x = self.velocity.y = 0;
                     return;
                 }
+
+                // ball slower
+                self.power *= 0.95;
+
+                // safety value
+                if (Math.abs(self.power) <= 0.3) {
+                    self.status = BALL_READY;
+                    self.power = 0;
+                    return;
+                }
+
+/*****************************************************************************/
 
                 // 1) check board collision
                 var direction = Collision.isBoardCollision(self);
@@ -114,15 +128,10 @@ define([
 
                 // 2) check pot collision
                 if (Collision.isPotCollision(direction, self)) {
-                    console.warn('*' + self.color + '* in pot!');
+                    console.warn('*' + self.color + '-' + self.id + '* in pot!');
 
                     self.status = BALL_REMOVED;
                     Game.refreshViewPort();
-
-                    // if this ball is white restart game
-                    if (self.color === 'white') {
-                        location.reload();
-                    }
                     return;
                 }
 
@@ -143,16 +152,6 @@ define([
                 }
 
                 Game.refreshViewPort();
-
-                // ball slower
-                self.power *= 0.95;
-
-                // safety value
-                if (Math.abs(self.power) <= 0.3) {
-                    self.status = BALL_READY;
-                    self.power = 0;
-                    return;
-                }
 
                 requestAnimFrame(loop);
             }

@@ -73,7 +73,7 @@ define([
             });
 
             if (collisionBall) {
-                Events.log('collision with *' + collisionBall.color + ' (id: ' + collisionBall.id + ') * ball');
+                console.log('BALL COLLISION: ' + currentBall.color + '-' + currentBall.id + ' <=> ' + collisionBall.color + '-' + collisionBall.id);
             }
             return collisionBall;
         },
@@ -98,7 +98,7 @@ define([
             }
 
             if (state) {
-                Events.log('collision with *' + getBoardName(state) + '* board', ball.position);
+                console.log('BOARD COLLISION: ' + ball.color + '-' + ball.id + ' <=> ' + getBoardName(state) + ' board');
             }
             return state;
         },
@@ -122,7 +122,7 @@ define([
             });
 
             if (status) {
-                Events.log('collision with *' + collisionPot + '* pot');
+                console.log('POT COLLISION: ' + ball.color + '-' + ball.id + ' <=> ' + collisionPot + ' pot');
             }
             return status;
         }
