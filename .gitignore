@@ -2,3 +2,6 @@
 .idea/
 nbproject/
 .settings/
+
+# project files
+dist
