@@ -114,6 +114,8 @@ define([
 
                 // 2) check pot collision
                 if (Collision.isPotCollision(direction, self)) {
+                    console.warn('*' + self.color + '* in pot!');
+
                     self.status = BALL_REMOVED;
                     Game.refreshViewPort();
 
