@@ -1,12 +1,11 @@
 define([
-    'core/snooker',
     'models/Table'
-], function (snooker, Table) {
+], function (Table) {
     'use strict';
 
     var Lines = {
         _ctx: null,
-        MARGIN: -15,
+        MARGIN: 0,
         initialize: function (options) {
             this._ctx = options.ctx;
         },
@@ -17,7 +16,7 @@ define([
                 y: e.offsetY || eO.offsetY || eO.layerY
             };
 
-            snooker.refreshViewPort();
+            Game.refreshViewPort();
 
             Lines.drawVerticalLine(cursor);
             Lines.drawHorizontalLine(cursor);
@@ -55,4 +54,3 @@ define([
     };
     return Lines;
 });
-

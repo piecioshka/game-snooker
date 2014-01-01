@@ -26,4 +26,3 @@ define([
     };
     return Loader;
 });
-

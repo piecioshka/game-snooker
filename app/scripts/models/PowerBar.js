@@ -1,6 +1,5 @@
 define([
-    'core/Game'
-], function (Game) {
+], function () {
     'use strict';
 
     /**
@@ -59,4 +58,3 @@ define([
     };
     return PowerBar;
 });
-

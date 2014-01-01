@@ -70,5 +70,7 @@ window.CUE_HEIGHT = 4;
 require([
     'bootstrap'
 ], function (Bootstrap) {
-    Bootstrap.setup();
+    Bootstrap.setup(function (Game) {
+        window.Game = Game;
+    });
 });

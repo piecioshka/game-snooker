@@ -51,7 +51,5 @@ define([
             return this;
         }
     };
-
     return Cue;
 });
-

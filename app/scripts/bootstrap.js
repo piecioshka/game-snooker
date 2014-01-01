@@ -1,9 +1,8 @@
 define([
-    'core/snooker',
     'core/KeyHandler',
     'core/Game',
     'core/Lines'
-], function (snooker, KeyHandler, Game, Lines) {
+], function (KeyHandler, Game, Lines) {
     'use strict';
 
     var stopEvent = function (e) {
@@ -18,12 +17,12 @@ define([
 
     function bootstrap() {
         Game.initialize(function () {
-            snooker.drawTable();
-            snooker.drawBalls();
-            // snooker.drawCues();
+            Game.drawTable();
+            Game.drawBalls();
+            // Game.drawCues();
 
             Lines.initialize({
-                ctx: snooker.table.ctx
+                ctx: Game.table.ctx
             });
 
             var interval;
@@ -43,24 +42,25 @@ define([
             _.each([
                 "mousedown", "touchstart", "dragstart"
             ], function (event) {
-                Events.bind(snooker.table.canvas, event, startAction);
+                Events.bind(Game.table.canvas, event, startAction);
             });
 
-            Events.bind(snooker.table.canvas, 'mousemove', Lines.draw);
+            Events.bind(Game.table.canvas, 'mousemove', Lines.draw);
 
             _.each([
                 "mouseup", "touchend", "touchcancel",
                 "touchleave", "touchmove", "tap",
                 "dbltap", "dragmove", "dragend"
             ], function (event) {
-                Events.bind(snooker.table.canvas, event, stopAction);
+                Events.bind(Game.table.canvas, event, stopAction);
             });
         });
     }
 
     return {
-        setup: function () {
+        setup: function (fn) {
             bootstrap();
+            fn(Game);
         }
     };
 

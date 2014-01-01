@@ -1,7 +1,6 @@
 define([
-    'underscore',
-    'core/snooker'
-], function (_, snooker) {
+    'underscore'
+], function (_) {
     'use strict';
 
     function getBoardName(index) {
@@ -66,7 +65,7 @@ define([
     var Collision = {
         isBallCollision: function (currentBall) {
             var collisionBall = null;
-            _.each(snooker.balls, function (ball) {
+            _.each(Game.balls, function (ball) {
                 if (ball.color === currentBall.color) return;
                 if (isTwoBallTouches(ball, currentBall)) {
                     collisionBall = ball;
@@ -130,4 +129,3 @@ define([
     };
     return Collision;
 });
-

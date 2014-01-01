@@ -1,6 +1,5 @@
 define([
-    'core/Game'
-], function (Game) {
+], function () {
     'use strict';
 
     var KeyHandler = {
@@ -51,4 +50,3 @@ define([
     };
     return KeyHandler;
 });
-

@@ -1,10 +1,8 @@
 define([
     'underscore',
-    'core/snooker',
-    'core/Game',
     'core/Collision',
     'models/PowerBar'
-], function (_, snooker, Game, Collision, PowerBar) {
+], function (_, Collision, PowerBar) {
     'use strict';
 
     /**
@@ -78,7 +76,7 @@ define([
             this.ctx.drawImage(this.texture, pos.x, pos.y, ballDiameter, ballDiameter);
         },
         move: function (cursorPosition) {
-            snooker.refreshBalls();
+            Game.refreshBalls();
             this.animate(cursorPosition);
         },
         animate: function (cursorDelta) {
@@ -111,7 +109,7 @@ define([
                 // 2) check pot collision
                 if (Collision.isPotCollision(direction, self)) {
                     self.status = BALL_REMOVED;
-                    snooker.refreshViewPort();
+                    Game.refreshViewPort();
                     return;
                 }
 
@@ -125,7 +123,7 @@ define([
                     });
                 }
 
-                snooker.refreshViewPort();
+                Game.refreshViewPort();
 
                 // Slower...
                 Game.power *= 0.95;
@@ -144,6 +142,5 @@ define([
             }
         }
     };
-
     return Ball;
 });

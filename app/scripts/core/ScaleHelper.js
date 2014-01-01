@@ -49,4 +49,3 @@ define([
     };
     return ScaleHelper;
 });
-
