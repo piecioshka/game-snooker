@@ -5,3 +5,4 @@ nbproject/
 
 # project files
 dist
+node_modules/

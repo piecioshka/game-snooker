@@ -33,6 +33,7 @@ define([
                 KeyHandler.mouseDown();
                 stopEvent(e);
             }
+
             function stopAction(e) {
                 clearInterval(interval);
                 KeyHandler.mouseUp(e);
