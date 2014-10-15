@@ -1,10 +1,10 @@
 {
-    "version": "0.0.1",
-    "name": "snooker.pc.pl",
-    "homepage": "https://github.com/piecioshka/snooker.pc.pl",
-    "repository": "git://github.com/piecioshka/snooker.pc.pl.git",
+    "version": "0.0.2",
+    "name": "game-snooker",
+
     "author": "Piotr Kowalski",
-    "dependencies": {},
+    "private": true,
+
     "devDependencies": {
         "underscore": "latest",
         "requirejs": "2.1.11",
@@ -12,6 +12,7 @@
         "gulp-clean": "0.2.4",
         "q": "1.0.1"
     },
+
     "engines": {
         "node": ">=0.10.0"
     }
