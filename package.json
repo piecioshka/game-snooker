@@ -1,16 +1,17 @@
 {
-    "version": "0.0.2",
+    "version": "1.0.0",
     "name": "game-snooker",
 
     "author": "Piotr Kowalski",
     "private": true,
 
     "devDependencies": {
-        "underscore": "latest",
-        "requirejs": "2.1.11",
-        "gulp": "3.5.6",
-        "gulp-clean": "0.2.4",
-        "q": "1.0.1"
+        "requirejs": "latest",
+        "del": "latest",
+        "gulp": "latest",
+        "gulp-less": "latest",
+        "gulp-help": "latest",
+        "q": "latest"
     },
 
     "engines": {

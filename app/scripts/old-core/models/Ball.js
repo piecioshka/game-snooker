@@ -1,6 +1,6 @@
 define([
     'underscore',
-    'core/Collision',
+    '../Collision',
     'models/PowerBar'
 ], function (_, Collision, PowerBar) {
     'use strict';

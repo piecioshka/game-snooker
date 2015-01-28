@@ -1,7 +1,8 @@
-# IDE configs
 .idea/
 nbproject/
 .settings/
 
-# project files
 node_modules/
+npm-debug.log
+dist/
+app/styles/css/

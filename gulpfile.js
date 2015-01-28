@@ -1,25 +1,21 @@
-/*global require */
-
 (function (root) {
     'use strict';
 
-    var _ = require('underscore');
     var rjs = require('requirejs');
     var gulp = require('gulp');
-    var clean = require('gulp-clean');
+    var less = require('gulp-less');
+    var del = require('del');
+    var path = require('path');
     var Q = require('q');
 
-    // Konfiguracja aplikacji potrzebna do budowy dist/
-    var config = require('./config.json');
+    require('gulp-help')(gulp);
 
-    gulp.task('prepare', function () {
-        // usuwamy katalog /dist
-        return gulp.src('dist/', { read: false })
-            .pipe(clean({ force: true }));
+    gulp.task('remove-dist', 'Remove directory dist/', function (cb) {
+        del(['dist'], cb);
     });
 
-    gulp.task('build', ['prepare'], function () {
-        // optymalizacja r.js
+    gulp.task('optimize', 'Build package with *.js files.', ['remove-dist'], function () {
+        var config = require('./config.json');
         var deferred = Q.defer();
         rjs.optimize(config, function () {
             deferred.resolve();
@@ -27,12 +23,29 @@
         return deferred.promise;
     });
 
-    gulp.task('clean', ['build'], function () {
-        // usuwamy logi builda
-        return gulp.src("./dist/build.txt", { read: false })
-            .pipe(clean());
+    gulp.task('clean', 'Remove logs.', ['optimize'], function (cb) {
+        del([
+            path.join('dist', 'build.txt'),
+            path.join('dist', 'styles', 'less')
+        ], cb);
     });
 
-    gulp.task('default', ['prepare', 'build', 'clean']);
+    gulp.task('remove-app-styles-css', 'Remove directory app/styles/css/', function (cb) {
+        del([path.join('app', 'styles', 'css')], cb);
+    });
+
+    gulp.task('styles', 'Compiled *.less files to main.css', ['remove-app-styles-css'], function () {
+        return gulp.src(path.join('app', 'styles', 'less', 'main.less'))
+            .pipe(less())
+            .pipe(gulp.dest(path.join('app', 'styles', 'css')));
+    });
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    gulp.task('build', 'Create distributed version of app.', ['optimize', 'clean']);
+
+    gulp.task('watch', 'Listen for modification any *.less file and compile to main.css.', ['styles'], function () {
+        gulp.watch([path.join('app', 'styles', '**', '*.less')], ['styles']);
+    });
 
 }(this));
