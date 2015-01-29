@@ -16,9 +16,11 @@
     });
 
     require([
-
-    ], function () {
-
+        'core/App',
+        'core/Game'
+    ], function (App, Game) {
+        App.game = new Game();
+        App.game.start();
     });
 
 }(this));
