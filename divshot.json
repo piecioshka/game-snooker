@@ -1,0 +1,5 @@
+{
+  "name": "snooker-game",
+  "root": "app",
+  "clean_urls": true
+}
