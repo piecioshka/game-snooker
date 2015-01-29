@@ -34,6 +34,7 @@ define([
         },
 
         _setupTable: function () {
+            // Cached ref to Phaser.Game
             var game = App.game.getPhaser();
 
             game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -46,6 +47,7 @@ define([
         },
 
         _setupAnalog: function () {
+            // Cached ref to Phaser.Game
             var game = App.game.getPhaser();
 
             analog = game.add.sprite(200, 450, 'power');
@@ -56,14 +58,16 @@ define([
         },
 
         _setupArrow: function () {
+            // Cached ref to Phaser.Game
             var game = App.game.getPhaser();
 
-            arrow = game.add.sprite(200, 450, 'ball-red');
+            arrow = game.add.sprite(200, 450, 'ball-white');
             arrow.anchor.setTo(0.1, 0.5);
             arrow.alpha = 0;
         },
 
         _createBall: function (x, y, key) {
+            // Cached ref to Phaser.Game
             var game = App.game.getPhaser();
 
             var ball = game.add.sprite(x, y, key, 1, balls);
@@ -132,9 +136,6 @@ define([
         },
 
         _drag: function (player, pointer) {
-            // Cached ref to Phaser.Game
-            var game = App.game.getPhaser();
-
             catchFlag = true;
 
             player.body.moves = false;
@@ -144,9 +145,6 @@ define([
         },
 
         _drop: function () {
-            // Cached ref to Phaser.Game
-            var game = App.game.getPhaser();
-
             catchFlag = false;
             whiteBall.body.moves = true;
 
@@ -185,7 +183,7 @@ define([
             var game = App.game.getPhaser();
 
             game.debug.spriteCoords(whiteBall, 80, 80);
-            game.debug.text("Launch Velocity: " + parseInt(launchVelocity, 10), 80, 30, 'rgb(0,255,0)');
+            game.debug.text('Launch Velocity: ' + parseInt(launchVelocity, 10), 80, 30, 'rgb(0,255,0)');
         }
     };
 
