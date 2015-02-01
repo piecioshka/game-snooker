@@ -1,6 +1,8 @@
 define([
-    'core/App'
-], function (App) {
+    'lodash',
+    'core/App',
+    'core/helpers/PhaserModelHelper'
+], function (_, App, PhaserModelHelper) {
     'use strict';
 
     function BallCollection() {
@@ -20,12 +22,7 @@ define([
         return ball;
     };
 
-    BallCollection.prototype.enableCollisions = function () {
-        // Cached ref to Phaser.Game
-        var game = App.game.getPhaser();
-
-        game.physics.arcade.collide(this._phaser, this._phaser);
-    };
+    _.extend(BallCollection.prototype, PhaserModelHelper.prototype);
 
     return BallCollection;
 });

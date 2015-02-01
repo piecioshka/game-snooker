@@ -1,14 +1,13 @@
 define([
     'phaser',
     'core/App',
-    'core/collections/BallCollection',
     'core/models/Ball',
     'core/models/WhiteBall',
     'core/models/Table'
-], function (Phaser, App, BallCollection, Ball, WhiteBall, Table) {
+], function (Phaser, App, Ball, WhiteBall, Table) {
     'use strict';
 
-    var balls;
+    var table;
     var whiteBall;
 
     var MainStage = {
@@ -31,44 +30,42 @@ define([
         },
 
         create: function () {
-            new Table();
+            table = new Table();
 
-            balls = new BallCollection();
+            whiteBall = table.add(new WhiteBall(210, 255, 'ball-white'));
 
-            whiteBall = balls.add(new WhiteBall(210, 255, 'ball-white'));
+            table.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.37, 'ball-green'));
+            table.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT / 2, 'ball-brown'));
+            table.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.62, 'ball-yellow'));
 
-            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.37, 'ball-green'));
-            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT / 2, 'ball-brown'));
-            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.62, 'ball-yellow'));
+            table.add(new Ball(Table.WIDTH / 2, Table.HEIGHT / 2, 'ball-blue'));
+            table.add(new Ball(Table.WIDTH * 0.63, Table.HEIGHT / 2, 'ball-pink'));
 
-            balls.add(new Ball(Table.WIDTH / 2, Table.HEIGHT / 2, 'ball-blue'));
-            balls.add(new Ball(Table.WIDTH * 0.63, Table.HEIGHT / 2, 'ball-pink'));
+            table.add(new Ball(Table.WIDTH * 0.67, Table.HEIGHT / 2, 'ball-red'));
 
-            balls.add(new Ball(Table.WIDTH * 0.67, Table.HEIGHT / 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
 
-            balls.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
 
-            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS * 3, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS * 3, 'ball-red'));
 
-            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS * 3, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS * 3, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 4.1, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
+            table.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 4.1, 'ball-red'));
 
-            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 4.1, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
-            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 4.1, 'ball-red'));
-
-            balls.add(new Ball(Table.WIDTH * 0.86, Table.HEIGHT / 2, 'ball-black'));
+            table.add(new Ball(Table.WIDTH * 0.86, Table.HEIGHT / 2, 'ball-black'));
         },
 
         update: function () {
-            balls.enableCollisions();
+            table.enableCollisions();
             whiteBall.enableCollision();
         },
 

@@ -1,16 +1,14 @@
 define([
     'phaser',
     'core/App',
-    'core/models/Model'
-], function (Phaser, App, Model) {
+    'core/helpers/PhaserModelHelper'
+], function (Phaser, App, PhaserModelHelper) {
     'use strict';
 
     function Ball(x, y, key) {
         this._phaser = undefined;
         this.initialize(x, y, key);
     }
-
-    Ball.prototype = Model.prototype;
 
     Ball.prototype.initialize = function (x, y, key) {
         // Cached ref to Phaser.Game
@@ -27,6 +25,8 @@ define([
     };
 
     Ball.RADIUS = 10.5;
+
+    _.extend(Ball.prototype, PhaserModelHelper.prototype);
 
     return Ball;
 });
