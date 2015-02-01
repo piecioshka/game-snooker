@@ -76,7 +76,7 @@ define([
         var game = App.game.getPhaser();
 
         this._analog = game.add.sprite(200, 450, 'analog');
-        this._analog.width = 4;
+        this._analog.width = 3;
         this._analog.rotation = 220;
         this._analog.alpha = 0;
         this._analog.anchor.setTo(0.5, 0.0);

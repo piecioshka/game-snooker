@@ -17,7 +17,7 @@
 
     require([
         'core/App',
-        'core/models/Game'
+        'core/Game'
     ], function (App, Game) {
         App.game = new Game();
         App.game.start();
