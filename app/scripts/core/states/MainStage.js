@@ -31,45 +31,40 @@ define([
         },
 
         create: function () {
-            // Cached ref to Phaser.Game
             new Table();
-
-            var tableWidth = 821;
-            var tableHeight = 459;
-            var ballRadius = 10.5;
 
             balls = new BallCollection();
 
             whiteBall = balls.add(new WhiteBall(210, 255, 'ball-white'));
 
-            balls.add(new Ball(tableWidth * 0.28, tableHeight * 0.37, 'ball-green'));
-            balls.add(new Ball(tableWidth * 0.28, tableHeight / 2, 'ball-brown'));
-            balls.add(new Ball(tableWidth * 0.28, tableHeight * 0.62, 'ball-yellow'));
+            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.37, 'ball-green'));
+            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT / 2, 'ball-brown'));
+            balls.add(new Ball(Table.WIDTH * 0.28, Table.HEIGHT * 0.62, 'ball-yellow'));
 
-            balls.add(new Ball(tableWidth / 2, tableHeight / 2, 'ball-blue'));
-            balls.add(new Ball(tableWidth * 0.63, tableHeight / 2, 'ball-pink'));
+            balls.add(new Ball(Table.WIDTH / 2, Table.HEIGHT / 2, 'ball-blue'));
+            balls.add(new Ball(Table.WIDTH * 0.63, Table.HEIGHT / 2, 'ball-pink'));
 
-            balls.add(new Ball(tableWidth * 0.67, tableHeight / 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.67, Table.HEIGHT / 2, 'ball-red'));
 
-            balls.add(new Ball(tableWidth * 0.693, tableHeight / 2 - ballRadius, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.693, tableHeight / 2 + ballRadius, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.693, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
 
-            balls.add(new Ball(tableWidth * 0.717, tableHeight / 2 - ballRadius * 2, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.717, tableHeight / 2, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.717, tableHeight / 2 + ballRadius * 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.717, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
 
-            balls.add(new Ball(tableWidth * 0.74, tableHeight / 2 - ballRadius * 3, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.74, tableHeight / 2 - ballRadius, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.74, tableHeight / 2 + ballRadius, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.74, tableHeight / 2 + ballRadius * 3, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS * 3, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 - Ball.RADIUS, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.74, Table.HEIGHT / 2 + Ball.RADIUS * 3, 'ball-red'));
 
-            balls.add(new Ball(tableWidth * 0.765, tableHeight / 2 - ballRadius * 4.1, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.765, tableHeight / 2 - ballRadius * 2, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.765, tableHeight / 2, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.765, tableHeight / 2 + ballRadius * 2, 'ball-red'));
-            balls.add(new Ball(tableWidth * 0.765, tableHeight / 2 + ballRadius * 4.1, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 4.1, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 - Ball.RADIUS * 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 2, 'ball-red'));
+            balls.add(new Ball(Table.WIDTH * 0.765, Table.HEIGHT / 2 + Ball.RADIUS * 4.1, 'ball-red'));
 
-            balls.add(new Ball(tableWidth * 0.86, tableHeight / 2, 'ball-black'));
+            balls.add(new Ball(Table.WIDTH * 0.86, Table.HEIGHT / 2, 'ball-black'));
         },
 
         update: function () {

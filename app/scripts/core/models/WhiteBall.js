@@ -43,10 +43,10 @@ define([
         this._arrow.alpha = 0;
         this._analog.alpha = 0;
 
-        var Xvector = (this._arrow.x - this._phaser.x) * 3;
-        var Yvector = (this._arrow.y - this._phaser.y) * 3;
+        var vectorX = (this._arrow.x - this._phaser.x) * 3;
+        var vectorY = (this._arrow.y - this._phaser.y) * 3;
 
-        this._phaser.body.velocity.setTo(Xvector, Yvector);
+        this._phaser.body.velocity.setTo(vectorX, vectorY);
     };
 
     WhiteBall.prototype.isCatch = function () {

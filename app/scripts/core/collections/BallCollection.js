@@ -1,7 +1,6 @@
 define([
-    'core/App',
-    'core/models/Ball'
-], function (App, Ball) {
+    'core/App'
+], function (App) {
     'use strict';
 
     function BallCollection() {
@@ -10,20 +9,21 @@ define([
     }
 
     BallCollection.prototype.initialize = function () {
+        // Cached ref to Phaser.Game
         var game = App.game.getPhaser();
+
         this._phaser = game.add.group();
     };
 
-    /**
-     * @param {Ball} ball
-     */
     BallCollection.prototype.add = function (ball) {
         this._phaser.add(ball.getPhaser());
         return ball;
     };
 
     BallCollection.prototype.enableCollisions = function () {
+        // Cached ref to Phaser.Game
         var game = App.game.getPhaser();
+
         game.physics.arcade.collide(this._phaser, this._phaser);
     };
 

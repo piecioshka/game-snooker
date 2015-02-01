@@ -26,5 +26,7 @@ define([
         this._phaser.body.drag.set(20, 20);
     };
 
+    Ball.RADIUS = 10.5;
+
     return Ball;
 });
