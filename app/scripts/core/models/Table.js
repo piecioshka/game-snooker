@@ -1,12 +1,15 @@
 define([
     'phaser',
-    'core/App'
-], function (Phaser, App) {
+    'core/App',
+    'core/models/Model'
+], function (Phaser, App, Model) {
     'use strict';
 
-    var Table = function () {
+    function Table() {
         this.initialize();
-    };
+    }
+
+    Table.prototype = new Model();
 
     Table.prototype.initialize = function () {
         // Cached ref to Phaser.Game
