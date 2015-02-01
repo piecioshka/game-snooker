@@ -18,6 +18,8 @@ define([
             // Load assets.
             game.load.image('power', 'assets/images/power.png');
             game.load.image('table', 'assets/images/table.png');
+            game.load.image('arrow', 'assets/images/arrow.png');
+            game.load.image('analog', 'assets/images/analog.png');
 
             game.load.image('ball-black', 'assets/images/balls/black.png');
             game.load.image('ball-blue', 'assets/images/balls/blue.png');

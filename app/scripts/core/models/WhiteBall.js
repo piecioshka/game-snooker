@@ -75,8 +75,8 @@ define([
         // Cached ref to Phaser.Game
         var game = App.game.getPhaser();
 
-        this._analog = game.add.sprite(200, 450, 'power');
-        this._analog.width = 8;
+        this._analog = game.add.sprite(200, 450, 'analog');
+        this._analog.width = 4;
         this._analog.rotation = 220;
         this._analog.alpha = 0;
         this._analog.anchor.setTo(0.5, 0.0);
@@ -86,7 +86,7 @@ define([
         // Cached ref to Phaser.Game
         var game = App.game.getPhaser();
 
-        this._arrow = game.add.sprite(200, 450, 'ball-white');
+        this._arrow = game.add.sprite(200, 450, 'arrow');
         this._arrow.anchor.setTo(0.1, 0.5);
         this._arrow.alpha = 0;
     };
