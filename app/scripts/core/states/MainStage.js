@@ -1,7 +1,9 @@
 define([
     'phaser',
-    'core/App'
-], function (Phaser, App) {
+    'core/App',
+    'core/models/Ball',
+    'core/models/Table'
+], function (Phaser, App, Ball, Table) {
     'use strict';
 
     var analog;
@@ -10,8 +12,6 @@ define([
     var launchVelocity = 0;
 
     var balls;
-    var table;
-
     var whiteBall;
 
     var Bootstrap = {
@@ -31,19 +31,6 @@ define([
             game.load.image('ball-red', 'assets/images/balls/red.png');
             game.load.image('ball-white', 'assets/images/balls/white.png');
             game.load.image('ball-yellow', 'assets/images/balls/yellow.png');
-        },
-
-        _setupTable: function () {
-            // Cached ref to Phaser.Game
-            var game = App.game.getPhaser();
-
-            game.physics.startSystem(Phaser.Physics.ARCADE);
-
-            // game.world.setBounds(0, 0, 821, 459);
-            game.world.bounds.setTo(55, 55, 711, 349);
-            game.physics.setBoundsToWorld();
-
-            game.add.tileSprite(0, 0, 821, 459, 'table');
         },
 
         _setupAnalog: function () {
@@ -91,7 +78,8 @@ define([
 
         create: function () {
             // Cached ref to Phaser.Game
-            this._setupTable();
+            new Table();
+
             this._setupAnalog();
             this._setupArrow();
 
