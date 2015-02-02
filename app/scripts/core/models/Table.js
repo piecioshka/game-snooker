@@ -1,9 +1,10 @@
 define([
+    'lodash',
     'phaser',
     'core/App',
     'core/helpers/PhaserModelHelper',
     'core/collections/BallCollection'
-], function (Phaser, App, PhaserModelHelper, BallCollection) {
+], function (_, Phaser, App, PhaserModelHelper, BallCollection) {
     'use strict';
 
     function Table() {

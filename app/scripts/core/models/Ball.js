@@ -1,8 +1,9 @@
 define([
+    'lodash',
     'phaser',
     'core/App',
     'core/helpers/PhaserModelHelper'
-], function (Phaser, App, PhaserModelHelper) {
+], function (_, Phaser, App, PhaserModelHelper) {
     'use strict';
 
     function Ball(x, y, key) {

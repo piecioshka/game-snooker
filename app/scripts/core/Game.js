@@ -1,8 +1,9 @@
 define([
+    'lodash',
     'phaser',
     'core/helpers/PhaserModelHelper',
     'core/states/MainStage'
-], function (Phaser, PhaserModelHelper, MainStage) {
+], function (_, Phaser, PhaserModelHelper, MainStage) {
     'use strict';
 
     var Game = function () {
