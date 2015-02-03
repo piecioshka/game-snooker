@@ -15,6 +15,8 @@ define([
         var game = App.game.getPhaser();
 
         this._phaser = game.add.group();
+        this._phaser.enableBody = true;
+        this._phaser.physicsBodyType = Phaser.Physics.P2JS;
     };
 
     BallCollection.prototype.add = function (ball) {

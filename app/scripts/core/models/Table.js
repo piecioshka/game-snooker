@@ -17,8 +17,6 @@ define([
         // Cached ref to Phaser.Game
         var game = App.game.getPhaser();
 
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-
         // Instead of line below:
         // game.world.setBounds(0, 0, 821, 459);
 
@@ -26,6 +24,9 @@ define([
         // And by PhaserJS situation that sprite is bigger than world is not supported.
         game.world.bounds.setTo(55, 55, 711, 349);
         game.physics.setBoundsToWorld();
+
+        game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.p2.restitution = 0.9;
 
         this._phaser = game.add.tileSprite(0, 0, 821, 459, 'table');
 
@@ -36,12 +37,8 @@ define([
         return this._balls.add(ball);
     };
 
-    Table.prototype.enableCollisions = function () {
-        // Cached ref to Phaser.Game
-        var game = App.game.getPhaser();
-
-        var phaserBalls = this._balls.getPhaser();
-        game.physics.arcade.collide(phaserBalls, phaserBalls);
+    Table.prototype.getBalls = function () {
+        return this._balls;
     };
 
     Table.WIDTH = 821;

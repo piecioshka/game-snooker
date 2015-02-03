@@ -6,23 +6,29 @@ define([
 ], function (_, Phaser, App, PhaserModelHelper) {
     'use strict';
 
-    function Ball(x, y, key) {
+    function Ball(x, y, key, table) {
         this._phaser = undefined;
-        this.initialize(x, y, key);
+        this.initialize(x, y, key, table);
     }
 
-    Ball.prototype.initialize = function (x, y, key) {
-        // Cached ref to Phaser.Game
-        var game = App.game.getPhaser();
+    Ball.prototype.initialize = function (x, y, key, table) {
+        var ball = this._phaser = table.getBalls().getPhaser().create(x, y, key);
+        var body = ball.body;
 
-        this._phaser = game.add.sprite(x, y, key);
+        body.setCircle(Ball.RADIUS);
+        body.fixedRotation = true;
+        body.mass = 0.4;
+        body.damping = 0.1;
 
-        game.physics.enable([this._phaser], Phaser.Physics.ARCADE);
+        body.onBeginContact.add(function () {
+            body.velocity.y *= 0.7;
+            body.velocity.x *= 0.7;
+        }, this);
 
-        this._phaser.anchor.set(0.5);
-        this._phaser.body.collideWorldBounds = true;
-        this._phaser.body.bounce.set(0.5);
-        this._phaser.body.drag.set(20, 20);
+        body.onEndContact.add(function () {
+            body.velocity.y *= 0.7;
+            body.velocity.x *= 0.7;
+        }, this);
     };
 
     Ball.RADIUS = 10.5;

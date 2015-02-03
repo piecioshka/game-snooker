@@ -3,15 +3,15 @@
 
     require.config({
         paths: {
-            events: 'vendor/events',
             lodash: 'vendor/lodash',
-            phaser: 'vendor/phaser'
+            phaser: 'vendor/phaser',
+            EventEmitter: 'vendor/EventEmitter'
         },
 
         shim: {
-            events: { exports: 'Events' },
             lodash: { exports: '_' },
-            phaser: { exports: 'Phaser' }
+            phaser: { exports: 'Phaser' },
+            EventEmitter: { deps: ['lodash'], exports: 'EventEmitter' }
         }
     });
 

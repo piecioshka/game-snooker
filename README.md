@@ -6,3 +6,5 @@
 - http://phaser.io/examples/_site/view_full.html?d=p2%20physics&f=collide+world+bounds.js&t=collide%20world%20bounds
 - http://phaser.io/examples/_site/view_full.html?d=p2%20physics&f=collision+groups.js&t=collision%20groups
 - http://phaser.io/examples/_site/view_full.html?d=p2%20physics&f=world+move.js&t=world%20move
+
+Try to do something like that: https://www.youtube.com/watch?v=egDKoXW8tG8

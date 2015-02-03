@@ -1,15 +1,15 @@
 define([
-
-], function () {
+    'phaser'
+], function (Phaser) {
     'use strict';
 
-    function Model() {
+    function PhaserModelHelper() {
 
     }
 
-    Model.prototype.getPhaser = function () {
+    PhaserModelHelper.prototype.getPhaser = function () {
         return this._phaser;
     };
 
-    return Model;
+    return PhaserModelHelper;
 });
