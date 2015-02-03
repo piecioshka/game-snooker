@@ -54,11 +54,15 @@ define([
 
                 ball.body.velocity.x = vectorX * params.strength;
                 ball.body.velocity.y = vectorY * params.strength;
+
+                cue.hide();
             });
 
             App.game.on('stop:ball', function () {
                 var ball = whiteBall.getPhaser();
                 ball.body.setZeroVelocity();
+
+                cue.show();
             });
 
             // Setup balls.

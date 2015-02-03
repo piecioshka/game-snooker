@@ -57,7 +57,9 @@ define([
         var strength = this._phaser;
 
         if (strength.width < strength.defaultWidth) {
-            strength.width++;
+            strength.width += 3;
+        } else {
+            strength.width = strength.defaultWidth;
         }
     };
 

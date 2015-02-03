@@ -17,18 +17,8 @@ define([
 
         body.setCircle(Ball.RADIUS);
         body.fixedRotation = true;
-        body.mass = 0.4;
-        body.damping = 0.1;
-
-        body.onBeginContact.add(function () {
-            body.velocity.y *= 0.7;
-            body.velocity.x *= 0.7;
-        }, this);
-
-        body.onEndContact.add(function () {
-            body.velocity.y *= 0.7;
-            body.velocity.x *= 0.7;
-        }, this);
+        body.mass = 0.7;
+        body.damping = 0.5;
     };
 
     Ball.RADIUS = 10.5;

@@ -27,6 +27,8 @@ define([
 
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.p2.restitution = 0.9;
+        game.physics.p2.friction = 1;
+        game.physics.p2.applyDamping = true;
 
         this._phaser = game.add.tileSprite(0, 0, 821, 459, 'table');
 
