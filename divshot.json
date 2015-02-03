@@ -1,5 +1,5 @@
 {
   "name": "snooker-game",
-  "root": "app",
+  "root": "dist",
   "clean_urls": true
 }
