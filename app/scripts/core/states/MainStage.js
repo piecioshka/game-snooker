@@ -37,6 +37,23 @@ define([
         },
 
         create: function () {
+            // Cached ref to Phaser.Game
+            var game = App.game.getPhaser();
+
+            // Instead of line below:
+            // game.world.setBounds(0, 0, 821, 459);
+
+            // Use that construction, because Table (without bands) is main world
+            // And by PhaserJS situation that sprite is bigger than world is not supported.
+            game.world.bounds.setTo(55, 55, 711, 349);
+            game.physics.setBoundsToWorld();
+
+            game.physics.startSystem(Phaser.Physics.P2JS);
+
+            game.physics.p2.restitution = 0.9;
+            game.physics.p2.friction = 1;
+            game.physics.p2.applyDamping = true;
+
             // Setup main models.
             // ------------------
 
@@ -109,7 +126,6 @@ define([
         render: function () {
             // Cached ref to Phaser.Game
             var game = App.game.getPhaser();
-
             game.debug.spriteCoords(whiteBall.getPhaser(), 80, 80);
         }
     };
