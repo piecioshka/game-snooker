@@ -1,9 +1,5 @@
 module.exports = {
-    resolve: {
-        extensions: ['.es6.js', '.js', '']
-    },
-
-    entry: './app/scripts/main',
+    entry: './app/scripts/main.js',
 
     output: {
         filename: 'bundle.js',
@@ -18,7 +14,7 @@ module.exports = {
                 loader: 'style-loader!css-loader!sass-loader'
             },
             {
-                test: /\.es6\.js/,
+                test: /\.js/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {

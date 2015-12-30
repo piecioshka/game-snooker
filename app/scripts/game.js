@@ -1,6 +1,6 @@
 import Conf from './conf';
-import BootloadStage from './states/BootloadStage';
-import GameStage from './states/GameStage';
+import BootloadState from './states/bootload-state';
+import GameState from './states/game-state';
 import Postal from 'postal';
 
 class Game {
@@ -17,8 +17,8 @@ class Game {
     }
 
     setup() {
-        this.game.state.add('boot', BootloadStage);
-        this.game.state.add('main', GameStage);
+        this.game.state.add('boot', BootloadState);
+        this.game.state.add('main', GameState);
 
         this.game.state.start('boot');
     }

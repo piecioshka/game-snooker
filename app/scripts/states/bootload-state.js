@@ -1,13 +1,13 @@
 import debug from 'debug';
 
-let log = debug('bootload:stage');
+let log = debug('bootload:state');
 
-class BootloadStage extends Phaser.State {
+class BootloadState extends Phaser.State {
     preload() {
         this.game.mainChannel.publish('bootload:start');
 
         this.load.path = 'assets/';
-        this.load.images(['power', 'table', 'cue']);
+        this.load.images(['table', 'cue', 'fill']);
         this.load.spritesheet('balls', 'balls.png', 21, 21);
         this.load.json('balls', 'balls.json');
         this.load.json('pockets', 'pockets.json');
@@ -21,4 +21,4 @@ class BootloadStage extends Phaser.State {
     }
 }
 
-export default BootloadStage;
+export default BootloadState;

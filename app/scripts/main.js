@@ -1,7 +1,7 @@
 require('../styles/scss/main.scss');
 require('./debug-conf');
 
-import Game from './Game';
+import Game from './game';
 import debug from 'debug';
 
 let game = new Game();
