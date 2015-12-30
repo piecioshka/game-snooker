@@ -1,26 +1,26 @@
 import Conf from './conf';
 import BootloadStage from './states/BootloadStage';
-import MainStage from './states/MainStage';
+import GameStage from './states/GameStage';
 import Postal from 'postal';
 
 class Game {
+    game = null;
     mainChannel = null;
 
     constructor() {
-        this.mainChannel = Postal.channel('main');
+        let game = this.game = new Phaser.Game(Conf.GAME_WIDTH, Conf.GAME_HEIGHT, Phaser.CANVAS, 'app');
+
+        let mainChannel = this.mainChannel = game.mainChannel = Postal.channel('main');
+        mainChannel.publish('setup.ready', {
+            setup: 'ready'
+        });
     }
 
     setup() {
-        var game = new Phaser.Game(Conf.GAME_WIDTH, Conf.GAME_HEIGHT, Phaser.CANVAS, 'app');
+        this.game.state.add('boot', BootloadStage);
+        this.game.state.add('main', GameStage);
 
-        game.state.add('boot', BootloadStage);
-        game.state.add('main', MainStage);
-
-        game.state.start('boot');
-
-        this.mainChannel.publish('setup.ready', {
-            setup: 'ready'
-        });
+        this.game.state.start('boot');
     }
 }
 

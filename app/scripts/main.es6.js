@@ -5,10 +5,10 @@ import Game from './Game';
 import debug from 'debug';
 
 let game = new Game();
-let log = debug('main');
+let log = debug('game');
 
-game.mainChannel.subscribe('setup.ready', (payload) => {
-    log(payload);
+game.mainChannel.subscribe('*', (data, { topic }) => {
+    log(topic);
 });
 
 game.setup();
