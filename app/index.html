@@ -3,10 +3,15 @@
 <head>
     <meta charset="utf-8"/>
     <title>Snooker Game</title>
-    <link rel="stylesheet" href="styles/css/main.css" type="text/css"/>
 </head>
 <body>
-    <div id="playground"></div>
-    <script src="scripts/vendor/require.js" data-main="scripts/main"></script>
+    <div id="app"></div>
+    <script src="../node_modules/phaser/dist/phaser.js"></script>
+    <script>
+        var PhaserGlobal = {
+            hideBanner: true
+        };
+    </script>
+    <script src="dist/bundle.js"></script>
 </body>
 </html>

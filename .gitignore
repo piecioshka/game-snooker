@@ -1,9 +1,5 @@
-.idea/
-nbproject/
-.settings/
-
 node_modules/
 npm-debug.log
-dist/
+
+app/dist/
 app/styles/css/
-.divshot-cache
