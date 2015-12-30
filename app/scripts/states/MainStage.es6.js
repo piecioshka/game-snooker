@@ -1,10 +1,11 @@
 import Conf from '../conf';
 import debug from 'debug';
 
-let log = debug('main-stage');
+let log = debug('main:stage');
 
-class MainStage {
+class MainStage extends Phaser.State {
     create() {
+        log('create');
         this.add.image(0, 0, 'table');
 
         let balls = this.cache.getJSON('balls-positions');
@@ -16,7 +17,7 @@ class MainStage {
     }
 
     update() {
-
+        // log('update');
     }
 
     render() {

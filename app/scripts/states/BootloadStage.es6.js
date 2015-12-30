@@ -1,5 +1,10 @@
-class Bootload extends Phaser.State {
+import debug from 'debug';
+
+let log = debug('bootload:stage');
+
+class BootloadStage extends Phaser.State {
     preload() {
+        log('preload');
         this.load.image('power', 'assets/images/power.png');
         this.load.image('table', 'assets/images/table.png');
         this.load.image('cue', 'assets/images/cue.png');
@@ -20,8 +25,9 @@ class Bootload extends Phaser.State {
     }
 
     create() {
+        log('create');
         this.state.start('main');
     }
 }
 
-export default Bootload;
+export default BootloadStage;
