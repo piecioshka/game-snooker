@@ -1,6 +1,10 @@
 {
     "private": true,
     "name": "game-snooker",
+    "scripts": {
+        "build": "webpack --profile -p",
+        "deploy": "gh-pages -d app/"
+    },
     "devDependencies": {
         "babel-loader": "^6.2.0",
         "babel-preset-es2015": "^6.3.13",
@@ -13,5 +17,8 @@
         "sass-loader": "^3.1.2",
         "style-loader": "latest",
         "webpack": "^1.12.9"
+    },
+    "dependencies": {
+        "babel-core": "^6.26.3"
     }
 }
