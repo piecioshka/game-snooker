@@ -2,4 +2,3 @@ node_modules/
 npm-debug.log
 
 app/dist/
-app/styles/css/

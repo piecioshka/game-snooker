@@ -1,13 +1,19 @@
+const path = require('path');
+
 module.exports = {
-    entry: './app/scripts/main.js',
+    entry: path.join(
+        __dirname, 'app/scripts/main.js'
+    ),
 
     output: {
         filename: 'bundle.js',
-        path: './app/dist/'
+        path: path.join(
+            __dirname, 'app/dist/'
+        )
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.scss$/,
                 exclude: /node_modules/,
@@ -18,8 +24,10 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    cacheDirectory: true,
-                    presets: ['es2015', 'stage-0']
+                    presets: ["@babel/preset-env"],
+                    plugins: [
+                        "@babel/plugin-proposal-class-properties",
+                    ]
                 }
             }
         ]
