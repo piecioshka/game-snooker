@@ -1,4 +1,4 @@
-require('../styles/scss/main.scss');
+require('../styles/main.scss');
 require('./debug-conf');
 
 import Game from './game';
