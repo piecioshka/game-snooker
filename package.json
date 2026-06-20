@@ -1,6 +1,7 @@
 {
     "private": true,
     "name": "game-snooker",
+    "license": "MIT",
     "scripts": {
         "clear": "rm -rf app/dist/",
         "clear:all": "rm -rf node_modules/ && npm run clear",
